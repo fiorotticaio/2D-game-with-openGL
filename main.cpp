@@ -150,6 +150,17 @@ void idle(void) {
 /*****************************************************************************************/
 
 int main(int argc, char *argv[]) {
+	if (argc < 2) {
+		printf("Usage: %s <svg file>\n", argv[0]);
+		exit(1);
+	}
+
+	char *path = argv[1];
+	printf("Path: %s\n", path);
+
+
+	
+
 	// Initialize openGL with Double buffer and RGB color without transparency.
 	// Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.
 	glutInit(&argc, argv);

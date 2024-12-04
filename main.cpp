@@ -156,10 +156,9 @@ int main(int argc, char *argv[]) {
 	}
 
 	char *path = argv[1];
-	printf("Path: %s\n", path);
 
 
-	
+
 
 	// Initialize openGL with Double buffer and RGB color without transparency.
 	// Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.

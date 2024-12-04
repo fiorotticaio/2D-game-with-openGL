@@ -1,10 +1,10 @@
-# Compilador a ser utilizado
+# Compiler used
 CC = gcc
 CXX = g++
 
-# Flags para o compilador:
-#  -g    Adiciona informações de debug ao executável
-#  -Wall Habilita todas as warnings
+# Compilation flags:
+#  -g    Add debug information to the executable file
+#  -Wall Turn on most, but not all, compiler warnings
 CFLAGS  = -g -Wall
 LINKING = -lglut -lGL -lGLU
 TARGET = *

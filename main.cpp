@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <vector>
+#include "tinyxml2.h"
+#include <string>
 
 #define INC_KEYIDLE 0.3
 
@@ -25,13 +27,13 @@ const GLint Width = 500;
 const GLint Height = 500;
 
 // Viewing dimensions
-const GLint ViewingWidth = 500;
-const GLint ViewingHeight = 500;
+const GLint ViewingWidth = 0;
+const GLint ViewingHeight = 0;
 
 
 
 /*****************************************************************************************/
-/********************************** CALLBACK FUNCTIONS ***********************************/
+/************************************ AUX FUNCTIONS **************************************/
 /*****************************************************************************************/
 
 void renderScene(void) {
@@ -154,11 +156,6 @@ int main(int argc, char *argv[]) {
 		printf("Usage: %s <svg file>\n", argv[0]);
 		exit(1);
 	}
-
-	char *path = argv[1];
-
-
-
 
 	// Initialize openGL with Double buffer and RGB color without transparency.
 	// Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.

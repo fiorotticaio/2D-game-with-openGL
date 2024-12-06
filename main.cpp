@@ -12,6 +12,8 @@
 #include "tinyxml2.h"
 #include <string>
 
+using namespace tinyxml2;
+
 #define INC_KEYIDLE 0.3
 
 
@@ -27,14 +29,53 @@ const GLint Width = 500;
 const GLint Height = 500;
 
 // Viewing dimensions
-const GLint ViewingWidth = 0;
-const GLint ViewingHeight = 0;
+GLint ViewingWidth = 0;
+GLint ViewingHeight = 0;
 
 
 
 /*****************************************************************************************/
 /************************************ AUX FUNCTIONS **************************************/
 /*****************************************************************************************/
+
+bool loadViewportSizeFromSvg(const char* svg_file_path) {
+	XMLDocument doc;
+    if (doc.LoadFile(svg_file_path) != XML_SUCCESS) {
+        printf("Error loading SVG file: %s\n", svg_file_path);
+        return false;
+    }
+
+    XMLElement* root = doc.FirstChildElement("svg");
+    if (!root) {
+        printf("<svg> element not found in file\n");
+        return false;
+    }
+
+    for (XMLElement* elem = root->FirstChildElement("rect"); elem; elem = elem->NextSiblingElement("rect")) {
+        const char* fill = elem->Attribute("fill");
+        if (fill && std::string(fill) == "blue") {
+            if (elem->Attribute("width") && elem->Attribute("height")) {
+				ViewingWidth = elem->FloatAttribute("width");
+				ViewingHeight = elem->FloatAttribute("height");
+			} else {
+				printf("Width or height attribute missing in blue rect.\n");
+				return false;
+			}
+
+			// Make the viewing area a square with the smallest dimension
+			if (ViewingWidth > ViewingHeight) {
+				ViewingWidth = ViewingHeight;
+			} else {
+				ViewingHeight = ViewingWidth;
+			}
+
+            return true;
+        }
+    }
+
+    printf("Blue rect not found in SVG file: %s\n", svg_file_path);
+    return false;
+}
 
 void renderScene(void) {
 	// Clear the screen
@@ -154,6 +195,10 @@ void idle(void) {
 int main(int argc, char *argv[]) {
 	if (argc < 2) {
 		printf("Usage: %s <svg file>\n", argv[0]);
+		exit(1);
+	}
+
+	if (!loadViewportSizeFromSvg(argv[1])) {
 		exit(1);
 	}
 

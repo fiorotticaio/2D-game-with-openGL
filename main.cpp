@@ -40,7 +40,7 @@ void renderScene(void) {
     
 	// ...
 
-	// Draw the new frame of the game.
+	// Draw the new frame of the game
 	glutSwapBuffers(); 
 }
 

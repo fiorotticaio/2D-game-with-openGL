@@ -7,32 +7,32 @@
 
 
 class Obstacle {
-    GLfloat gX;
-    GLfloat gY;
-    GLfloat gWidth;
-    GLfloat gHeight;
-    GLfloat gRed;
-    GLfloat gGreen;
-    GLfloat gBlue;
+    GLfloat x;
+    GLfloat y;
+    GLfloat width;
+    GLfloat height;
+    GLfloat red;
+    GLfloat green;
+    GLfloat blue;
 
 
 private:
-    void DrawRectangle(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue);
+    void DrawObstacle(GLfloat x, GLfloat y);
 
 
 public:
     Obstacle(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue) {
-        gX = x;
-        gY = y;
-        gWidth = width;
-        gHeight = height;
-        gRed = red;
-        gGreen = green;
-        gBlue = blue;
+        x = x;
+        y = y;
+        width = width;
+        height = height;
+        red = red;
+        green = green;
+        blue = blue;
     }
 
     void Draw() {
-        DrawRectangle(gWidth, gHeight, gRed, gGreen, gBlue);
+        DrawObstacle(x, y);
     }
 };
 

@@ -11,6 +11,7 @@
 #include <vector>
 #include "tinyxml2.h"
 #include <string>
+#include "arena.h"
 
 using namespace tinyxml2;
 
@@ -31,6 +32,9 @@ const GLint Height = 500;
 // Viewing dimensions
 GLint ViewingWidth = 0;
 GLint ViewingHeight = 0;
+
+// Components of the virtual world
+Arena* arena = NULL;
 
 
 
@@ -81,7 +85,7 @@ void renderScene(void) {
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT);
     
-	// ...
+	// arena->Draw();
 
 	// Draw the new frame of the game
 	glutSwapBuffers(); 
@@ -201,6 +205,9 @@ int main(int argc, char *argv[]) {
 	if (!loadViewportSizeFromSvg(argv[1])) {
 		exit(1);
 	}
+
+	// Initialize the arena
+	arena = new Arena(argv[1]);
 
 	// Initialize openGL with Double buffer and RGB color without transparency.
 	// Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.

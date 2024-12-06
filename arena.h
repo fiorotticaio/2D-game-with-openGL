@@ -9,9 +9,14 @@
 #include "obstacle.h"
 #include "opponent.h"
 #include <vector>
+#include "tinyxml2.h"
+#include <string>
 
 
 class Arena {
+    GLfloat x;
+    GLfloat y;
+
     GLfloat width;
     GLfloat height;
 
@@ -26,18 +31,12 @@ class Arena {
 
 private:
     void DrawArena();
+    void LoadArena(const char* svg_file_path);
 
 
 public:
-    Arena(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue, Player player, std::vector<Obstacle> obstacles, std::vector<Opponent> opponents) {
-        width = width;
-        height = height;
-        red = red;
-        green = green;
-        blue = blue;
-        player = player;
-        obstacles = obstacles;
-        opponents = opponents;
+    Arena(const char* svg_file_path) {
+        LoadArena(svg_file_path);
     }
 
     void Draw() {

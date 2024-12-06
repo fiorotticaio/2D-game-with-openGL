@@ -30,8 +30,8 @@ class Arena {
 
 
 private:
-    void DrawArena();
     void LoadArena(const char* svg_file_path);
+    void DrawArena();
 
 
 public:

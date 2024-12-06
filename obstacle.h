@@ -9,8 +9,10 @@
 class Obstacle {
     GLfloat x;
     GLfloat y;
+
     GLfloat width;
     GLfloat height;
+    
     GLfloat red;
     GLfloat green;
     GLfloat blue;

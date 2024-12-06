@@ -30,8 +30,10 @@ const GLint Width = 500;
 const GLint Height = 500;
 
 // Viewing dimensions
-GLint ViewingWidth = 0;
-GLint ViewingHeight = 0;
+GLfloat ViewingWidth = 0;
+GLfloat ViewingHeight = 0;
+GLfloat xPositionArena = 0;
+GLfloat yPositionArena = 0;
 
 // Components of the virtual world
 Arena* arena = NULL;
@@ -61,6 +63,8 @@ bool loadViewportSizeFromSvg(const char* svg_file_path) {
             if (elem->Attribute("width") && elem->Attribute("height")) {
 				ViewingWidth = elem->FloatAttribute("width");
 				ViewingHeight = elem->FloatAttribute("height");
+				xPositionArena = elem->FloatAttribute("x");
+				yPositionArena = elem->FloatAttribute("y");
 			} else {
 				printf("Width or height attribute missing in blue rect.\n");
 				return false;
@@ -157,10 +161,10 @@ void init(void) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity (alpha)
 
 	glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-	glOrtho(0,                   // X coordinate of left edge             
-			ViewingWidth,        // X coordinate of right edge            
-			0,                   // Y coordinate of bottom edge             
-			ViewingHeight,       // Y coordinate of top edge             
+	glOrtho(xPositionArena,                   // X coordinate of left edge             
+			xPositionArena + ViewingWidth,        // X coordinate of right edge            
+			yPositionArena,                   // Y coordinate of bottom edge             
+			yPositionArena + ViewingHeight,       // Y coordinate of top edge             
 			-100,                // Z coordinate of the “near” plane            
 			100);                // Z coordinate of the “far” plane
 	glMatrixMode(GL_MODELVIEW);  // Select the projection matrix    

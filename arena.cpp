@@ -25,27 +25,27 @@ void Arena::LoadArena(const char* svg_file_path) {
             if (fill) {
                 std::string fillStr = fill;
                 if (fillStr == "blue") {
-                    // Arena dimensions
-                    width = elem->FloatAttribute("width");
-                    height = elem->FloatAttribute("height");
-                    x = elem->FloatAttribute("x");
-                    y = elem->FloatAttribute("y");
-                    red = 0.0f;
-                    green = 0.0f;
-                    blue = 1.0f;
+                    // Arena parameters
+                    gWidth = elem->FloatAttribute("width");
+                    gHeight = elem->FloatAttribute("height");
+                    gX = elem->FloatAttribute("x");
+                    gY = elem->FloatAttribute("y");
+                    gRed = 0.0f;
+                    gGreen = 0.0f;
+                    gBlue = 1.0f;
 
-                    printf("Arena: width=%f, height=%f, x=%f, y=%f, red=%f, green=%f, blue=%f\n", width, height, x, y, red, green, blue);
+                    printf("Arena: width=%f, height=%f, x=%f, y=%f, red=%f, green=%f, blue=%f\n", gWidth, gHeight, gX, gY, gRed, gGreen, gBlue);
 
                 } else if (fillStr == "black") {
-                    // Obstacle
-                    GLfloat x = elem->FloatAttribute("x");
-                    GLfloat y = elem->FloatAttribute("y");
+                    // Obstacle parameters
+                    GLfloat obstacleX = elem->FloatAttribute("x");
+                    GLfloat obstacleY = elem->FloatAttribute("y");
                     GLfloat obstacleWidth = elem->FloatAttribute("width");
                     GLfloat obstacleHeight = elem->FloatAttribute("height");
 
-                    printf("Obstacle: x=%f, y=%f, width=%f, height=%f\n", x, y, obstacleWidth, obstacleHeight);
+                    printf("Obstacle: x=%f, y=%f, width=%f, height=%f\n", obstacleX, obstacleY, obstacleWidth, obstacleHeight);
 
-                    // obstacles.push_back(new Obstacle(x, y, obstacleWidth, obstacleHeight));
+                    gObstacles.push_back(new Obstacle(obstacleX, obstacleY, obstacleWidth, obstacleHeight, 0.0f, 0.0f, 0.0f));
                 }
             }
         } else if (tag == "circle") {
@@ -80,11 +80,14 @@ void Arena::LoadArena(const char* svg_file_path) {
 void Arena::DrawArena() {
     glPushMatrix();
         // Draw arena
-        glTranslatef(width/2, 0, 0);
-        DrawRect(width, height, red, green, blue);
+        glTranslatef(gX, gY, 0);
+        DrawRect(gWidth, gHeight, gRed, gGreen, gBlue);
+        glTranslatef(-gX, -gY, 0);
 
-
-
+        // Draw obstacles
+        for (Obstacle* obstacle : gObstacles) {
+            obstacle->Draw();
+        }
 
     glPopMatrix();
 }
@@ -94,9 +97,9 @@ void Arena::DrawRect(GLfloat width, GLfloat height, GLfloat red, GLfloat green, 
     glColor3f(red, green, blue);
 
     glBegin(GL_POLYGON);
-        glVertex2f(-width/2, 0);
-        glVertex2f(width/2, 0);
-        glVertex2f(width/2, height);
-        glVertex2f(-width/2, height);
+        glVertex2f(0, 0);
+        glVertex2f(width, 0);
+        glVertex2f(width, height);
+        glVertex2f(0, height);
     glEnd();
 }

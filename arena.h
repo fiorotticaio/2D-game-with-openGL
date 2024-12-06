@@ -14,19 +14,19 @@
 
 
 class Arena {
-    GLfloat x;
-    GLfloat y;
+    GLfloat gX;
+    GLfloat gY;
 
-    GLfloat width;
-    GLfloat height;
+    GLfloat gWidth;
+    GLfloat gHeight;
 
-    GLfloat red;
-    GLfloat green;
-    GLfloat blue;
+    GLfloat gRed;
+    GLfloat gGreen;
+    GLfloat gBlue;
     
-    Player* player;
-    std::vector<Obstacle*> obstacles;
-    std::vector<Opponent*> opponents;
+    Player* gPlayer;
+    std::vector<Obstacle*> gObstacles;
+    std::vector<Opponent*> gOpponents;
 
 
 private:

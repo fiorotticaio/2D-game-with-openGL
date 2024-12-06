@@ -4,37 +4,39 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <cstdio>
 
 
 class Obstacle {
-    GLfloat x;
-    GLfloat y;
+    GLfloat gX;
+    GLfloat gY;
 
-    GLfloat width;
-    GLfloat height;
+    GLfloat gWidth;
+    GLfloat gHeight;
     
-    GLfloat red;
-    GLfloat green;
-    GLfloat blue;
+    GLfloat gRed;
+    GLfloat gGreen;
+    GLfloat gBlue;
 
 
 private:
-    void DrawObstacle(GLfloat x, GLfloat y);
+    void DrawObstacle();
+    void DrawReact(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue);
 
 
 public:
     Obstacle(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue) {
-        x = x;
-        y = y;
-        width = width;
-        height = height;
-        red = red;
-        green = green;
-        blue = blue;
+        gX = x;
+        gY = y;
+        gWidth = width;
+        gHeight = height;
+        gRed = red;
+        gGreen = green;
+        gBlue = blue;
     }
 
     void Draw() {
-        DrawObstacle(x, y);
+        DrawObstacle();
     }
 };
 

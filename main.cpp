@@ -85,7 +85,7 @@ void renderScene(void) {
 	// Clear the screen
 	glClear(GL_COLOR_BUFFER_BIT);
     
-	// arena->Draw();
+	arena->Draw();
 
 	// Draw the new frame of the game
 	glutSwapBuffers(); 
@@ -157,10 +157,10 @@ void init(void) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity (alpha)
 
 	glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-	glOrtho(-(ViewingWidth/2),   // X coordinate of left edge             
-			(ViewingWidth/2),   // X coordinate of right edge            
-			-(ViewingHeight/2),  // Y coordinate of bottom edge             
-			(ViewingHeight/2),  // Y coordinate of top edge             
+	glOrtho(0,                   // X coordinate of left edge             
+			ViewingWidth,        // X coordinate of right edge            
+			0,                   // Y coordinate of bottom edge             
+			ViewingHeight,       // Y coordinate of top edge             
 			-100,                // Z coordinate of the “near” plane            
 			100);                // Z coordinate of the “far” plane
 	glMatrixMode(GL_MODELVIEW);  // Select the projection matrix    

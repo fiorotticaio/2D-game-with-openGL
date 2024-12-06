@@ -78,5 +78,25 @@ void Arena::LoadArena(const char* svg_file_path) {
 
 
 void Arena::DrawArena() {
-    // ...
+    glPushMatrix();
+        // Draw arena
+        glTranslatef(width/2, 0, 0);
+        DrawRect(width, height, red, green, blue);
+
+
+
+
+    glPopMatrix();
+}
+
+
+void Arena::DrawRect(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue) {
+    glColor3f(red, green, blue);
+
+    glBegin(GL_POLYGON);
+        glVertex2f(-width/2, 0);
+        glVertex2f(width/2, 0);
+        glVertex2f(width/2, height);
+        glVertex2f(-width/2, height);
+    glEnd();
 }

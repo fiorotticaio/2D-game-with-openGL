@@ -77,9 +77,10 @@ public:
         DrawPlayer();
     }
 
+    GLfloat GetGx();
+    GLfloat GetGy();
     void MoveEmX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX);
     void MoveEmY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY);
-    GLfloat GetGx();
 
 };
 

@@ -45,7 +45,9 @@ public:
     }
 
     GLfloat GetWidth();
+    GLfloat GetHeight();
     GLfloat GetPlayerGx();
+    GLfloat GetPlayerGy();
     void MovePlayerEmX(GLfloat dx);
     void MovePlayerEmY(GLfloat dy);
 };

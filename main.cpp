@@ -43,31 +43,39 @@ Arena* arena = NULL;
 /*****************************************************************************************/
 /************************************ AUX FUNCTIONS **************************************/
 /*****************************************************************************************/
-void UpdateViewport(GLfloat playerX, GLfloat arenaX, GLfloat arenaWidth, GLfloat viewingWidth) {
-    GLfloat newViewportX;
+void UpdateViewport(GLfloat playerX, GLfloat playerY, 
+                    GLfloat arenaX, GLfloat arenaY, 
+                    GLfloat arenaWidth, GLfloat arenaHeight, 
+                    GLfloat viewingWidth, GLfloat viewingHeight) {
+    GLfloat newViewportX, newViewportY;
 
-    // View Center based on the player position
     GLfloat centeredX = playerX - viewingWidth / 2;
 
-    // Min limit
-    if (centeredX < arenaX) {
+    if (centeredX < arenaX) { // Min limit
         newViewportX = arenaX;
-    }
-    // Max limit
-    else if (centeredX + viewingWidth > arenaX + arenaWidth) {
+    } else if (centeredX + viewingWidth > arenaX + arenaWidth) { // Max limit
         newViewportX = arenaX + arenaWidth - viewingWidth;
-    }
-    // Normal case
-    else {
+    } else { // Normal case
         newViewportX = centeredX;
     }
 
+    GLfloat centeredY = playerY - viewingHeight / 2;
+
+    if (centeredY < arenaY) { // Min limit
+        newViewportY = arenaY;
+    } else if (centeredY + viewingHeight > arenaY + arenaHeight) { // Max limit
+        newViewportY = arenaY + arenaHeight - viewingHeight;
+    } else { // Normal case
+        newViewportY = centeredY;
+    }
+
+    // Update the viewport
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(newViewportX,                       
             newViewportX + viewingWidth,        
-            yPositionArena,                     
-            yPositionArena + ViewingHeight,     
+            newViewportY,                       
+            newViewportY + viewingHeight,       
             -100,                               
             100);                               
     glMatrixMode(GL_MODELVIEW);
@@ -236,7 +244,10 @@ void idle(void) {
 		arena->MovePlayerEmY(-inc);
 	}
 
-	UpdateViewport(arena->GetPlayerGx(), xPositionArena, arena->GetWidth(), ViewingWidth);
+	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
+				   xPositionArena, yPositionArena,
+				   arena->GetWidth(), arena->GetHeight(),
+				   ViewingWidth, ViewingHeight);
 	
 	glutPostRedisplay();
 }

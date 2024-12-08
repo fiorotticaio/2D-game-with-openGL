@@ -24,6 +24,14 @@ void Player::DrawCircle() {
     glEnd();
 }
 
+GLfloat Player::GetGx() {
+    return gX;
+}
+
+GLfloat Player::GetGy() {
+    return gY;
+}
+
 void Player::MoveEmX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX) {
     if (gX + dx >= minPlayerPositionX && gX + dx <= maxPlayerPositionX) {
         gX += dx;
@@ -34,8 +42,4 @@ void Player::MoveEmY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPo
     if (gY + dy >= minPlayerPositionY && gY + dy <= maxPlayerPositionY) {
         gY += dy;
     }
-}
-
-GLfloat Player::GetGx() {
-    return gX;
 }

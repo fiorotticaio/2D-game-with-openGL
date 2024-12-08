@@ -112,8 +112,16 @@ GLfloat Arena::GetWidth() {
     return gWidth;
 }
 
+GLfloat Arena::GetHeight() {
+    return gHeight;
+}
+
 GLfloat Arena::GetPlayerGx() {
     return gPlayer->GetGx();
+}
+
+GLfloat Arena::GetPlayerGy() {
+    return gPlayer->GetGy();
 }
 
 void Arena::MovePlayerEmX(GLfloat dx) {

@@ -21,18 +21,18 @@ class Obstacle {
 
 private:
     void DrawObstacle();
-    void DrawReact(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue);
+    void DrawReact();
 
 
 public:
-    Obstacle(GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue) {
+    Obstacle(GLfloat x, GLfloat y, GLfloat width, GLfloat height) {
         gX = x;
         gY = y;
         gWidth = width;
         gHeight = height;
-        gRed = red;
-        gGreen = green;
-        gBlue = blue;
+        gRed = 0.0f;
+        gGreen = 0.0f;
+        gBlue = 0.0f;
     }
 
     void Draw() {

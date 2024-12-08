@@ -1,6 +1,11 @@
 #include "arena.h"
 
-void Arena::LoadArena(const char* svg_file_path) {
+GLfloat MapYCoordinate(GLfloat yRead, GLfloat yPositionArena, GLfloat ViewingHeight) {
+    // The y coordenates of the svg are inverted
+    return yPositionArena + ViewingHeight - (yRead - yPositionArena);
+}
+
+void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat ViewingHeight) {
     using namespace tinyxml2;
 
     XMLDocument doc;
@@ -43,9 +48,11 @@ void Arena::LoadArena(const char* svg_file_path) {
                     GLfloat obstacleWidth = elem->FloatAttribute("width");
                     GLfloat obstacleHeight = elem->FloatAttribute("height");
 
+                    obstacleY = MapYCoordinate(obstacleY, gY, ViewingHeight);
+
                     printf("Obstacle: x=%f, y=%f, width=%f, height=%f\n", obstacleX, obstacleY, obstacleWidth, obstacleHeight);
 
-                    gObstacles.push_back(new Obstacle(obstacleX, obstacleY, obstacleWidth, obstacleHeight, 0.0f, 0.0f, 0.0f));
+                    gObstacles.push_back(new Obstacle(obstacleX, obstacleY, obstacleWidth, obstacleHeight));
                 }
             }
         } else if (tag == "circle") {
@@ -57,10 +64,12 @@ void Arena::LoadArena(const char* svg_file_path) {
                 GLfloat cy = elem->FloatAttribute("cy");
                 GLfloat radius = elem->FloatAttribute("r");
 
+                cy = MapYCoordinate(cy, gY, ViewingHeight);
+
                 if (fillStr == "green") {
                     // Player
                     printf("Player: cx=%f, cy=%f, radius=%f\n", cx, cy, radius);
-                    // player = new Player(cx, cy, radius);
+                    gPlayer = new Player(cx, cy, 0.0f, 1.0f, 0.0f, radius);
                 } else if (fillStr == "red") {
                     // Opponent
                     printf("Opponent: cx=%f, cy=%f, radius=%f\n", cx, cy, radius);
@@ -70,36 +79,47 @@ void Arena::LoadArena(const char* svg_file_path) {
         }
     }
 
-    // if (!player) {
-    //     printf("Player (green circle) not found in SVG file.\n");
-    //     exit(1);
-    // }
+    if (!gPlayer) {
+        printf("Player (green circle) not found in SVG file.\n");
+        exit(1);
+    }
 }
 
 
 void Arena::DrawArena() {
     glPushMatrix();
-        // Draw arena
+        // Draw arena background
         glTranslatef(gX, gY, 0);
-        DrawRect(gWidth, gHeight, gRed, gGreen, gBlue);
-        glTranslatef(-gX, -gY, 0);
-
-        // Draw obstacles
-        for (Obstacle* obstacle : gObstacles) {
-            obstacle->Draw();
-        }
-
+        DrawRect();
     glPopMatrix();
+
+    for (Obstacle* obstacle : gObstacles) {
+        obstacle->Draw();
+    }
+
+    gPlayer->Draw();
 }
 
 
-void Arena::DrawRect(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue) {
-    glColor3f(red, green, blue);
+void Arena::DrawRect() {
+    glColor3f(gRed, gGreen, gBlue);
 
     glBegin(GL_POLYGON);
         glVertex2f(0, 0);
-        glVertex2f(width, 0);
-        glVertex2f(width, height);
-        glVertex2f(0, height);
+        glVertex2f(gWidth, 0);
+        glVertex2f(gWidth, gHeight);
+        glVertex2f(0, gHeight);
     glEnd();
+}
+
+GLfloat Arena::GetPlayerGx() {
+    return gPlayer->GetGx();
+}
+
+void Arena::MovePlayerEmX(GLfloat dx) {
+    gPlayer->MoveEmX(dx);
+}
+
+void Arena::MovePlayerEmY(GLfloat dy) {
+    gPlayer->MoveEmY(dy);
 }

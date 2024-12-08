@@ -161,13 +161,13 @@ void init(void) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black, no opacity (alpha)
 
 	glMatrixMode(GL_PROJECTION); // Select the projection matrix    
-	glOrtho(xPositionArena,                   // X coordinate of left edge             
-			xPositionArena + ViewingWidth,        // X coordinate of right edge            
-			yPositionArena,                   // Y coordinate of bottom edge             
-			yPositionArena + ViewingHeight,       // Y coordinate of top edge             
-			-100,                // Z coordinate of the “near” plane            
-			100);                // Z coordinate of the “far” plane
-	glMatrixMode(GL_MODELVIEW);  // Select the projection matrix    
+	glOrtho(xPositionArena,                 // X coordinate of left edge             
+			xPositionArena + ViewingWidth,  // X coordinate of right edge            
+			yPositionArena,                 // Y coordinate of bottom edge             
+			yPositionArena + ViewingHeight, // Y coordinate of top edge             
+			-100,                           // Z coordinate of the “near” plane            
+			100);                           // Z coordinate of the “far” plane
+	glMatrixMode(GL_MODELVIEW); // Select the projection matrix    
 
 	glLoadIdentity();
 }
@@ -185,11 +185,11 @@ void idle(void) {
 
 	// Treat keyPress
 	if (keyStatus[(int)('a')]) {
-		// Do something
+		arena->MovePlayerEmX(-inc);
 	}
-	// ...
-
-	
+	if (keyStatus[(int)('d')]) {
+		arena->MovePlayerEmX(inc);
+	}
 	
 	glutPostRedisplay();
 }
@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Initialize the arena
-	arena = new Arena(argv[1]);
+	arena = new Arena(argv[1], ViewingWidth, ViewingHeight);
 
 	// Initialize openGL with Double buffer and RGB color without transparency.
 	// Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.

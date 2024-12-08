@@ -30,19 +30,23 @@ class Arena {
 
 
 private:
-    void LoadArena(const char* svg_file_path);
+    void LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat ViewingHeight);
     void DrawArena();
-    void DrawRect(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue);
+    void DrawRect();
 
 
 public:
-    Arena(const char* svg_file_path) {
-        LoadArena(svg_file_path);
+    Arena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat ViewingHeight) {
+        LoadArena(svg_file_path, ViewingWidth, ViewingHeight);
     }
 
     void Draw() {
         DrawArena();
     }
+
+    GLfloat GetPlayerGx();
+    void MovePlayerEmX(GLfloat dx);
+    void MovePlayerEmY(GLfloat dy);
 };
 
 

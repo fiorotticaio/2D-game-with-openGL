@@ -3,17 +3,18 @@
 void Obstacle::DrawObstacle() {
     glPushMatrix();
         glTranslatef(gX, gY, 0);
-        DrawReact(gWidth, gHeight, gRed, gGreen, gBlue);
+        DrawReact();
     glPopMatrix();
 }
 
-void Obstacle::DrawReact(GLfloat width, GLfloat height, GLfloat red, GLfloat green, GLfloat blue) {
-    glColor3f(red, green, blue);
+void Obstacle::DrawReact() {
+    glColor3f(gRed, gGreen, gBlue);
 
+    // The coordenates givem in the svg file are the left top corner of the rectangle
     glBegin(GL_POLYGON);
+        glVertex2f(0, -gHeight);
+        glVertex2f(gWidth, -gHeight);
+        glVertex2f(gWidth, 0);
         glVertex2f(0, 0);
-        glVertex2f(width, 0);
-        glVertex2f(width, height);
-        glVertex2f(0, height);
     glEnd();
 }

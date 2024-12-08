@@ -43,6 +43,37 @@ Arena* arena = NULL;
 /*****************************************************************************************/
 /************************************ AUX FUNCTIONS **************************************/
 /*****************************************************************************************/
+void UpdateViewport(GLfloat playerX, GLfloat arenaX, GLfloat arenaWidth, GLfloat viewingWidth) {
+    GLfloat newViewportX;
+
+    // View Center based on the player position
+    GLfloat centeredX = playerX - viewingWidth / 2;
+
+    // Min limit
+    if (centeredX < arenaX) {
+        newViewportX = arenaX;
+    }
+    // Max limit
+    else if (centeredX + viewingWidth > arenaX + arenaWidth) {
+        newViewportX = arenaX + arenaWidth - viewingWidth;
+    }
+    // Normal case
+    else {
+        newViewportX = centeredX;
+    }
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(newViewportX,                       
+            newViewportX + viewingWidth,        
+            yPositionArena,                     
+            yPositionArena + ViewingHeight,     
+            -100,                               
+            100);                               
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+}
+
 
 bool loadViewportSizeFromSvg(const char* svg_file_path) {
 	XMLDocument doc;
@@ -190,6 +221,8 @@ void idle(void) {
 	if (keyStatus[(int)('d')]) {
 		arena->MovePlayerEmX(inc);
 	}
+
+	UpdateViewport(arena->GetPlayerGx(), xPositionArena, arena->GetWidth(), ViewingWidth);
 	
 	glutPostRedisplay();
 }

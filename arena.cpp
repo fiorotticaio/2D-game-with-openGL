@@ -39,8 +39,6 @@ void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat V
                     gGreen = 0.0f;
                     gBlue = 1.0f;
 
-                    printf("Arena: width=%f, height=%f, x=%f, y=%f, red=%f, green=%f, blue=%f\n", gWidth, gHeight, gX, gY, gRed, gGreen, gBlue);
-
                 } else if (fillStr == "black") {
                     // Obstacle parameters
                     GLfloat obstacleX = elem->FloatAttribute("x");
@@ -49,8 +47,6 @@ void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat V
                     GLfloat obstacleHeight = elem->FloatAttribute("height");
 
                     obstacleY = MapYCoordinate(obstacleY, gY, ViewingHeight);
-
-                    printf("Obstacle: x=%f, y=%f, width=%f, height=%f\n", obstacleX, obstacleY, obstacleWidth, obstacleHeight);
 
                     gObstacles.push_back(new Obstacle(obstacleX, obstacleY, obstacleWidth, obstacleHeight));
                 }
@@ -67,13 +63,10 @@ void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat V
                 cy = MapYCoordinate(cy, gY, ViewingHeight);
 
                 if (fillStr == "green") {
-                    // Player
-                    printf("Player: cx=%f, cy=%f, radius=%f\n", cx, cy, radius);
                     gPlayer = new Player(cx, cy, 0.0f, 1.0f, 0.0f, radius);
                 } else if (fillStr == "red") {
                     // Opponent
-                    printf("Opponent: cx=%f, cy=%f, radius=%f\n", cx, cy, radius);
-                    // opponents.push_back(new Opponent(cx, cy, radius));
+                    opponents.push_back(new Opponent(cx, cy, radius));
                 }
             }
         }
@@ -112,12 +105,16 @@ void Arena::DrawRect() {
     glEnd();
 }
 
+GLfloat Arena::GetWidth() {
+    return gWidth;
+}
+
 GLfloat Arena::GetPlayerGx() {
     return gPlayer->GetGx();
 }
 
 void Arena::MovePlayerEmX(GLfloat dx) {
-    gPlayer->MoveEmX(dx);
+    gPlayer->MoveEmX(dx, gX, gX + gWidth);
 }
 
 void Arena::MovePlayerEmY(GLfloat dy) {

@@ -44,6 +44,7 @@ public:
         DrawArena();
     }
 
+    GLfloat GetWidth();
     GLfloat GetPlayerGx();
     void MovePlayerEmX(GLfloat dx);
     void MovePlayerEmY(GLfloat dy);

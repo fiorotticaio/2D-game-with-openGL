@@ -63,10 +63,9 @@ void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat V
                 cy = MapYCoordinate(cy, gY, ViewingHeight);
 
                 if (fillStr == "green") {
-                    gPlayer = new Player(cx, cy, 0.0f, 1.0f, 0.0f, radius);
+                    gPlayer = new Player(cx, cy, radius);
                 } else if (fillStr == "red") {
-                    // Opponent
-                    opponents.push_back(new Opponent(cx, cy, radius));
+                    gOpponents.push_back(new Opponent(cx, cy, radius));
                 }
             }
         }
@@ -91,6 +90,10 @@ void Arena::DrawArena() {
     }
 
     gPlayer->Draw();
+
+    for (Opponent* opponent : gOpponents) {
+        opponent->Draw();
+    }
 }
 
 

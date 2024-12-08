@@ -48,29 +48,28 @@ private:
     
 
 public:
-    Player(GLfloat x, GLfloat y, GLfloat red, GLfloat green, GLfloat blue, GLfloat baseCircleRadius) {
+    Player(GLfloat x, GLfloat y, GLfloat baseCircleRadius) {
         gX = x;
         gY = y;
-        gRed = red;
-        gGreen = green;
-        gBlue = blue;
+        gRed = 0.0f;
+        gGreen = 1.0f;
+        gBlue = 0.0f;
         gBaseCircleRadius = baseCircleRadius;
-        gHeadCircleRadius = 5.0f;
-        gHeadAngle = 0.0f;
-        gBodyWidth = 5.0f;
-        gBodyHeight = 10.0f;
-        gInvisibleReactWidth = 5.0f;
-        gInvisibleReactHeight = gBodyHeight + 2 * gHeadCircleRadius;
-        gArmWidth = 2.0f;
-        gArmHeight = 4.0f;
-        gArmAngle = 45;
-        gThighWidth = 3.0f;
-        gThighHeight = 6.0f;
-        gThighAngle = 290;
-        gLegWidth = 3.0f;
-        gLegHeight = 7.0f;
-        gLegAngle = 280;
-        gSpeed = 10.0f;
+        gHeadCircleRadius = (22/172) * gBaseCircleRadius;
+        gBodyHeight = (53/172) * gBaseCircleRadius;
+        gBodyWidth = gBodyHeight / 2;
+        gInvisibleReactHeight = 2 * gBaseCircleRadius;
+        gInvisibleReactWidth = gBodyWidth;
+        gArmHeight = (57/172) * gBaseCircleRadius;
+        gArmWidth = gArmHeight / 6;
+        gArmAngle = 45.0f;
+        gThighHeight = (47/172) * gBaseCircleRadius;
+        gThighWidth = gThighHeight / 6;
+        gThighAngle = 320.0f;
+        gLegHeight = (50/172) * gBaseCircleRadius;
+        gLegWidth = gLegHeight / 6;
+        gLegAngle = 280.0f;
+        gSpeed = 10;
         gDirection = 1.0f;
     }
 

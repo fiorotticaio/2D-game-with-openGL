@@ -121,5 +121,5 @@ void Arena::MovePlayerEmX(GLfloat dx) {
 }
 
 void Arena::MovePlayerEmY(GLfloat dy) {
-    gPlayer->MoveEmY(dy);
+    gPlayer->MoveEmY(dy, gY, gY + gHeight);
 }

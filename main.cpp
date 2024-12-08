@@ -137,6 +137,14 @@ void keyPress(unsigned char key, int x, int y) {
 		case 'D':
 			keyStatus[(int)('d')] = 1;
 			break;
+		case 'w':
+		case 'W':
+			keyStatus[(int)('w')] = 1;
+			break;
+		case 's':
+		case 'S':
+			keyStatus[(int)('s')] = 1;
+			break;
 		case 'f':
 		case 'F':
 			keyStatus[(int)('f')] = 1;
@@ -220,6 +228,12 @@ void idle(void) {
 	}
 	if (keyStatus[(int)('d')]) {
 		arena->MovePlayerEmX(inc);
+	}
+	if (keyStatus[(int)('w')]) {
+		arena->MovePlayerEmY(inc);
+	}
+	if (keyStatus[(int)('s')]) {
+		arena->MovePlayerEmY(-inc);
 	}
 
 	UpdateViewport(arena->GetPlayerGx(), xPositionArena, arena->GetWidth(), ViewingWidth);

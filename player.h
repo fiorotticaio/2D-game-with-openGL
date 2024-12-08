@@ -78,7 +78,7 @@ public:
     }
 
     void MoveEmX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX);
-    void MoveEmY(GLfloat dy);
+    void MoveEmY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY);
     GLfloat GetGx();
 
 };

@@ -30,8 +30,10 @@ void Player::MoveEmX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPo
     }
 }
 
-void Player::MoveEmY(GLfloat dy) {
-    gY += dy;
+void Player::MoveEmY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY) {
+    if (gY + dy >= minPlayerPositionY && gY + dy <= maxPlayerPositionY) {
+        gY += dy;
+    }
 }
 
 GLfloat Player::GetGx() {

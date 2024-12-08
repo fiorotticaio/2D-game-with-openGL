@@ -6,6 +6,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
+#include <stdio.h>
 
 
 class Player {
@@ -45,6 +46,7 @@ class Player {
 private:
     void DrawPlayer();
     void DrawCircle();
+    void DrawRect();
     
 
 public:
@@ -55,19 +57,19 @@ public:
         gGreen = 1.0f;
         gBlue = 0.0f;
         gBaseCircleRadius = baseCircleRadius;
-        gHeadCircleRadius = (22/172) * gBaseCircleRadius;
-        gBodyHeight = (53/172) * gBaseCircleRadius;
-        gBodyWidth = gBodyHeight / 2;
+        gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
+        gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
+        gBodyWidth = (float) gBodyHeight / (float) 2;
         gInvisibleReactHeight = 2 * gBaseCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
-        gArmHeight = (57/172) * gBaseCircleRadius;
-        gArmWidth = gArmHeight / 6;
+        gArmHeight = ((float) 57 / (float) 172) * gBaseCircleRadius;
+        gArmWidth = (float) gArmHeight / (float) 6;
         gArmAngle = 45.0f;
-        gThighHeight = (47/172) * gBaseCircleRadius;
-        gThighWidth = gThighHeight / 6;
+        gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
+        gThighWidth = (float) gThighHeight / (float) 6;
         gThighAngle = 320.0f;
-        gLegHeight = (50/172) * gBaseCircleRadius;
-        gLegWidth = gLegHeight / 6;
+        gLegHeight = ((float) 50 / (float) 172) * gBaseCircleRadius;
+        gLegWidth = (float) gLegHeight / (float)  6;
         gLegAngle = 280.0f;
         gSpeed = 10;
         gDirection = 1.0f;

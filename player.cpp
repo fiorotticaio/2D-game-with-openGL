@@ -2,9 +2,25 @@
 
 void Player::DrawPlayer() {
     glPushMatrix();
+        // Draw the body
         glTranslatef(gX, gY, 0);
+        DrawRect();
+
+        // Draw the head
+        glTranslatef(0, gBodyHeight + gHeadCircleRadius, 0);
         DrawCircle();
     glPopMatrix();
+}
+
+void Player::DrawRect() {
+    glColor3f(gRed, gGreen, gBlue);
+
+    glBegin(GL_POLYGON);
+        glVertex2f(-gBodyWidth / 2, 0);
+        glVertex2f(gBodyWidth / 2, 0);
+        glVertex2f(gBodyWidth / 2, gBodyHeight);
+        glVertex2f(-gBodyWidth / 2, gBodyHeight);
+    glEnd();
 }
 
 void Player::DrawCircle() {
@@ -17,8 +33,8 @@ void Player::DrawCircle() {
         glVertex2f(0.0f, 0.0f);
         for (int i = 0; i <= numSegments; ++i) {
             GLfloat angle = i * angleStep;
-            GLfloat x = gBaseCircleRadius * cos(angle);
-            GLfloat y = gBaseCircleRadius * sin(angle);
+            GLfloat x = gHeadCircleRadius * cos(angle);
+            GLfloat y = gHeadCircleRadius * sin(angle);
             glVertex2f(x, y);
         }
     glEnd();

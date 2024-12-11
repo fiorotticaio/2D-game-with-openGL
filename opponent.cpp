@@ -91,13 +91,13 @@ GLfloat Opponent::GetGy() {
 
 void Opponent::MoveInX(GLfloat dx, GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX) {
     if (gX + dx >= minOpponentPositionX && gX + dx <= maxOpponentPositionX) {
-        gX += dx;
+        gX += dx * gSpeed * gDirection; 
     }
 }
 
 void Opponent::MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY) {
     if (gY + dy >= minOpponentPositionY && gY + dy <= maxOpponentPositionY) {
-        gY += dy;
+        gY += dy * gSpeed;
     }
 }
 
@@ -114,4 +114,8 @@ void Opponent::RotateArm(GLfloat y, GLfloat windowHeight) {
 
     if      (gArmAngle > angleMax) gArmAngle = angleMax;
     else if (gArmAngle < angleMin) gArmAngle = angleMin;
+}
+
+void Opponent::SetDirection(GLint direction) {
+    gDirection = direction;
 }

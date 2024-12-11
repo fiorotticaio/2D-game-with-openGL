@@ -86,6 +86,7 @@ public:
     void MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX);
     void MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY);
     void RotateArm(GLfloat y, GLfloat windowHeight);
+    void SetDirection(GLint direction);
 };
 
 

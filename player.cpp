@@ -97,7 +97,7 @@ void Player::MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPo
 
 void Player::MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY) {
     if (gY + dy >= minPlayerPositionY && gY + dy <= maxPlayerPositionY) {
-        gY += dy * gSpeed * gDirection;
+        gY += dy * gSpeed;
     }
 }
 
@@ -114,4 +114,8 @@ void Player::RotateArm(GLfloat y, GLfloat windowHeight) {
 
     if      (gArmAngle > angleMax) gArmAngle = angleMax;
     else if (gArmAngle < angleMin) gArmAngle = angleMin;
+}
+
+void Player::SetDirection(GLint direction) {
+    gDirection = direction;
 }

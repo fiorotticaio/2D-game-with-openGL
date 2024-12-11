@@ -86,6 +86,7 @@ public:
     void MoveInX(GLfloat dx, GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX);
     void MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY);
     void RotateArm(GLfloat y, GLfloat windowHeight);
+    void SetDirection(GLint direction);
 };
 
 

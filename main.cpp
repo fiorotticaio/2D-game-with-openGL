@@ -241,9 +241,11 @@ void idle(void) {
 
 	// Treat keyPress
 	if (keyStatus[(int)('a')]) {
-		arena->MovePlayerInX(-inc);
+		arena->SetPlayerDirection(-1);
+		arena->MovePlayerInX(inc);
 	}
 	if (keyStatus[(int)('d')]) {
+		arena->SetPlayerDirection(1);
 		arena->MovePlayerInX(inc);
 	}
 	if (keyStatus[(int)('w')]) {

@@ -135,3 +135,7 @@ void Arena::MovePlayerInY(GLfloat dy) {
 void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight) {
     gPlayer->RotateArm(y, WindowHeight);
 }
+
+void Arena::SetPlayerDirection(GLint direction) {
+    gPlayer->SetDirection(direction);
+}

@@ -50,6 +50,7 @@ public:
     GLfloat GetPlayerGy();
     void MovePlayerInX(GLfloat dx);
     void MovePlayerInY(GLfloat dy);
+    void RotatePlayerArm(GLfloat y, GLfloat WindowHeight);
 };
 
 

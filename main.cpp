@@ -188,7 +188,7 @@ void keyPress(unsigned char key, int x, int y) {
 }
 
 
-void keyup(unsigned char key, int x, int y) {
+void keyUp(unsigned char key, int x, int y) {
 	keyStatus[(int)(key)] = 0;
 	glutPostRedisplay();
 }
@@ -218,6 +218,15 @@ void init(void) {
 
 	glLoadIdentity();
 }
+
+
+void passiveMotion(int x, int y) {
+	// Invert the y position
+	y = Height - y;
+
+	arena->RotatePlayerArm(y, Height);
+}
+
 
 void idle(void) {
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
@@ -285,7 +294,8 @@ int main(int argc, char *argv[]) {
 	glutDisplayFunc(renderScene);
 	glutKeyboardFunc(keyPress);
 	glutIdleFunc(idle);
-	glutKeyboardUpFunc(keyup);
+	glutKeyboardUpFunc(keyUp);
+	glutPassiveMotionFunc(passiveMotion);
 	
 	init();
 

@@ -124,10 +124,10 @@ GLfloat Arena::GetPlayerGy() {
     return gPlayer->GetGy();
 }
 
-void Arena::MovePlayerEmX(GLfloat dx) {
-    gPlayer->MoveEmX(dx, gX, gX + gWidth);
+void Arena::MovePlayerInX(GLfloat dx) {
+    gPlayer->MoveInX(dx, gX, gX + gWidth);
 }
 
-void Arena::MovePlayerEmY(GLfloat dy) {
-    gPlayer->MoveEmY(dy, gY, gY + gHeight);
+void Arena::MovePlayerInY(GLfloat dy) {
+    gPlayer->MoveInY(dy, gY, gY + gHeight);
 }

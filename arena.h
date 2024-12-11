@@ -48,8 +48,8 @@ public:
     GLfloat GetHeight();
     GLfloat GetPlayerGx();
     GLfloat GetPlayerGy();
-    void MovePlayerEmX(GLfloat dx);
-    void MovePlayerEmY(GLfloat dy);
+    void MovePlayerInX(GLfloat dx);
+    void MovePlayerInY(GLfloat dy);
 };
 
 

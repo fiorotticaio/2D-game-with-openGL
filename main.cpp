@@ -15,7 +15,7 @@
 
 using namespace tinyxml2;
 
-#define INC_KEYIDLE 0.01
+#define INC_KEYIDLE 0.1
 
 
 
@@ -232,16 +232,16 @@ void idle(void) {
 
 	// Treat keyPress
 	if (keyStatus[(int)('a')]) {
-		arena->MovePlayerEmX(-inc);
+		arena->MovePlayerInX(-inc);
 	}
 	if (keyStatus[(int)('d')]) {
-		arena->MovePlayerEmX(inc);
+		arena->MovePlayerInX(inc);
 	}
 	if (keyStatus[(int)('w')]) {
-		arena->MovePlayerEmY(inc);
+		arena->MovePlayerInY(inc);
 	}
 	if (keyStatus[(int)('s')]) {
-		arena->MovePlayerEmY(-inc);
+		arena->MovePlayerInY(-inc);
 	}
 
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 

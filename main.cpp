@@ -15,7 +15,7 @@
 
 using namespace tinyxml2;
 
-#define INC_KEYIDLE 0.3
+#define INC_KEYIDLE 0.01
 
 
 

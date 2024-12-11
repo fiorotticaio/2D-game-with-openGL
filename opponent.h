@@ -26,6 +26,7 @@ class Opponent {
     GLfloat gArmWidth;
     GLfloat gArmHeight;
     GLfloat gArmAngle;
+    GLfloat gArmSpeed;
 
     GLfloat gThighWidth;
     GLfloat gThighHeight;
@@ -63,6 +64,7 @@ public:
         gArmHeight = ((float) 57 / (float) 172) * gBaseCircleRadius;
         gArmWidth = (float) gArmHeight / (float) 6;
         gArmAngle = -90.0f;
+        gArmSpeed = 1.0f;
         gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
         gThighWidth = (float) gThighHeight / (float) 6;
         gFrontThighAngle = -140.0f;
@@ -83,6 +85,7 @@ public:
     GLfloat GetGy();
     void MoveInX(GLfloat dx, GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX);
     void MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY);
+    void RotateArm(GLfloat y, GLfloat windowHeight);
 };
 
 

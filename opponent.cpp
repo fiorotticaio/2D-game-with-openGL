@@ -100,3 +100,18 @@ void Opponent::MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOppo
         gY += dy;
     }
 }
+
+void Opponent::RotateArm(GLfloat y, GLfloat windowHeight) {
+    GLfloat mouseMin = 0;
+    GLfloat mouseMax = windowHeight - mouseMin;
+
+    GLfloat angleMax = -45.0f;
+    GLfloat angleMin = -135.0f;
+
+    gArmAngle = angleMin + ((y - mouseMin) / (mouseMax - mouseMin)) * (angleMax - angleMin);
+    
+    gArmAngle *= gArmSpeed; // FIXME: This is not too cool
+
+    if      (gArmAngle > angleMax) gArmAngle = angleMax;
+    else if (gArmAngle < angleMin) gArmAngle = angleMin;
+}

@@ -22,7 +22,7 @@ void Player::DrawHeadAndArm() {
 
         // Draw the arm
         glTranslatef(0, -(gHeadCircleRadius + (gBodyHeight/2)), 0);
-        glRotatef(gArmAngle, 0, 0, 1);
+        glRotatef(gArmAngle * gDirection, 0, 0, 1);
         DrawRect(gArmWidth, gArmHeight, 1.0f, 1.0f, 0.0f);
     glPopMatrix();
 }
@@ -30,12 +30,12 @@ void Player::DrawHeadAndArm() {
 void Player::DrawFrontLeg() {
     glPushMatrix();
         // Draw the front thigh
-        glRotatef(gFrontThighAngle, 0, 0, 1);
+        glRotatef(gFrontThighAngle * gDirection, 0, 0, 1);
         DrawRect(gThighWidth, gThighHeight, 1.0f, 0.0f, 0.0f);
 
         // // Draw the front leg
         glTranslatef(0, gThighHeight, 0);
-        glRotatef(gFrontShinAngle, 0, 0, 1);
+        glRotatef(gFrontShinAngle * gDirection, 0, 0, 1);
         DrawRect(gShinWidth, gShinHeight, 1.0f, 0.0f, 0.0f);
     glPopMatrix();
 }
@@ -43,12 +43,12 @@ void Player::DrawFrontLeg() {
 void Player::DrawBackLeg() {
     glPushMatrix();
         // Draw the back thigh
-        glRotatef(gBackThighAngle, 0, 0, 1);
+        glRotatef(gBackThighAngle * gDirection, 0, 0, 1);
         DrawRect(gThighWidth, gThighHeight, 1.0f, 0.0f, 0.0f);
 
         // Draw the back leg
         glTranslatef(0, gThighHeight, 0);
-        glRotatef(gBackShinAngle, 0, 0, 1);
+        glRotatef(gBackShinAngle * gDirection, 0, 0, 1);
         DrawRect(gShinWidth, gShinHeight, 1.0f, 0.0f, 0.0f);
     glPopMatrix();
 }

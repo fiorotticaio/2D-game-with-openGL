@@ -38,7 +38,7 @@ class Player {
     GLfloat gBackShinAngle;
 
     GLfloat gSpeed;
-    GLfloat gDirection;
+    GLint gDirection; // 1 for right (front), -1 for left (back)
 
 
 private:
@@ -72,7 +72,7 @@ public:
         gFrontShinAngle = -70.0f;
         gBackShinAngle = -30.0f;
         gSpeed = 10;
-        gDirection = 1.0f;
+        gDirection = 1;
     }
 
     void Draw() {

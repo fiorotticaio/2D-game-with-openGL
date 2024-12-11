@@ -54,7 +54,7 @@ public:
     Player(GLfloat x, GLfloat y, GLfloat baseCircleRadius) {
         gX = x;
         gY = y;
-        gBaseCircleRadius = 20;
+        gBaseCircleRadius = baseCircleRadius;
         gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
         gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
         gBodyWidth = (float) gBodyHeight / (float) 2;
@@ -81,9 +81,8 @@ public:
 
     GLfloat GetGx();
     GLfloat GetGy();
-    void MoveEmX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX);
-    void MoveEmY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY);
-
+    void MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX);
+    void MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY);
 };
 
 

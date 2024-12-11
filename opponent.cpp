@@ -2,24 +2,101 @@
 
 void Opponent::DrawOpponent() {
     glPushMatrix();
+        // Draw the body
         glTranslatef(gX, gY, 0);
-        DrawCircle();
+        DrawRect(gBodyWidth, gBodyHeight, 1.0f, 0.0f, 0.0f);
+
+        DrawHeadAndArm();
+
+        DrawFrontLeg();
+
+        DrawBackLeg();
     glPopMatrix();
 }
 
-void Opponent::DrawCircle() {
+void Opponent::DrawHeadAndArm() {
+    glPushMatrix();
+        // Draw the head
+        glTranslatef(0, gBodyHeight + gHeadCircleRadius, 0);
+        DrawCircle(gHeadCircleRadius, 1.0f, 0.0f, 0.0f);
+
+        // Draw the arm
+        glTranslatef(0, -(gHeadCircleRadius + (gBodyHeight/2)), 0);
+        glRotatef(gArmAngle * gDirection, 0, 0, 1);
+        DrawRect(gArmWidth, gArmHeight, 1.0f, 1.0f, 0.0f);
+    glPopMatrix();
+}
+
+void Opponent::DrawFrontLeg() {
+    glPushMatrix();
+        // Draw the front thigh
+        glRotatef(gFrontThighAngle * gDirection, 0, 0, 1);
+        DrawRect(gThighWidth, gThighHeight, 0.0f, 1.0f, 0.0f);
+
+        // // Draw the front leg
+        glTranslatef(0, gThighHeight, 0);
+        glRotatef(gFrontShinAngle * gDirection, 0, 0, 1);
+        DrawRect(gShinWidth, gShinHeight, 0.0f, 1.0f, 0.0f);
+    glPopMatrix();
+}
+
+void Opponent::DrawBackLeg() {
+    glPushMatrix();
+        // Draw the back thigh
+        glRotatef(gBackThighAngle * gDirection, 0, 0, 1);
+        DrawRect(gThighWidth, gThighHeight, 0.0f, 1.0f, 0.0f);
+
+        // Draw the back leg
+        glTranslatef(0, gThighHeight, 0);
+        glRotatef(gBackShinAngle * gDirection, 0, 0, 1);
+        DrawRect(gShinWidth, gShinHeight, 0.0f, 1.0f, 0.0f);
+    glPopMatrix();
+}
+
+void Opponent::DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B) {
+    glColor3f(R, G, B);
+
+    glBegin(GL_POLYGON);
+        glVertex2f(-width / 2, 0);
+        glVertex2f(width / 2, 0);
+        glVertex2f(width / 2, height);
+        glVertex2f(-width / 2, height);
+    glEnd();
+}
+
+void Opponent::DrawCircle(GLfloat radius, GLfloat R, GLfloat G, GLfloat B) {
     const int numSegments = 100;
     const GLfloat angleStep = 2.0f * M_PI / numSegments;
 
-    glColor3f(gRed, gGreen, gBlue);
+    glColor3f(R, G, B);
 
     glBegin(GL_TRIANGLE_FAN);
         glVertex2f(0.0f, 0.0f);
         for (int i = 0; i <= numSegments; ++i) {
             GLfloat angle = i * angleStep;
-            GLfloat x = gBaseCircleRadius * cos(angle);
-            GLfloat y = gBaseCircleRadius * sin(angle);
+            GLfloat x = radius * cos(angle);
+            GLfloat y = radius * sin(angle);
             glVertex2f(x, y);
         }
     glEnd();
+}
+
+GLfloat Opponent::GetGx() {
+    return gX;
+}
+
+GLfloat Opponent::GetGy() {
+    return gY;
+}
+
+void Opponent::MoveInX(GLfloat dx, GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX) {
+    if (gX + dx >= minOpponentPositionX && gX + dx <= maxOpponentPositionX) {
+        gX += dx;
+    }
+}
+
+void Opponent::MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY) {
+    if (gY + dy >= minOpponentPositionY && gY + dy <= maxOpponentPositionY) {
+        gY += dy;
+    }
 }

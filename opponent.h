@@ -6,18 +6,16 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <math.h>
+#include <stdio.h>
 
 
 class Opponent {
     GLfloat gX;
     GLfloat gY;
 
-    GLfloat gRed;
-    GLfloat gGreen;
-    GLfloat gBlue;
-
     GLfloat gBaseCircleRadius; // Read in the svg file
     GLfloat gHeadCircleRadius;
+    GLfloat gHeadAngle;
 
     GLfloat gBodyWidth;
     GLfloat gBodyHeight;
@@ -31,29 +29,32 @@ class Opponent {
 
     GLfloat gThighWidth;
     GLfloat gThighHeight;
-    GLfloat gThighAngle;
+    GLfloat gFrontThighAngle;
+    GLfloat gBackThighAngle;
 
-    GLfloat gLegWidth;
-    GLfloat gLegHeight;
-    GLfloat gLegAngle;
+    GLfloat gShinWidth;
+    GLfloat gShinHeight;
+    GLfloat gFrontShinAngle;
+    GLfloat gBackShinAngle;
 
     GLfloat gSpeed;
-    GLfloat gDirection;
+    GLint gDirection; // 1 for right (front), -1 for left (back)
 
 
 private:
     void DrawOpponent();
-    void DrawCircle();
+    void DrawCircle(GLfloat radius, GLfloat R, GLfloat G, GLfloat B);
+    void DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
+    void DrawHeadAndArm();
+    void DrawFrontLeg();
+    void DrawBackLeg();
     
 
 public:
     Opponent(GLfloat x, GLfloat y, GLfloat baseCircleRadius) {
         gX = x;
         gY = y;
-        gRed = 1.0f;
-        gGreen = 0.0f;
-        gBlue = 0.0f;
-                gBaseCircleRadius = baseCircleRadius;
+        gBaseCircleRadius = baseCircleRadius;
         gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
         gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
         gBodyWidth = (float) gBodyHeight / (float) 2;
@@ -61,21 +62,27 @@ public:
         gInvisibleReactWidth = gBodyWidth;
         gArmHeight = ((float) 57 / (float) 172) * gBaseCircleRadius;
         gArmWidth = (float) gArmHeight / (float) 6;
-        gArmAngle = 45.0f;
+        gArmAngle = -90.0f;
         gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
         gThighWidth = (float) gThighHeight / (float) 6;
-        gThighAngle = 320.0f;
-        gLegHeight = ((float) 50 / (float) 172) * gBaseCircleRadius;
-        gLegWidth = (float) gLegHeight / (float)  6;
-        gLegAngle = 280.0f;
+        gFrontThighAngle = -140.0f;
+        gBackThighAngle = -210.0f;
+        gShinHeight = ((float) 50 / (float) 172) * gBaseCircleRadius;
+        gShinWidth = (float) gShinHeight / (float)  6;
+        gFrontShinAngle = -70.0f;
+        gBackShinAngle = -30.0f;
         gSpeed = 10;
-        gDirection = 1.0f;
+        gDirection = -1;
     }
 
     void Draw() {
         DrawOpponent();
     }
 
+    GLfloat GetGx();
+    GLfloat GetGy();
+    void MoveInX(GLfloat dx, GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX);
+    void MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY);
 };
 
 

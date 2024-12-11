@@ -13,10 +13,6 @@ class Player {
     GLfloat gX;
     GLfloat gY;
 
-    GLfloat gRed;
-    GLfloat gGreen;
-    GLfloat gBlue;
-
     GLfloat gBaseCircleRadius; // Read in the svg file
     GLfloat gHeadCircleRadius;
     GLfloat gHeadAngle;
@@ -45,18 +41,15 @@ class Player {
 
 private:
     void DrawPlayer();
-    void DrawCircle();
-    void DrawRect();
+    void DrawCircle(GLfloat radius, GLfloat R, GLfloat G, GLfloat B);
+    void DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
     
 
 public:
     Player(GLfloat x, GLfloat y, GLfloat baseCircleRadius) {
         gX = x;
         gY = y;
-        gRed = 0.0f;
-        gGreen = 1.0f;
-        gBlue = 0.0f;
-        gBaseCircleRadius = baseCircleRadius;
+        gBaseCircleRadius = 40;
         gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
         gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
         gBodyWidth = (float) gBodyHeight / (float) 2;
@@ -64,7 +57,7 @@ public:
         gInvisibleReactWidth = gBodyWidth;
         gArmHeight = ((float) 57 / (float) 172) * gBaseCircleRadius;
         gArmWidth = (float) gArmHeight / (float) 6;
-        gArmAngle = 45.0f;
+        gArmAngle = -90.0f;
         gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
         gThighWidth = (float) gThighHeight / (float) 6;
         gThighAngle = 320.0f;

@@ -4,37 +4,42 @@ void Player::DrawPlayer() {
     glPushMatrix();
         // Draw the body
         glTranslatef(gX, gY, 0);
-        DrawRect();
+        DrawRect(gBodyWidth, gBodyHeight, 0.0f, 1.0f, 0.0f);
 
         // Draw the head
         glTranslatef(0, gBodyHeight + gHeadCircleRadius, 0);
-        DrawCircle();
+        DrawCircle(gHeadCircleRadius, 0.0f, 1.0f, 0.0f);
+
+        // Draw the arm
+        glTranslatef(0, -(gHeadCircleRadius + (gBodyHeight/2)), 0);
+        glRotatef(gArmAngle, 0, 0, 1);
+        DrawRect(gArmWidth, gArmHeight, 1.0f, 1.0f, 0.0f);
     glPopMatrix();
 }
 
-void Player::DrawRect() {
-    glColor3f(gRed, gGreen, gBlue);
+void Player::DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B) {
+    glColor3f(R, G, B);
 
     glBegin(GL_POLYGON);
-        glVertex2f(-gBodyWidth / 2, 0);
-        glVertex2f(gBodyWidth / 2, 0);
-        glVertex2f(gBodyWidth / 2, gBodyHeight);
-        glVertex2f(-gBodyWidth / 2, gBodyHeight);
+        glVertex2f(-width / 2, 0);
+        glVertex2f(width / 2, 0);
+        glVertex2f(width / 2, height);
+        glVertex2f(-width / 2, height);
     glEnd();
 }
 
-void Player::DrawCircle() {
+void Player::DrawCircle(GLfloat radius, GLfloat R, GLfloat G, GLfloat B) {
     const int numSegments = 100;
     const GLfloat angleStep = 2.0f * M_PI / numSegments;
 
-    glColor3f(gRed, gGreen, gBlue);
+    glColor3f(R, G, B);
 
     glBegin(GL_TRIANGLE_FAN);
         glVertex2f(0.0f, 0.0f);
         for (int i = 0; i <= numSegments; ++i) {
             GLfloat angle = i * angleStep;
-            GLfloat x = gHeadCircleRadius * cos(angle);
-            GLfloat y = gHeadCircleRadius * sin(angle);
+            GLfloat x = radius * cos(angle);
+            GLfloat y = radius * sin(angle);
             glVertex2f(x, y);
         }
     glEnd();

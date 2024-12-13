@@ -86,8 +86,8 @@ public:
 
     GLfloat GetGx();
     GLfloat GetGy();
-    void MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX);
-    void MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY);
+    void MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference);
+    void MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLdouble timeDifference);
     void RotateArm(GLfloat y, GLfloat windowHeight);
     void SetXDirection(GLint xDirection);
     void SetYDirection(GLint yDirection);

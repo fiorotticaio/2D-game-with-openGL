@@ -242,19 +242,19 @@ void idle(void) {
 	// Treat keyPress
 	if (keyStatus[(int)('a')]) {
 		arena->SetPlayerXDirection(-1);
-		arena->MovePlayerInX(inc);
+		arena->MovePlayerInX(inc, timeDiference);
 	}
 	if (keyStatus[(int)('d')]) {
 		arena->SetPlayerXDirection(1);
-		arena->MovePlayerInX(inc);
+		arena->MovePlayerInX(inc, timeDiference);
 	}
 	if (keyStatus[(int)('w')]) {
 		arena->SetPlayerYDirection(1);
-		arena->MovePlayerInY(inc);
+		arena->MovePlayerInY(inc, timeDiference);
 	}
 	if (keyStatus[(int)('s')]) {
 		arena->SetPlayerYDirection(-1);
-		arena->MovePlayerInY(inc);
+		arena->MovePlayerInY(inc, timeDiference);
 	}
 
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 

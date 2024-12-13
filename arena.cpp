@@ -124,12 +124,12 @@ GLfloat Arena::GetPlayerGy() {
     return gPlayer->GetGy();
 }
 
-void Arena::MovePlayerInX(GLfloat dx) {
-    gPlayer->MoveInX(dx, gX, gX + gWidth);
+void Arena::MovePlayerInX(GLfloat dx, GLdouble timeDifference) {
+    gPlayer->MoveInX(dx, gX, gX + gWidth, timeDifference);
 }
 
-void Arena::MovePlayerInY(GLfloat dy) {
-    gPlayer->MoveInY(dy, gY, gY + gHeight);
+void Arena::MovePlayerInY(GLfloat dy, GLdouble timeDifference) {
+    gPlayer->MoveInY(dy, gY, gY + gHeight, timeDifference);
 }
 
 void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight) {

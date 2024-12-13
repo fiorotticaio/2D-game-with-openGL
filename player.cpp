@@ -89,15 +89,17 @@ GLfloat Player::GetGy() {
     return gY;
 }
 
-void Player::MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX) {
-    if (gX + dx * gXDirection >= minPlayerPositionX && gX + dx * gXDirection <= maxPlayerPositionX) {
-        gX += dx * gXDirection;
+void Player::MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference) {
+    if (gX + dx * timeDifference * gXDirection >= minPlayerPositionX && 
+        gX + dx * timeDifference * gXDirection <= maxPlayerPositionX) {
+        gX += dx * timeDifference * gXDirection;
     }
 }
 
-void Player::MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY) {
-    if (gY + dy * gYDirection >= minPlayerPositionY && gY + dy * gYDirection <= maxPlayerPositionY) {
-        gY += dy * gYDirection;
+void Player::MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLdouble timeDifference) {
+    if (gY + dy * timeDifference * gYDirection >= minPlayerPositionY && 
+        gY + dy * timeDifference * gYDirection <= maxPlayerPositionY) {
+        gY += dy * timeDifference * gYDirection;
     }
 }
 

@@ -274,9 +274,9 @@ void idle(void) {
 		static int frontThighAngleDir = 1;
 		static int backThighAngleDir = 1;
 		if      (arena->GetPlayerFrontThighAngle() > -140) frontThighAngleDir *= -1;
-		else if (arena->GetPlayerFrontThighAngle() < -210) frontThighAngleDir *= -1;
+		else if (arena->GetPlayerFrontThighAngle() < -220) frontThighAngleDir *= -1;
 		if      (arena->GetPlayerBackThighAngle()  > -140) backThighAngleDir  *= -1;
-		else if (arena->GetPlayerBackThighAngle()  < -210) backThighAngleDir  *= -1;
+		else if (arena->GetPlayerBackThighAngle()  < -220) backThighAngleDir  *= -1;
 		arena->RotatePlayerFrontThigh(frontThighAngleDir * INC_KEYIDLE);
 		arena->RotatePlayerBackThigh(backThighAngleDir * INC_KEYIDLE);
 	}

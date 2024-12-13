@@ -22,7 +22,7 @@ void Player::DrawHeadAndArm() {
 
         // Draw the arm
         glTranslatef(0, -(gHeadCircleRadius + (gBodyHeight/2)), 0);
-        glRotatef(gArmAngle * gDirection, 0, 0, 1);
+        glRotatef(gArmAngle * gXDirection, 0, 0, 1);
         DrawRect(gArmWidth, gArmHeight, 1.0f, 1.0f, 0.0f);
     glPopMatrix();
 }
@@ -30,12 +30,12 @@ void Player::DrawHeadAndArm() {
 void Player::DrawFrontLeg() {
     glPushMatrix();
         // Draw the front thigh
-        glRotatef(gFrontThighAngle * gDirection, 0, 0, 1);
+        glRotatef(gFrontThighAngle * gXDirection, 0, 0, 1);
         DrawRect(gThighWidth, gThighHeight, 1.0f, 0.0f, 0.0f);
 
         // // Draw the front leg
         glTranslatef(0, gThighHeight, 0);
-        glRotatef(gFrontShinAngle * gDirection, 0, 0, 1);
+        glRotatef(gFrontShinAngle * gXDirection, 0, 0, 1);
         DrawRect(gShinWidth, gShinHeight, 1.0f, 0.0f, 0.0f);
     glPopMatrix();
 }
@@ -43,12 +43,12 @@ void Player::DrawFrontLeg() {
 void Player::DrawBackLeg() {
     glPushMatrix();
         // Draw the back thigh
-        glRotatef(gBackThighAngle * gDirection, 0, 0, 1);
+        glRotatef(gBackThighAngle * gXDirection, 0, 0, 1);
         DrawRect(gThighWidth, gThighHeight, 1.0f, 0.0f, 0.0f);
 
         // Draw the back leg
         glTranslatef(0, gThighHeight, 0);
-        glRotatef(gBackShinAngle * gDirection, 0, 0, 1);
+        glRotatef(gBackShinAngle * gXDirection, 0, 0, 1);
         DrawRect(gShinWidth, gShinHeight, 1.0f, 0.0f, 0.0f);
     glPopMatrix();
 }
@@ -90,14 +90,14 @@ GLfloat Player::GetGy() {
 }
 
 void Player::MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX) {
-    if (gX + dx >= minPlayerPositionX && gX + dx <= maxPlayerPositionX) {
-        gX += dx * gSpeed * gDirection;
+    if (gX + dx * gXDirection >= minPlayerPositionX && gX + dx * gXDirection <= maxPlayerPositionX) {
+        gX += dx * gXDirection;
     }
 }
 
 void Player::MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY) {
-    if (gY + dy >= minPlayerPositionY && gY + dy <= maxPlayerPositionY) {
-        gY += dy * gSpeed;
+    if (gY + dy * gYDirection >= minPlayerPositionY && gY + dy * gYDirection <= maxPlayerPositionY) {
+        gY += dy * gYDirection;
     }
 }
 
@@ -110,12 +110,16 @@ void Player::RotateArm(GLfloat y, GLfloat windowHeight) {
 
     gArmAngle = angleMin + ((y - mouseMin) / (mouseMax - mouseMin)) * (angleMax - angleMin);
     
-    gArmAngle *= gArmSpeed; // FIXME: This is not too cool
+    // gArmAngle *= gArmSpeed;
 
     if      (gArmAngle > angleMax) gArmAngle = angleMax;
     else if (gArmAngle < angleMin) gArmAngle = angleMin;
 }
 
-void Player::SetDirection(GLint direction) {
-    gDirection = direction;
+void Player::SetXDirection(GLint xDirection) {
+    gXDirection = xDirection;
+}
+
+void Player::SetYDirection(GLint yDirection) {
+    gYDirection = yDirection;
 }

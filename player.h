@@ -39,7 +39,8 @@ class Player {
     GLfloat gBackShinAngle;
 
     GLfloat gSpeed;
-    GLint gDirection; // 1 for right (front), -1 for left (back)
+    GLint gXDirection; // 1 for right (front), -1 for left (back)
+    GLint gYDirection; // 1 for up, -1 for down
 
 
 private:
@@ -74,7 +75,9 @@ public:
         gFrontShinAngle = -70.0f;
         gBackShinAngle = -30.0f;
         gSpeed = 10;
-        gDirection = 1;
+        gXDirection = 1;
+        gYDirection = 1;
+
     }
 
     void Draw() {
@@ -86,7 +89,8 @@ public:
     void MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX);
     void MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY);
     void RotateArm(GLfloat y, GLfloat windowHeight);
-    void SetDirection(GLint direction);
+    void SetXDirection(GLint xDirection);
+    void SetYDirection(GLint yDirection);
 };
 
 

@@ -53,6 +53,16 @@ public:
     void RotatePlayerArm(GLfloat y, GLfloat WindowHeight);
     void SetPlayerXDirection(GLint xDirection);
     void SetPlayerYDirection(GLint yDirection);
+    GLfloat GetPlayerFrontThighAngle();
+    GLfloat GetPlayerBackThighAngle();
+    GLfloat GetPlayerFrontShinAngle();
+    GLfloat GetPlayerBackShinAngle();
+    void RotatePlayerFrontThigh(GLfloat dAngle);
+    void RotatePlayerBackThigh(GLfloat dAngle);
+    void RotatePlayerFrontShin(GLfloat dAngle);
+    void RotatePlayerBackShin(GLfloat dAngle);
+    void SetPlayerFrontShinAngle(GLfloat angle);
+    void SetPlayerBackShinAngle(GLfloat angle);
 };
 
 

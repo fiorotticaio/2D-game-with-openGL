@@ -15,7 +15,7 @@
 
 using namespace tinyxml2;
 
-#define INC_KEYIDLE 0.2
+#define INC_KEYIDLE 0.05
 
 
 
@@ -38,6 +38,7 @@ GLfloat yPositionArena = 0;
 // Components of the virtual world
 Arena* arena = NULL;
 
+int animateLegs = 0;
 
 
 /*****************************************************************************************/
@@ -189,6 +190,9 @@ void keyPress(unsigned char key, int x, int y) {
 
 
 void keyUp(unsigned char key, int x, int y) {
+	if (key == 'a' || key == 'A' || key == 'd' || key == 'D') {
+		animateLegs = 0;
+	}
 	keyStatus[(int)(key)] = 0;
 	glutPostRedisplay();
 }
@@ -197,7 +201,7 @@ void keyUp(unsigned char key, int x, int y) {
 void ResetKeyStatus() {
 	// Initialize keyStatus
 	int i;
-	for(i = 0; i < 256; i++) keyStatus[i] = 0; 
+	for(i = 0; i < 256; i++) keyStatus[i] = 0;
 }
 
 
@@ -241,10 +245,12 @@ void idle(void) {
 
 	// Treat keyPress
 	if (keyStatus[(int)('a')]) {
+		animateLegs = 1;
 		arena->SetPlayerXDirection(-1);
 		arena->MovePlayerInX(inc, timeDiference);
 	}
 	if (keyStatus[(int)('d')]) {
+		animateLegs = 1;
 		arena->SetPlayerXDirection(1);
 		arena->MovePlayerInX(inc, timeDiference);
 	}
@@ -257,14 +263,28 @@ void idle(void) {
 		arena->MovePlayerInY(inc, timeDiference);
 	}
 
+
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),
 				   ViewingWidth, ViewingHeight);
+
+
+	if (animateLegs) {
+		static int frontThighAngleDir = 1;
+		static int backThighAngleDir = 1;
+		if      (arena->GetPlayerFrontThighAngle() > -140) frontThighAngleDir *= -1;
+		else if (arena->GetPlayerFrontThighAngle() < -210) frontThighAngleDir *= -1;
+		if      (arena->GetPlayerBackThighAngle()  > -140) backThighAngleDir  *= -1;
+		else if (arena->GetPlayerBackThighAngle()  < -210) backThighAngleDir  *= -1;
+		arena->RotatePlayerFrontThigh(frontThighAngleDir * INC_KEYIDLE);
+		arena->RotatePlayerBackThigh(backThighAngleDir * INC_KEYIDLE);
+	}
 	
+
 	glutPostRedisplay();
 }
- 
+
 
 
 /*****************************************************************************************/

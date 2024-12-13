@@ -143,3 +143,43 @@ void Arena::SetPlayerXDirection(GLint xDirection) {
 void Arena::SetPlayerYDirection(GLint yDirection) {
     gPlayer->SetYDirection(yDirection);
 }
+
+GLfloat Arena::GetPlayerFrontThighAngle() {
+    return gPlayer->GetFrontThighAngle();
+}
+
+GLfloat Arena::GetPlayerBackThighAngle() {
+    return gPlayer->GetBackThighAngle();
+}
+
+GLfloat Arena::GetPlayerFrontShinAngle() {
+    return gPlayer->GetFrontShinAngle();
+}
+
+GLfloat Arena::GetPlayerBackShinAngle() {
+    return gPlayer->GetBackShinAngle();
+}
+
+void Arena::RotatePlayerFrontThigh(GLfloat dAngle) {
+    gPlayer->RotateFrontThigh(dAngle);
+}
+
+void Arena::RotatePlayerBackThigh(GLfloat dAngle) {
+    gPlayer->RotateBackThigh(dAngle);
+}
+
+void Arena::RotatePlayerFrontShin(GLfloat dAngle) {
+    gPlayer->RotateFrontShin(dAngle);
+}
+
+void Arena::RotatePlayerBackShin(GLfloat dAngle) {
+    gPlayer->RotateBackShin(dAngle);
+}
+
+void Arena::SetPlayerFrontShinAngle(GLfloat angle) {
+    gPlayer->SetFrontShinAngle(angle);
+}
+
+void Arena::SetPlayerBackShinAngle(GLfloat angle) {
+    gPlayer->SetBackShinAngle(angle);
+}

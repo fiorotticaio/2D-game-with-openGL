@@ -72,8 +72,8 @@ public:
         gBackThighAngle = -210.0f;
         gShinHeight = ((float) 50 / (float) 172) * gBaseCircleRadius;
         gShinWidth = (float) gShinHeight / (float)  6;
-        gFrontShinAngle = -70.0f;
-        gBackShinAngle = -30.0f;
+        gFrontShinAngle = 0.0f;
+        gBackShinAngle = 0.0f;
         gSpeed = 10;
         gXDirection = 1;
         gYDirection = 1;
@@ -91,6 +91,16 @@ public:
     void RotateArm(GLfloat y, GLfloat windowHeight);
     void SetXDirection(GLint xDirection);
     void SetYDirection(GLint yDirection);
+    GLfloat GetFrontThighAngle();
+    GLfloat GetBackThighAngle();
+    GLfloat GetFrontShinAngle();
+    GLfloat GetBackShinAngle();
+    void RotateFrontThigh(GLfloat dAngle);
+    void RotateBackThigh(GLfloat dAngle);
+    void RotateFrontShin(GLfloat dAngle);
+    void RotateBackShin(GLfloat dAngle);
+    void SetFrontShinAngle(GLfloat angle);
+    void SetBackShinAngle(GLfloat angle);
 };
 
 

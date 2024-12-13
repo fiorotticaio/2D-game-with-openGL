@@ -8,9 +8,9 @@ void Player::DrawPlayer() {
 
         DrawHeadAndArm();
 
-        DrawFrontLeg();
-
         DrawBackLeg();
+
+        DrawFrontLeg();
     glPopMatrix();
 }
 
@@ -31,12 +31,12 @@ void Player::DrawFrontLeg() {
     glPushMatrix();
         // Draw the front thigh
         glRotatef(gFrontThighAngle * gXDirection, 0, 0, 1);
-        DrawRect(gThighWidth, gThighHeight, 1.0f, 0.0f, 0.0f);
+        DrawRect(gThighWidth, gThighHeight, 1.0f, 1.0f, 1.0f);
 
         // // Draw the front leg
         glTranslatef(0, gThighHeight, 0);
         glRotatef(gFrontShinAngle * gXDirection, 0, 0, 1);
-        DrawRect(gShinWidth, gShinHeight, 1.0f, 0.0f, 0.0f);
+        DrawRect(gShinWidth, gShinHeight, 1.0f, 1.0f, 1.0f);
     glPopMatrix();
 }
 
@@ -124,4 +124,44 @@ void Player::SetXDirection(GLint xDirection) {
 
 void Player::SetYDirection(GLint yDirection) {
     gYDirection = yDirection;
+}
+
+GLfloat Player::GetFrontThighAngle() {
+    return gFrontThighAngle;
+}
+
+GLfloat Player::GetBackThighAngle() {
+    return gBackThighAngle;
+}
+
+GLfloat Player::GetFrontShinAngle() {
+    return gFrontShinAngle;
+}
+
+GLfloat Player::GetBackShinAngle() {
+    return gBackShinAngle;
+}
+
+void Player::RotateFrontThigh(GLfloat dAngle) {
+    gFrontThighAngle += dAngle;
+}
+
+void Player::RotateBackThigh(GLfloat dAngle) {
+    gBackThighAngle += dAngle;
+}
+
+void Player::RotateFrontShin(GLfloat dAngle) {
+    gFrontShinAngle += dAngle;
+}
+
+void Player::RotateBackShin(GLfloat dAngle) {
+    gBackShinAngle += dAngle;
+}
+
+void Player::SetFrontShinAngle(GLfloat angle) {
+    gFrontShinAngle = angle;
+}
+
+void Player::SetBackShinAngle(GLfloat angle) {
+    gBackShinAngle = angle;
 }

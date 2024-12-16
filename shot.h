@@ -6,35 +6,46 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#define SHOT_RADIUS 5
+
 
 class Shot {
-    GLfloat xInit; 
-    GLfloat yInit;
+    GLfloat gXInit; 
+    GLfloat gYInit;
 
-    GLfloat x; 
-    GLfloat y;
+    GLfloat gX; 
+    GLfloat gY;
 
-    GLfloat speed;
-    GLfloat direction[2];
+    GLfloat gSpeed;
+    GLfloat gDirection[2];
 
 
 private:
     void DrawShot(GLfloat x, GLfloat y);
+    void DrawCircle(GLfloat radius, GLfloat R, GLfloat G, GLfloat B);
 
 
 public:
-    Shot(GLfloat xInit, GLfloat yInit, GLfloat speed, GLfloat direction[2]) {
-        xInit = xInit;
-        yInit = yInit;
-        x = xInit;
-        y = yInit;
-        speed = speed;
-        direction = direction;
+    Shot(GLfloat gXInit, GLfloat gYInit, GLfloat* d) {
+        gXInit = gXInit;
+        gYInit = gYInit;
+        gX = gXInit;
+        gY = gYInit;
+        gSpeed = 1;
+        gDirection[0] = d[0];
+        gDirection[1] = d[1];
     }
 
     void Draw() {
-        DrawShot(x, y);
+        DrawShot(gX, gY);
     }
+
+    void Move(GLdouble timeDifference);
+    bool Valid();
+    void GetPos(GLfloat &xOut, GLfloat &yOut) {
+        xOut = gX;
+        yOut = gY;
+    }	
 };
 
 

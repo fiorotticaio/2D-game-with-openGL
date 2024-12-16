@@ -11,6 +11,7 @@
 #include <vector>
 #include "tinyxml2.h"
 #include <string>
+#include "shot.h"
 
 
 class Arena {
@@ -63,6 +64,7 @@ public:
     void RotatePlayerBackShin(GLfloat dAngle);
     void SetPlayerFrontShinAngle(GLfloat angle);
     void SetPlayerBackShinAngle(GLfloat angle);
+    Shot* PlayerShoot(GLfloat maxDist);
 };
 
 

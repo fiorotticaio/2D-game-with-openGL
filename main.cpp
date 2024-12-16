@@ -12,6 +12,7 @@
 #include "tinyxml2.h"
 #include <string>
 #include "arena.h"
+#include "shot.h"
 
 using namespace tinyxml2;
 
@@ -39,6 +40,8 @@ GLfloat yPositionArena = 0;
 Arena* arena = NULL;
 
 int animateLegs = 0;
+
+std::vector<Shot*> shots;
 
 
 /*****************************************************************************************/
@@ -130,6 +133,10 @@ void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
     
 	arena->Draw();
+
+	for (Shot* shot : shots) {
+		if (shot) shot->Draw();
+	}
 
 	// Draw the new frame of the game
 	glutSwapBuffers(); 
@@ -232,6 +239,13 @@ void passiveMotion(int x, int y) {
 }
 
 
+void mouseClick(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        shots.push_back(arena->PlayerShoot(ViewingWidth));
+    }
+}
+
+
 void idle(void) {
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
@@ -268,6 +282,27 @@ void idle(void) {
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),
 				   ViewingWidth, ViewingHeight);
+
+	
+	for (size_t i = 0; i < shots.size(); ++i) {
+        Shot* shot = shots[i];
+        if (shot) {
+            shot->Move(timeDiference);
+
+            // Verifica se o shot atingiu o alvo
+            // if (alvo.Atingido(shot)) {
+            //     alvo.Recria(rand() % 500 - 250, 200);
+            //     atingido++;
+            // }
+
+            // Check if the shot is still valid
+            if (!shot->Valid()) {
+                delete shot;
+                shots.erase(shots.begin() + i);
+                i--;
+            }
+        }
+    }
 
 
 	if (animateLegs) {
@@ -320,6 +355,7 @@ int main(int argc, char *argv[]) {
 	glutIdleFunc(idle);
 	glutKeyboardUpFunc(keyUp);
 	glutPassiveMotionFunc(passiveMotion);
+	glutMouseFunc(mouseClick);
 	
 	init();
 

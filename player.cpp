@@ -165,3 +165,143 @@ void Player::SetFrontShinAngle(GLfloat angle) {
 void Player::SetBackShinAngle(GLfloat angle) {
     gBackShinAngle = angle;
 }
+
+// Aux rotation func
+void RotatePoint(GLfloat x, GLfloat y, GLfloat angle, GLfloat &xOut, GLfloat &yOut) {
+    // Rotation matrix
+    GLfloat rotMatrix[3][3] = {
+        {cos(angle), -sin(angle), 0},
+        {sin(angle), cos(angle) , 0},
+        {0         , 0          , 1},
+    };
+
+    // Input vector
+    GLfloat inVector[3] = {x, y, 1};
+
+    // Output vector
+    GLfloat outVector[3] = {0, 0, 0};
+
+    // Multiply matrix by vector
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            outVector[i] += rotMatrix[i][j] * inVector[j];
+        }
+    }
+
+    // Output values
+    xOut = outVector[0];
+    yOut = outVector[1];
+}
+
+// Aux translate func
+void TranslatePoint(GLfloat x, GLfloat y, GLfloat dx, GLfloat dy, GLfloat &xOut, GLfloat &yOut) {
+    // Translation matrix
+    GLfloat transMatrix[3][3] = {
+        {1, 0, dx},
+        {0, 1, dy},
+        {0, 0, 1},
+    };
+
+    // Input vector
+    GLfloat inVector[3] = {x, y, 1};
+
+    // Output vector
+    GLfloat outVector[3] = {0, 0, 0};
+
+    // Multiply matrix by vector
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            outVector[i] += transMatrix[i][j] * inVector[j];
+        }
+    }
+
+    // Output values
+    xOut = outVector[0];
+    yOut = outVector[1];
+}
+
+// Aux scale func
+void ScalePoint(GLfloat x, GLfloat y, GLfloat sx, GLfloat sy, GLfloat &xOut, GLfloat &yOut) {
+    // Sacle matriz
+    GLfloat scaleMatrix[3][3] = {
+        {sx, 0 , 0},
+        {0 , sy, 0},
+        {0 , 0 , 1},
+    };
+
+    // Input vector
+    GLfloat inVector[3] = {x, y, 1};
+
+    // Output vector
+    GLfloat outVector[3] = {0, 0, 0};
+
+    // Multiply matrix by vector
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            outVector[i] += scaleMatrix[i][j] * inVector[j];
+        }
+    }
+
+    // Output values
+    xOut = outVector[0];
+    yOut = outVector[1];
+}
+
+Shot* Player::Shoot(GLfloat maxDist) {
+    GLfloat xBaseArm = 0.0, yBaseArm = 0.0;
+    GLfloat xTopArm = 0.0, yTopArm = 0.0;
+
+    glPushMatrix();
+        // Getting top position
+        GLfloat x = 0.0, y = 0.0;
+        GLfloat xOut = 0.0, yOut = 0.0;
+
+        TranslatePoint(x, y, 0, gArmHeight, xOut, yOut);
+        x = xOut; y = yOut;
+
+        RotatePoint(x, y, (gArmAngle * M_PI / 180) * gXDirection, xOut, yOut);
+        x = xOut; y = yOut;
+
+        TranslatePoint(x, y, 0, gBodyHeight/2, xOut, yOut);
+        x = xOut; y = yOut;
+
+        TranslatePoint(x, y, gX, gY, xOut, yOut);
+        x = xOut; y = yOut;
+
+        xTopArm = x;
+        yTopArm = y;
+
+
+        // Getting base position
+        x = 0.0; y = 0.0;
+        xOut = 0.0, yOut = 0.0;
+
+        RotatePoint(x, y, (gArmAngle * M_PI / 180) * gXDirection, xOut, yOut);
+        x = xOut; y = yOut;
+
+        TranslatePoint(x, y, 0, gBodyHeight/2, xOut, yOut);
+        x = xOut; y = yOut;
+
+        TranslatePoint(x, y, gX, gY, xOut, yOut);
+        x = xOut; y = yOut;
+
+        xBaseArm = x;
+        yBaseArm = y;
+
+
+        // Findig the direction
+        GLfloat baseVector[2] = {xBaseArm, yBaseArm};
+        GLfloat topVector[2] = {xTopArm, yTopArm};
+
+        GLfloat xResVector = topVector[0] - baseVector[0];
+        GLfloat yResVector = topVector[1] - baseVector[1];
+
+        GLfloat norm = sqrt(pow(xResVector, 2) + pow(yResVector, 2));
+        xResVector /= norm;
+        yResVector /= norm;
+
+        GLfloat shotDirection[2] = {xResVector, yResVector};
+    glPopMatrix();
+
+    return new Shot(xTopArm, yTopArm, gSpeed, shotDirection, maxDist, gBaseCircleRadius/5);
+}

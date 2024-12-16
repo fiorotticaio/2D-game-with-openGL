@@ -7,6 +7,7 @@
 #include <GL/glu.h>
 #include <math.h>
 #include <stdio.h>
+#include "shot.h"
 
 
 class Player {
@@ -101,6 +102,7 @@ public:
     void RotateBackShin(GLfloat dAngle);
     void SetFrontShinAngle(GLfloat angle);
     void SetBackShinAngle(GLfloat angle);
+    Shot* Shoot(GLfloat maxDist);
 };
 
 

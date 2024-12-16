@@ -5,8 +5,8 @@
 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <cstdio>
 
-#define SHOT_RADIUS 5
 
 
 class Shot {
@@ -18,6 +18,8 @@ class Shot {
 
     GLfloat gSpeed;
     GLfloat gDirection[2];
+    GLfloat gRadius;
+    GLfloat gMaxDist;
 
 
 private:
@@ -26,14 +28,16 @@ private:
 
 
 public:
-    Shot(GLfloat gXInit, GLfloat gYInit, GLfloat* d) {
-        gXInit = gXInit;
-        gYInit = gYInit;
+    Shot(GLfloat x, GLfloat y, GLfloat playerSpeed, GLfloat* d, GLfloat maxDist, GLfloat radius) {
+        gXInit = x;
+        gYInit = y;
         gX = gXInit;
         gY = gYInit;
-        gSpeed = 1;
+        gSpeed = 0.1f;
         gDirection[0] = d[0];
         gDirection[1] = d[1];
+        gRadius = radius;
+        gMaxDist = maxDist;
     }
 
     void Draw() {

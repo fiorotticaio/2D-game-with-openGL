@@ -183,3 +183,7 @@ void Arena::SetPlayerFrontShinAngle(GLfloat angle) {
 void Arena::SetPlayerBackShinAngle(GLfloat angle) {
     gPlayer->SetBackShinAngle(angle);
 }
+
+Shot* Arena::PlayerShoot(GLfloat maxDist) {
+    return gPlayer->Shoot(maxDist);
+}

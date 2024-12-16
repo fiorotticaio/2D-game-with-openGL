@@ -33,7 +33,7 @@ void Player::DrawFrontLeg() {
         glRotatef(gFrontThighAngle * gXDirection, 0, 0, 1);
         DrawRect(gThighWidth, gThighHeight, 1.0f, 1.0f, 1.0f);
 
-        // // Draw the front leg
+        // Draw the front leg
         glTranslatef(0, gThighHeight, 0);
         glRotatef(gFrontShinAngle * gXDirection, 0, 0, 1);
         DrawRect(gShinWidth, gShinHeight, 1.0f, 1.0f, 1.0f);

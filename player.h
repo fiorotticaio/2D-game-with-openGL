@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "shot.h"
 #include "obstacle.h"
+#include "opponent.h"
 
 
 class Player {
@@ -106,6 +107,7 @@ public:
     Shot* Shoot(GLfloat maxDist);
     bool CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
     GLfloat GetSpeed();
+    bool CollidesWithOpponent(Opponent* opponent, GLfloat dx, GLfloat dy);
 };
 
 

@@ -333,3 +333,26 @@ bool Player::CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
 GLfloat Player::GetSpeed() {
     return gSpeed;
 }
+
+
+bool Player::CollidesWithOpponent(Opponent* opponent, GLfloat dx, GLfloat dy) {
+    GLfloat x = gX + dx * gXDirection;
+    GLfloat y = gY + dy * gYDirection;
+
+    GLfloat playerLeftX = x - gInvisibleReactWidth / 2;
+    GLfloat playerRightX = x + gInvisibleReactWidth / 2;
+    GLfloat playerBottomY = y - gThighHeight - gShinHeight;
+    GLfloat playerTopY = y - gThighHeight - gShinHeight + gInvisibleReactHeight;
+
+    GLfloat opponentLeftX = opponent->GetGx() - opponent->GetInvisibleReactWidth() / 2;
+    GLfloat opponentRightX = opponent->GetGx() + opponent->GetInvisibleReactWidth() / 2;
+    GLfloat opponentBottomY = opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight();
+    GLfloat opponentTopY = opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight() + opponent->GetInvisibleReactHeight();
+
+    if (playerRightX > opponentLeftX && playerLeftX < opponentRightX &&
+        playerTopY > opponentBottomY && playerBottomY < opponentTopY) {
+        return true;
+    }
+
+    return false;
+}

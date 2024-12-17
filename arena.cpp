@@ -132,12 +132,24 @@ void Arena::MovePlayerInX(GLdouble timeDifference) {
         }
     }
 
+    for (Opponent* opponent : gOpponents) {
+        if (gPlayer->CollidesWithOpponent(opponent, gPlayer->GetSpeed(), 0)) {
+            return;
+        }
+    }
+
     gPlayer->MoveInX(gX, gX + gWidth, timeDifference);
 }
 
 void Arena::MovePlayerInY(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
         if (gPlayer->CollidesWithObstacle(obstacle, 0, gPlayer->GetSpeed())) {
+            return;
+        }
+    }
+
+    for (Opponent* opponent : gOpponents) {
+        if (gPlayer->CollidesWithOpponent(opponent, 0, gPlayer->GetSpeed())) {
             return;
         }
     }

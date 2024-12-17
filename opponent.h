@@ -59,8 +59,6 @@ public:
         gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
         gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
         gBodyWidth = (float) gBodyHeight / (float) 2;
-        gInvisibleReactHeight = 2 * gBaseCircleRadius;
-        gInvisibleReactWidth = gBodyWidth;
         gArmHeight = ((float) 57 / (float) 172) * gBaseCircleRadius;
         gArmWidth = (float) gArmHeight / (float) 6;
         gArmAngle = -90.0f;
@@ -75,6 +73,8 @@ public:
         gBackShinAngle = -30.0f;
         gSpeed = 10;
         gDirection = -1;
+        gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
+        gInvisibleReactWidth = gBodyWidth;
     }
 
     void Draw() {
@@ -87,6 +87,10 @@ public:
     void MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY);
     void RotateArm(GLfloat y, GLfloat windowHeight);
     void SetDirection(GLint direction);
+    GLfloat GetInvisibleReactWidth();
+    GLfloat GetInvisibleReactHeight();
+    GLfloat GetThighHeight();
+    GLfloat GetShinHeight();
 };
 
 

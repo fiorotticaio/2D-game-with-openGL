@@ -119,3 +119,23 @@ void Opponent::RotateArm(GLfloat y, GLfloat windowHeight) {
 void Opponent::SetDirection(GLint direction) {
     gDirection = direction;
 }
+
+
+GLfloat Opponent::GetInvisibleReactWidth() {
+    return gInvisibleReactWidth;
+}
+
+
+GLfloat Opponent::GetInvisibleReactHeight() {
+    return gInvisibleReactHeight;
+}
+
+
+GLfloat Opponent::GetThighHeight() {
+    return gThighHeight;
+}
+
+
+GLfloat Opponent::GetShinHeight() {
+    return gShinHeight;
+}

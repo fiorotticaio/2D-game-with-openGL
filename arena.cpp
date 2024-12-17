@@ -182,11 +182,11 @@ void Arena::RotatePlayerBackThigh(GLfloat dAngle) {
 }
 
 void Arena::RotatePlayerFrontShin(GLfloat dAngle) {
-    gPlayer->RotateFrontShin(dAngle);
+    gPlayer->RotateFrontShin(dAngle * gPlayer->GetSpeed());
 }
 
 void Arena::RotatePlayerBackShin(GLfloat dAngle) {
-    gPlayer->RotateBackShin(dAngle);
+    gPlayer->RotateBackShin(dAngle * gPlayer->GetSpeed());
 }
 
 void Arena::SetPlayerFrontShinAngle(GLfloat angle) {

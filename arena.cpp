@@ -125,24 +125,24 @@ GLfloat Arena::GetPlayerGy() {
     return gPlayer->GetGy();
 }
 
-void Arena::MovePlayerInX(GLfloat dx, GLdouble timeDifference) {
+void Arena::MovePlayerInX(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
-        if (gPlayer->CollidesWithObstacle(obstacle, dx, 0)) {
+        if (gPlayer->CollidesWithObstacle(obstacle, gPlayer->GetSpeed(), 0)) {
             return;
         }
     }
 
-    gPlayer->MoveInX(dx, gX, gX + gWidth, timeDifference);
+    gPlayer->MoveInX(gX, gX + gWidth, timeDifference);
 }
 
-void Arena::MovePlayerInY(GLfloat dy, GLdouble timeDifference) {
+void Arena::MovePlayerInY(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
-        if (gPlayer->CollidesWithObstacle(obstacle, 0, dy)) {
+        if (gPlayer->CollidesWithObstacle(obstacle, 0, gPlayer->GetSpeed())) {
             return;
         }
     }
 
-    gPlayer->MoveInY(dy, gY, gY + gHeight, timeDifference);
+    gPlayer->MoveInY(gY, gY + gHeight, timeDifference);
 }
 
 void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight) {
@@ -174,11 +174,11 @@ GLfloat Arena::GetPlayerBackShinAngle() {
 }
 
 void Arena::RotatePlayerFrontThigh(GLfloat dAngle) {
-    gPlayer->RotateFrontThigh(dAngle);
+    gPlayer->RotateFrontThigh(dAngle * gPlayer->GetSpeed());
 }
 
 void Arena::RotatePlayerBackThigh(GLfloat dAngle) {
-    gPlayer->RotateBackThigh(dAngle);
+    gPlayer->RotateBackThigh(dAngle * gPlayer->GetSpeed());
 }
 
 void Arena::RotatePlayerFrontShin(GLfloat dAngle) {

@@ -16,8 +16,6 @@
 
 using namespace tinyxml2;
 
-#define INC_KEYIDLE 0.05
-
 
 
 /*****************************************************************************************/
@@ -255,26 +253,24 @@ void idle(void) {
 	timeDiference = currentTime - previousTime; // Calculates the elapsed time since the last frame
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
 
-	double inc = INC_KEYIDLE;
-
 	// Treat keyPress
 	if (keyStatus[(int)('a')]) {
 		animateLegs = 1;
 		arena->SetPlayerXDirection(-1);
-		arena->MovePlayerInX(inc, timeDiference);
+		arena->MovePlayerInX(timeDiference);
 	}
 	if (keyStatus[(int)('d')]) {
 		animateLegs = 1;
 		arena->SetPlayerXDirection(1);
-		arena->MovePlayerInX(inc, timeDiference);
+		arena->MovePlayerInX(timeDiference);
 	}
 	if (keyStatus[(int)('w')]) {
 		arena->SetPlayerYDirection(1);
-		arena->MovePlayerInY(inc, timeDiference);
+		arena->MovePlayerInY(timeDiference);
 	}
 	if (keyStatus[(int)('s')]) {
 		arena->SetPlayerYDirection(-1);
-		arena->MovePlayerInY(inc, timeDiference);
+		arena->MovePlayerInY(timeDiference);
 	}
 
 
@@ -312,8 +308,8 @@ void idle(void) {
 		else if (arena->GetPlayerFrontThighAngle() < -220) frontThighAngleDir *= -1;
 		if      (arena->GetPlayerBackThighAngle()  > -140) backThighAngleDir  *= -1;
 		else if (arena->GetPlayerBackThighAngle()  < -220) backThighAngleDir  *= -1;
-		arena->RotatePlayerFrontThigh(frontThighAngleDir * INC_KEYIDLE);
-		arena->RotatePlayerBackThigh(backThighAngleDir * INC_KEYIDLE);
+		arena->RotatePlayerFrontThigh(frontThighAngleDir);
+		arena->RotatePlayerBackThigh(backThighAngleDir);
 	}
 	
 

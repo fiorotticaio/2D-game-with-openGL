@@ -74,7 +74,7 @@ public:
         gShinWidth = (float) gShinHeight / (float)  6;
         gFrontShinAngle = 0.0f;
         gBackShinAngle = 0.0f;
-        gSpeed = 10;
+        gSpeed = 0.05f;
         gXDirection = 1;
         gYDirection = 1;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
@@ -88,8 +88,8 @@ public:
 
     GLfloat GetGx();
     GLfloat GetGy();
-    void MoveInX(GLfloat dx, GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference);
-    void MoveInY(GLfloat dy, GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLdouble timeDifference);
+    void MoveInX(GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference);
+    void MoveInY(GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLdouble timeDifference);
     void RotateArm(GLfloat y, GLfloat windowHeight);
     void SetXDirection(GLint xDirection);
     void SetYDirection(GLint yDirection);
@@ -105,6 +105,7 @@ public:
     void SetBackShinAngle(GLfloat angle);
     Shot* Shoot(GLfloat maxDist);
     bool CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    GLfloat GetSpeed();
 };
 
 

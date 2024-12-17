@@ -33,7 +33,7 @@ public:
         gYInit = y;
         gX = gXInit;
         gY = gYInit;
-        gSpeed = 0.1f;
+        gSpeed = 2 * playerSpeed;
         gDirection[0] = d[0];
         gDirection[1] = d[1];
         gRadius = radius;

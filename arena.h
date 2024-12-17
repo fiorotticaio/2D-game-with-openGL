@@ -33,7 +33,7 @@ class Arena {
 private:
     void LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat ViewingHeight);
     void DrawArena();
-    void DrawRect();
+    void DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
 
 
 public:

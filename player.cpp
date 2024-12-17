@@ -305,3 +305,26 @@ Shot* Player::Shoot(GLfloat maxDist) {
 
     return new Shot(xTopArm, yTopArm, gSpeed, shotDirection, maxDist, gBaseCircleRadius/5);
 }
+
+
+bool Player::CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
+    GLfloat x = gX + dx * gXDirection;
+    GLfloat y = gY + dy * gYDirection;
+
+    GLfloat playerLeftX = x - gInvisibleReactWidth / 2;
+    GLfloat playerRightX = x + gInvisibleReactWidth / 2;
+    GLfloat playerBottomY = y - gThighHeight - gShinHeight;
+    GLfloat playerTopY = y - gThighHeight - gShinHeight + gInvisibleReactHeight;
+
+    GLfloat obstacleLeftX = obstacle->GetX();
+    GLfloat ObstacleRightX = obstacle->GetX() + obstacle->GetWidth();
+    GLfloat obstacleTopY = obstacle->GetY();
+    GLfloat obstacleBottomY = obstacle->GetY() - obstacle->GetHeight();
+
+    if (playerRightX > obstacleLeftX && playerLeftX < ObstacleRightX &&
+        playerTopY > obstacleBottomY && playerBottomY < obstacleTopY) {
+        return true;
+    }
+
+    return false;
+}

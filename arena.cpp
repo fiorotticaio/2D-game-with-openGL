@@ -82,7 +82,7 @@ void Arena::DrawArena() {
     glPushMatrix();
         // Draw arena background
         glTranslatef(gX, gY, 0);
-        DrawRect();
+        DrawRect(gWidth, gHeight, gRed, gGreen, gBlue);
     glPopMatrix();
 
     for (Obstacle* obstacle : gObstacles) {
@@ -97,14 +97,15 @@ void Arena::DrawArena() {
 }
 
 
-void Arena::DrawRect() {
-    glColor3f(gRed, gGreen, gBlue);
+void Arena::DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B) {
+    glColor3f(R, G, B);
 
+    // The coordenates givem in the svg file are the left bottom corner of the arena
     glBegin(GL_POLYGON);
         glVertex2f(0, 0);
-        glVertex2f(gWidth, 0);
-        glVertex2f(gWidth, gHeight);
-        glVertex2f(0, gHeight);
+        glVertex2f(width, 0);
+        glVertex2f(width, height);
+        glVertex2f(0, height);
     glEnd();
 }
 
@@ -125,10 +126,22 @@ GLfloat Arena::GetPlayerGy() {
 }
 
 void Arena::MovePlayerInX(GLfloat dx, GLdouble timeDifference) {
+    for (Obstacle* obstacle : gObstacles) {
+        if (gPlayer->CollidesWithObstacle(obstacle, dx, 0)) {
+            return;
+        }
+    }
+
     gPlayer->MoveInX(dx, gX, gX + gWidth, timeDifference);
 }
 
 void Arena::MovePlayerInY(GLfloat dy, GLdouble timeDifference) {
+    for (Obstacle* obstacle : gObstacles) {
+        if (gPlayer->CollidesWithObstacle(obstacle, 0, dy)) {
+            return;
+        }
+    }
+
     gPlayer->MoveInY(dy, gY, gY + gHeight, timeDifference);
 }
 

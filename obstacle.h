@@ -21,7 +21,7 @@ class Obstacle {
 
 private:
     void DrawObstacle();
-    void DrawReact();
+    void DrawReact(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
 
 
 public:
@@ -38,6 +38,11 @@ public:
     void Draw() {
         DrawObstacle();
     }
+
+    GLfloat GetX();
+    GLfloat GetY();
+    GLfloat GetWidth();
+    GLfloat GetHeight();
 };
 
 

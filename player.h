@@ -8,6 +8,7 @@
 #include <math.h>
 #include <stdio.h>
 #include "shot.h"
+#include "obstacle.h"
 
 
 class Player {
@@ -61,8 +62,6 @@ public:
         gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
         gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
         gBodyWidth = (float) gBodyHeight / (float) 2;
-        gInvisibleReactHeight = 2 * gBaseCircleRadius;
-        gInvisibleReactWidth = gBodyWidth;
         gArmHeight = ((float) 57 / (float) 172) * gBaseCircleRadius;
         gArmWidth = (float) gArmHeight / (float) 6;
         gArmAngle = -90.0f;
@@ -78,6 +77,8 @@ public:
         gSpeed = 10;
         gXDirection = 1;
         gYDirection = 1;
+        gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
+        gInvisibleReactWidth = gBodyWidth;
 
     }
 
@@ -103,6 +104,7 @@ public:
     void SetFrontShinAngle(GLfloat angle);
     void SetBackShinAngle(GLfloat angle);
     Shot* Shoot(GLfloat maxDist);
+    bool CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
 };
 
 

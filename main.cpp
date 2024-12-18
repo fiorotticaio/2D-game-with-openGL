@@ -241,6 +241,12 @@ void mouseClick(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         shots.push_back(arena->PlayerShoot(ViewingWidth));
     }
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+		arena->SetPlayerYDirection(1); // Jump
+	}
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP) {
+		arena->SetPlayerYDirection(-1); // Stop Jump
+	}
 }
 
 
@@ -264,21 +270,21 @@ void idle(void) {
 		arena->SetPlayerXDirection(1);
 		arena->MovePlayerInX(timeDiference);
 	}
-	if (keyStatus[(int)('w')]) {
-		arena->SetPlayerYDirection(1);
-		arena->MovePlayerInY(timeDiference);
-	}
-	if (keyStatus[(int)('s')]) {
-		arena->SetPlayerYDirection(-1);
-		arena->MovePlayerInY(timeDiference);
-	}
-
+	// if (keyStatus[(int)('w')]) {
+	// 	arena->SetPlayerYDirection(1);
+	// 	arena->MovePlayerInY(timeDiference);
+	// }
+	// if (keyStatus[(int)('s')]) {
+	// 	arena->SetPlayerYDirection(-1);
+	// 	arena->MovePlayerInY(timeDiference);
+	// }
 
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),
 				   ViewingWidth, ViewingHeight);
 
+	arena->MovePlayerInY(timeDiference);
 	
 	for (size_t i = 0; i < shots.size(); ++i) {
         Shot* shot = shots[i];
@@ -300,7 +306,6 @@ void idle(void) {
         }
     }
 
-
 	if (animateLegs) {
 		static int frontThighAngleDir = 1;
 		static int backThighAngleDir = 1;
@@ -312,7 +317,6 @@ void idle(void) {
 		arena->RotatePlayerBackThigh(backThighAngleDir);
 	}
 	
-
 	glutPostRedisplay();
 }
 

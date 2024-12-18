@@ -41,7 +41,7 @@ class Player {
     GLfloat gFrontShinAngle;
     GLfloat gBackShinAngle;
 
-    GLfloat gSpeed;
+    GLfloat gSpeed; // In x and y
     GLint gXDirection; // 1 for right (front), -1 for left (back)
     GLint gYDirection; // 1 for up, -1 for down
 
@@ -77,7 +77,7 @@ public:
         gBackShinAngle = 0.0f;
         gSpeed = 0.05f;
         gXDirection = 1;
-        gYDirection = 1;
+        gYDirection = -1;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
 

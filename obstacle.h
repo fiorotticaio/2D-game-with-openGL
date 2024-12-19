@@ -5,6 +5,8 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <cstdio>
+#include "shot.h"
+#include <math.h>
 
 
 class Obstacle {
@@ -43,6 +45,7 @@ public:
     GLfloat GetGy();
     GLfloat GetWidth();
     GLfloat GetHeight();
+    bool CollidesWithShot(Shot* shot);
 };
 
 

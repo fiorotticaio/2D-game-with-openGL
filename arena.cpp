@@ -301,3 +301,8 @@ bool Arena::PlayerLanded() {
 
     return false;
 }
+
+
+std::vector<Obstacle*> Arena::GetObstacles() {
+    return gObstacles;
+}

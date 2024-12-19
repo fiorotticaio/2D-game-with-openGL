@@ -253,7 +253,7 @@ void mouseClick(int button, int state, int x, int y) {
 
 
 void idle(void) {
-	for (int i = 0; i < 90000000; i++); // Simulate lower processing
+	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
 	GLdouble currentTime, timeDiference;
@@ -288,11 +288,15 @@ void idle(void) {
         if (shot) {
             shot->Move(timeDiference);
 
-            // Verifica se o shot atingiu o alvo
-            // if (alvo.Atingido(shot)) {
-            //     alvo.Recria(rand() % 500 - 250, 200);
-            //     atingido++;
-            // }
+			for (Obstacle* obstacle : arena->GetObstacles()) {
+				if (obstacle->CollidesWithShot(shot)) {
+					delete shot;
+					shots.erase(shots.begin() + i);
+					i--;
+					break;
+				}
+			}
+
 
             // Check if the shot is still valid
             if (!shot->Valid()) {

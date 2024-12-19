@@ -74,6 +74,7 @@ public:
     GLfloat GetPlayerShinHeight();
     bool PlayerReachedMaximumJumpHeight();
     bool PlayerLanded();
+    std::vector<Obstacle*> GetObstacles();
 };
 
 

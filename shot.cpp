@@ -34,3 +34,18 @@ bool Shot::Valid() {
     // Checks if the shot has already traveled a maximum distance
     return sqrt(pow(gX - gXInit, 2) + pow(gY - gYInit, 2)) < gMaxDist;
 }
+
+
+GLfloat Shot::GetGx() {
+    return gX;
+}
+
+
+GLfloat Shot::GetGy() {
+    return gY;
+}
+
+
+GLfloat Shot::GetRadius() {
+    return gRadius;
+}

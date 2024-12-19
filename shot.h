@@ -46,10 +46,9 @@ public:
 
     void Move(GLdouble timeDifference);
     bool Valid();
-    void GetPos(GLfloat &xOut, GLfloat &yOut) {
-        xOut = gX;
-        yOut = gY;
-    }	
+    GLfloat GetGx();
+    GLfloat GetGy();
+    GLfloat GetRadius();
 };
 
 

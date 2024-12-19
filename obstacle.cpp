@@ -38,3 +38,19 @@ GLfloat Obstacle::GetWidth() {
 GLfloat Obstacle::GetHeight() {
     return gHeight;
 }
+
+
+bool Obstacle::CollidesWithShot(Shot* shot) {
+    GLfloat shotX = shot->GetGx();
+    GLfloat shotY = shot->GetGy();
+    GLfloat shotRadius = shot->GetRadius();
+
+    GLfloat closestX = std::max(gX, std::min(shotX, gX + gWidth));
+    GLfloat closestY = std::max(gY - gHeight, std::min(shotY, gY));
+
+    GLfloat distanceX = shotX - closestX;
+    GLfloat distanceY = shotY - closestY;
+    GLfloat distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+    return distanceSquared <= shotRadius * shotRadius;
+}

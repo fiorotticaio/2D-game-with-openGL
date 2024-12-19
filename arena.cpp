@@ -306,3 +306,18 @@ bool Arena::PlayerLanded() {
 std::vector<Obstacle*> Arena::GetObstacles() {
     return gObstacles;
 }
+
+
+std::vector<Opponent*> Arena::GetOpponents() {
+    return gOpponents;
+}
+
+
+void Arena::EraseOpponent(Opponent* opponent) {
+    for (size_t i = 0; i < gOpponents.size(); ++i) {
+        if (gOpponents[i] == opponent) {
+            gOpponents.erase(gOpponents.begin() + i);
+            return;
+        }
+    }
+}

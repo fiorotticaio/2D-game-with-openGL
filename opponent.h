@@ -7,6 +7,7 @@
 #include <GL/glu.h>
 #include <math.h>
 #include <stdio.h>
+#include "shot.h"
 
 
 class Opponent {
@@ -91,6 +92,7 @@ public:
     GLfloat GetInvisibleReactHeight();
     GLfloat GetThighHeight();
     GLfloat GetShinHeight();
+    bool CollidesWithShot(Shot* shot);
 };
 
 

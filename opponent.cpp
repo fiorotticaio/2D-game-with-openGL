@@ -139,3 +139,19 @@ GLfloat Opponent::GetThighHeight() {
 GLfloat Opponent::GetShinHeight() {
     return gShinHeight;
 }
+
+
+bool Opponent::CollidesWithShot(Shot* shot) {
+    GLfloat shotX = shot->GetGx();
+    GLfloat shotY = shot->GetGy();
+    GLfloat shotRadius = shot->GetRadius();
+
+    GLfloat closestX = std::max(gX - gInvisibleReactWidth / 2, std::min(shotX, gX + gInvisibleReactWidth / 2));
+    GLfloat closestY = std::max(gY - gThighHeight - gShinHeight, std::min(shotY, gY - gThighHeight - gShinHeight + gInvisibleReactHeight));
+
+    GLfloat distanceX = shotX - closestX;
+    GLfloat distanceY = shotY - closestY;
+    GLfloat distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+    return distanceSquared <= shotRadius * shotRadius;
+}

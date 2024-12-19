@@ -75,6 +75,8 @@ public:
     bool PlayerReachedMaximumJumpHeight();
     bool PlayerLanded();
     std::vector<Obstacle*> GetObstacles();
+    std::vector<Opponent*> GetOpponents();
+    void EraseOpponent(Opponent* opponent);
 };
 
 

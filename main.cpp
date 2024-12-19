@@ -288,17 +288,33 @@ void idle(void) {
         if (shot) {
             shot->Move(timeDiference);
 
+			bool shotDeleted = false;
+
 			for (Obstacle* obstacle : arena->GetObstacles()) {
 				if (obstacle->CollidesWithShot(shot)) {
 					delete shot;
 					shots.erase(shots.begin() + i);
 					i--;
+					shotDeleted = true;
 					break;
 				}
 			}
 
+			if (shotDeleted) continue;
 
-            // Check if the shot is still valid
+			for (Opponent* opponent : arena->GetOpponents()) {
+				if (opponent->CollidesWithShot(shot)) {
+					delete shot;
+					shots.erase(shots.begin() + i);
+					i--;
+					shotDeleted = true;
+					arena->EraseOpponent(opponent);
+					break;
+				}
+			}
+
+			if (shotDeleted) continue;
+
             if (!shot->Valid()) {
                 delete shot;
                 shots.erase(shots.begin() + i);

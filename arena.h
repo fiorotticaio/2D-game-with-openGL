@@ -53,7 +53,9 @@ public:
     void MovePlayerInY(GLdouble timeDifference);
     void RotatePlayerArm(GLfloat y, GLfloat WindowHeight);
     void SetPlayerXDirection(GLint xDirection);
+    GLint GetPlayerXDirection();
     void SetPlayerYDirection(GLint yDirection);
+    GLint GetPlayerYDirection();
     GLfloat GetPlayerFrontThighAngle();
     GLfloat GetPlayerBackThighAngle();
     GLfloat GetPlayerFrontShinAngle();
@@ -65,6 +67,13 @@ public:
     void SetPlayerFrontShinAngle(GLfloat angle);
     void SetPlayerBackShinAngle(GLfloat angle);
     Shot* PlayerShoot(GLfloat maxDist);
+    void PlayerJump();
+    GLfloat GetPlayerMaxJumpHeight();
+    GLfloat GetPlayerJumpHeight();
+    GLfloat GetPlayerThighHeight();
+    GLfloat GetPlayerShinHeight();
+    bool PlayerReachedMaximumJumpHeight();
+    bool PlayerLanded();
 };
 
 

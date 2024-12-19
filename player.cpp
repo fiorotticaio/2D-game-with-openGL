@@ -90,16 +90,17 @@ GLfloat Player::GetGy() {
 }
 
 void Player::MoveInX(GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference) {
-    if (gX + gSpeed * timeDifference * gXDirection >= minPlayerPositionX + gBodyWidth/2 && 
-        gX + gSpeed * timeDifference * gXDirection <= maxPlayerPositionX - gBodyWidth/2) {
-        gX += gSpeed * timeDifference * gXDirection;
+    if (gX + gXSpeed * timeDifference * gXDirection >= minPlayerPositionX + gBodyWidth/2 && 
+        gX + gXSpeed * timeDifference * gXDirection <= maxPlayerPositionX - gBodyWidth/2) {
+        gX += gXSpeed * timeDifference * gXDirection;
     }
 }
 
 void Player::MoveInY(GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLdouble timeDifference) {
-    if (gY + gSpeed * timeDifference * gYDirection >= minPlayerPositionY + gThighHeight + gShinHeight && 
-        gY + gSpeed * timeDifference * gYDirection <= maxPlayerPositionY - gThighHeight - gShinHeight) {
-        gY += gSpeed * timeDifference * gYDirection;
+    if (gY + gYSpeed * timeDifference * gYDirection >= minPlayerPositionY + gThighHeight + gShinHeight && 
+        gY + gYSpeed * timeDifference * gYDirection <= maxPlayerPositionY - gThighHeight - gShinHeight) {
+        gY += gYSpeed * timeDifference * gYDirection;
+        jumpHeight += gYSpeed * timeDifference * gYDirection;
     }
 }
 
@@ -303,7 +304,7 @@ Shot* Player::Shoot(GLfloat maxDist) {
         GLfloat shotDirection[2] = {xResVector, yResVector};
     glPopMatrix();
 
-    return new Shot(xTopArm, yTopArm, gSpeed, shotDirection, maxDist, gBaseCircleRadius/5);
+    return new Shot(xTopArm, yTopArm, gXSpeed, shotDirection, maxDist, gBaseCircleRadius/5);
 }
 
 
@@ -321,8 +322,8 @@ bool Player::CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
     GLfloat obstacleTopY = obstacle->GetY();
     GLfloat obstacleBottomY = obstacle->GetY() - obstacle->GetHeight();
 
-    if (playerRightX > obstacleLeftX && playerLeftX < ObstacleRightX &&
-        playerTopY > obstacleBottomY && playerBottomY < obstacleTopY) {
+    if (playerRightX >= obstacleLeftX && playerLeftX <= ObstacleRightX &&
+        playerTopY >= obstacleBottomY && playerBottomY <= obstacleTopY) {
         return true;
     }
 
@@ -330,8 +331,13 @@ bool Player::CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
 }
 
 
-GLfloat Player::GetSpeed() {
-    return gSpeed;
+GLfloat Player::GetXSpeed() {
+    return gXSpeed;
+}
+
+
+GLfloat Player::GetYSpeed() {
+    return gYSpeed;
 }
 
 
@@ -349,8 +355,83 @@ bool Player::CollidesWithOpponent(Opponent* opponent, GLfloat dx, GLfloat dy) {
     GLfloat opponentBottomY = opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight();
     GLfloat opponentTopY = opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight() + opponent->GetInvisibleReactHeight();
 
-    if (playerRightX > opponentLeftX && playerLeftX < opponentRightX &&
-        playerTopY > opponentBottomY && playerBottomY < opponentTopY) {
+    if (playerRightX >= opponentLeftX && playerLeftX <= opponentRightX &&
+        playerTopY >= opponentBottomY && playerBottomY <= opponentTopY) {
+        return true;
+    }
+
+    return false;
+}
+
+
+GLint Player::GetXDirection() {
+    return gXDirection;
+}
+
+
+GLint Player::GetYDirection() {
+    return gYDirection;
+}
+
+
+void Player::Jump() {
+    gYDirection = 1;
+    jumpHeight = 0; // Reset jump height
+}
+
+
+GLfloat Player::GetMaxJumpHeight() {
+    return maxJumpHeight;
+}
+
+
+GLfloat Player::GetJumpHeight() {
+    return jumpHeight;
+}
+
+
+GLfloat Player::GetThighHeight() {
+    return gThighHeight;
+}
+
+
+GLfloat Player::GetShinHeight() {
+    return gShinHeight;
+}
+
+
+bool Player::ReachedMaximumJumpHeight() {
+    return jumpHeight >= maxJumpHeight;
+}
+
+
+GLfloat Player::GetInvisibleReactHeight() {
+    return gInvisibleReactHeight;
+}
+
+
+GLfloat Player::GetInvisibleReactWidth() {
+    return gInvisibleReactWidth;
+}
+
+
+bool Player::LandedInObstacle(Obstacle* obstacle) {
+    if (round(gY - gThighHeight - gShinHeight) <= round(obstacle->GetY()) && 
+        round(gY - gThighHeight - gShinHeight) >= round(obstacle->GetY() - obstacle->GetHeight()) &&
+        round(gX + gInvisibleReactWidth / 2) >= round(obstacle->GetX()) && 
+        round(gX - gInvisibleReactWidth / 2) <= round(obstacle->GetX() + obstacle->GetWidth())) {
+        return true;
+    }
+
+    return false;
+}
+
+
+bool Player::LandedInOpponent(Opponent* opponent) {
+    if (round(gY - gThighHeight - gShinHeight) <= round(opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight() + opponent->GetInvisibleReactHeight()) && 
+        round(gY - gThighHeight - gShinHeight + gInvisibleReactHeight) >= round(opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight()) &&
+        round(gX + gInvisibleReactWidth / 2) >= round(opponent->GetGx() - opponent->GetInvisibleReactWidth() / 2) && 
+        round(gX - gInvisibleReactWidth / 2) <= round(opponent->GetGx() + opponent->GetInvisibleReactWidth() / 2)) {
         return true;
     }
 

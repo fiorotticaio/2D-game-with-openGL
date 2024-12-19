@@ -36,10 +36,12 @@ GLfloat yPositionArena = 0;
 
 // Components of the virtual world
 Arena* arena = NULL;
-
-int animateLegs = 0;
-
 std::vector<Shot*> shots;
+
+// Flags and aux variables
+int animateLegs = 0;
+float positionTolerance = 0.5f;
+
 
 
 /*****************************************************************************************/
@@ -241,11 +243,11 @@ void mouseClick(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         shots.push_back(arena->PlayerShoot(ViewingWidth));
     }
-	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
-		arena->SetPlayerYDirection(1); // Jump
+	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN && arena->PlayerLanded()) {
+		arena->PlayerJump();
 	}
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_UP) {
-		arena->SetPlayerYDirection(-1); // Stop Jump
+		arena->SetPlayerYDirection(-1);
 	}
 }
 
@@ -259,7 +261,6 @@ void idle(void) {
 	timeDiference = currentTime - previousTime; // Calculates the elapsed time since the last frame
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
 
-	// Treat keyPress
 	if (keyStatus[(int)('a')]) {
 		animateLegs = 1;
 		arena->SetPlayerXDirection(-1);
@@ -270,19 +271,15 @@ void idle(void) {
 		arena->SetPlayerXDirection(1);
 		arena->MovePlayerInX(timeDiference);
 	}
-	// if (keyStatus[(int)('w')]) {
-	// 	arena->SetPlayerYDirection(1);
-	// 	arena->MovePlayerInY(timeDiference);
-	// }
-	// if (keyStatus[(int)('s')]) {
-	// 	arena->SetPlayerYDirection(-1);
-	// 	arena->MovePlayerInY(timeDiference);
-	// }
 
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),
 				   ViewingWidth, ViewingHeight);
+	
+	if (arena->PlayerReachedMaximumJumpHeight()) {
+		arena->SetPlayerYDirection(-1);
+	}
 
 	arena->MovePlayerInY(timeDiference);
 	

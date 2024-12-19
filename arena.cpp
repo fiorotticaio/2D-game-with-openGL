@@ -109,31 +109,36 @@ void Arena::DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloa
     glEnd();
 }
 
+
 GLfloat Arena::GetWidth() {
     return gWidth;
 }
+
 
 GLfloat Arena::GetHeight() {
     return gHeight;
 }
 
+
 GLfloat Arena::GetPlayerGx() {
     return gPlayer->GetGx();
 }
+
 
 GLfloat Arena::GetPlayerGy() {
     return gPlayer->GetGy();
 }
 
+
 void Arena::MovePlayerInX(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
-        if (gPlayer->CollidesWithObstacle(obstacle, gPlayer->GetSpeed(), 0)) {
+        if (gPlayer->CollidesWithObstacle(obstacle, gPlayer->GetXSpeed(), 0)) {
             return;
         }
     }
 
     for (Opponent* opponent : gOpponents) {
-        if (gPlayer->CollidesWithOpponent(opponent, gPlayer->GetSpeed(), 0)) {
+        if (gPlayer->CollidesWithOpponent(opponent, gPlayer->GetXSpeed(), 0)) {
             return;
         }
     }
@@ -141,15 +146,16 @@ void Arena::MovePlayerInX(GLdouble timeDifference) {
     gPlayer->MoveInX(gX, gX + gWidth, timeDifference);
 }
 
+
 void Arena::MovePlayerInY(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
-        if (gPlayer->CollidesWithObstacle(obstacle, 0, gPlayer->GetSpeed())) {
+        if (gPlayer->CollidesWithObstacle(obstacle, 0, gPlayer->GetYSpeed())) {
             return;
         }
     }
 
     for (Opponent* opponent : gOpponents) {
-        if (gPlayer->CollidesWithOpponent(opponent, 0, gPlayer->GetSpeed())) {
+        if (gPlayer->CollidesWithOpponent(opponent, 0, gPlayer->GetYSpeed())) {
             return;
         }
     }
@@ -157,58 +163,136 @@ void Arena::MovePlayerInY(GLdouble timeDifference) {
     gPlayer->MoveInY(gY, gY + gHeight, timeDifference);
 }
 
+
 void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight) {
     gPlayer->RotateArm(y, WindowHeight);
 }
+
 
 void Arena::SetPlayerXDirection(GLint xDirection) {
     gPlayer->SetXDirection(xDirection);
 }
 
+
 void Arena::SetPlayerYDirection(GLint yDirection) {
     gPlayer->SetYDirection(yDirection);
 }
+
 
 GLfloat Arena::GetPlayerFrontThighAngle() {
     return gPlayer->GetFrontThighAngle();
 }
 
+
 GLfloat Arena::GetPlayerBackThighAngle() {
     return gPlayer->GetBackThighAngle();
 }
+
 
 GLfloat Arena::GetPlayerFrontShinAngle() {
     return gPlayer->GetFrontShinAngle();
 }
 
+
 GLfloat Arena::GetPlayerBackShinAngle() {
     return gPlayer->GetBackShinAngle();
 }
 
+
 void Arena::RotatePlayerFrontThigh(GLfloat dAngle) {
-    gPlayer->RotateFrontThigh(dAngle * gPlayer->GetSpeed());
+    gPlayer->RotateFrontThigh(dAngle * gPlayer->GetXSpeed());
 }
+
 
 void Arena::RotatePlayerBackThigh(GLfloat dAngle) {
-    gPlayer->RotateBackThigh(dAngle * gPlayer->GetSpeed());
+    gPlayer->RotateBackThigh(dAngle * gPlayer->GetXSpeed());
 }
+
 
 void Arena::RotatePlayerFrontShin(GLfloat dAngle) {
-    gPlayer->RotateFrontShin(dAngle * gPlayer->GetSpeed());
+    gPlayer->RotateFrontShin(dAngle * gPlayer->GetXSpeed());
 }
 
+
 void Arena::RotatePlayerBackShin(GLfloat dAngle) {
-    gPlayer->RotateBackShin(dAngle * gPlayer->GetSpeed());
+    gPlayer->RotateBackShin(dAngle * gPlayer->GetXSpeed());
 }
+
 
 void Arena::SetPlayerFrontShinAngle(GLfloat angle) {
     gPlayer->SetFrontShinAngle(angle);
 }
 
+
 void Arena::SetPlayerBackShinAngle(GLfloat angle) {
     gPlayer->SetBackShinAngle(angle);
 }
 
+
 Shot* Arena::PlayerShoot(GLfloat maxDist) {
     return gPlayer->Shoot(maxDist);
+}
+
+
+GLint Arena::GetPlayerXDirection() {
+    return gPlayer->GetXDirection();
+}
+
+
+GLint Arena::GetPlayerYDirection() {
+    return gPlayer->GetYDirection();
+}
+
+
+void Arena::PlayerJump() {
+    gPlayer->Jump();
+}
+
+
+GLfloat Arena::GetPlayerMaxJumpHeight() {
+    return gPlayer->GetMaxJumpHeight();
+}
+
+
+GLfloat Arena::GetPlayerJumpHeight() {
+    return gPlayer->GetJumpHeight();
+}
+
+
+GLfloat Arena::GetPlayerThighHeight() {
+    return gPlayer->GetThighHeight();
+}
+
+
+GLfloat Arena::GetPlayerShinHeight() {
+    return gPlayer->GetShinHeight();
+}
+
+
+bool Arena::PlayerReachedMaximumJumpHeight() {
+    return gPlayer->ReachedMaximumJumpHeight();
+}
+
+
+bool Arena::PlayerLanded() {
+    if (gPlayer->GetYDirection() == 1) return false; // If the player is still going up, it hasn't landed yet
+
+    // Check if the player is on the ground
+    if (round(gPlayer->GetGy() - gPlayer->GetThighHeight() - gPlayer->GetShinHeight()) == round(gY)) {
+        return true;
+    }
+    
+    for (Obstacle* obstacle : gObstacles) {
+        if (gPlayer->LandedInObstacle(obstacle)) {
+            return true;
+        }
+    }
+
+    for (Opponent* opponent : gOpponents) {
+        if (gPlayer->LandedInOpponent(opponent)) {
+            return true;
+        }
+    }
+
+    return false;
 }

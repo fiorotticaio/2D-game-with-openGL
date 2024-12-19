@@ -133,12 +133,18 @@ GLfloat Arena::GetPlayerGy() {
 void Arena::MovePlayerInX(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
         if (gPlayer->CollidesWithObstacle(obstacle, gPlayer->GetXSpeed(), 0)) {
+            if (gPlayer->LandedInObstacle(obstacle, 0, gPlayer->GetYSpeed())) {
+                continue;
+            }
             return;
         }
     }
 
     for (Opponent* opponent : gOpponents) {
         if (gPlayer->CollidesWithOpponent(opponent, gPlayer->GetXSpeed(), 0)) {
+            if (gPlayer->LandedInOpponent(opponent, 0, gPlayer->GetYSpeed())) {
+                continue;
+            }
             return;
         }
     }
@@ -277,19 +283,18 @@ bool Arena::PlayerReachedMaximumJumpHeight() {
 bool Arena::PlayerLanded() {
     if (gPlayer->GetYDirection() == 1) return false; // If the player is still going up, it hasn't landed yet
 
-    // Check if the player is on the ground
-    if (round(gPlayer->GetGy() - gPlayer->GetThighHeight() - gPlayer->GetShinHeight()) == round(gY)) {
+    if (gPlayer->CollidedWithGround(gY, gPlayer->GetYSpeed())) {
         return true;
     }
     
     for (Obstacle* obstacle : gObstacles) {
-        if (gPlayer->LandedInObstacle(obstacle)) {
+        if (gPlayer->LandedInObstacle(obstacle, 0, gPlayer->GetYSpeed())) {
             return true;
         }
     }
 
     for (Opponent* opponent : gOpponents) {
-        if (gPlayer->LandedInOpponent(opponent)) {
+        if (gPlayer->LandedInOpponent(opponent, 0, gPlayer->GetYSpeed())) {
             return true;
         }
     }

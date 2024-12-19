@@ -20,12 +20,12 @@ void Obstacle::DrawReact(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GL
 }
 
 
-GLfloat Obstacle::GetX() {
+GLfloat Obstacle::GetGx() {
     return gX;
 }
 
 
-GLfloat Obstacle::GetY() {
+GLfloat Obstacle::GetGy() {
     return gY;
 }
 

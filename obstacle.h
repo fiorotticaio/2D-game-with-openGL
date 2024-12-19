@@ -39,8 +39,8 @@ public:
         DrawObstacle();
     }
 
-    GLfloat GetX();
-    GLfloat GetY();
+    GLfloat GetGx();
+    GLfloat GetGy();
     GLfloat GetWidth();
     GLfloat GetHeight();
 };

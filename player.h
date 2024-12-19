@@ -125,8 +125,9 @@ public:
     bool ReachedMaximumJumpHeight();
     GLfloat GetInvisibleReactHeight();
     GLfloat GetInvisibleReactWidth();
-    bool LandedInObstacle(Obstacle* obstacle);
-    bool LandedInOpponent(Opponent* opponent);
+    bool LandedInObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool LandedInOpponent(Opponent* opponent, GLfloat dx, GLfloat dy);
+    bool CollidedWithGround(GLfloat groundY, GLfloat dy);
 };
 
 

@@ -64,6 +64,8 @@ public:
     Opponent(GLfloat x, GLfloat y, GLfloat baseCircleRadius) {
         gX = x;
         gY = y;
+        gXDirection = -1;
+        gYDirection = -1;
         gBaseCircleRadius = baseCircleRadius;
         gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
         gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
@@ -71,7 +73,7 @@ public:
         gArmHeight = ((float) 57 / (float) 172) * gBaseCircleRadius;
         gArmWidth = (float) gArmHeight / (float) 6;
         gArmAngle = -90.0f;
-        gArmSpeed = 1.0f;
+        gArmSpeed = 0.5f;
         gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
         gThighWidth = (float) gThighHeight / (float) 6;
         gFrontThighAngle = -140.0f;
@@ -82,8 +84,6 @@ public:
         gBackShinAngle = 0.0f;
         gXSpeed = 0.025f;
         gYSpeed = 0.025f;
-        gXDirection = -1;
-        gYDirection = -1;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
         maxJumpHeight = 4 * gInvisibleReactHeight; // 4 instead of 3 to make the game more playable
@@ -98,7 +98,7 @@ public:
     GLfloat GetGy();
     void MoveInX(GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX, GLdouble timeDifference);
     void MoveInY(GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY, GLdouble timeDifference);
-    void RotateArm(GLfloat y, GLfloat windowHeight);
+    void RotateArmToTargetAngle(GLfloat timeDifference, GLfloat targetAngle);
     void SetXDirection(GLint xDirection);
     GLint GetXDirection();
     void SetYDirection(GLint yDirection);

@@ -61,7 +61,7 @@ public:
     GLfloat GetPlayerGy();
     void MovePlayerInX(GLdouble timeDifference);
     void MovePlayerInY(GLdouble timeDifference);
-    void RotatePlayerArm(GLfloat y, GLfloat WindowHeight);
+    void RotatePlayerArm(GLfloat y, GLfloat WindowHeight, GLfloat timeDifference);
     void SetPlayerXDirection(GLint xDirection);
     GLint GetPlayerXDirection();
     void SetPlayerYDirection(GLint yDirection);
@@ -91,6 +91,7 @@ public:
 	void MoveOpponentsInX(GLfloat timeDiference);
     bool ObstaclesCollidesWithShot(Shot* shot);
     bool OpponentsCollidesWithShot(Shot* shot);
+    void MoveOpponentsArms(GLfloat timeDifference);
 };
 
 

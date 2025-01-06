@@ -254,8 +254,8 @@ bool Arena::PlayerLandsInOpponent(Player* player, Opponent* opponent, GLfloat dx
 }
 
 
-void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight) {
-    gPlayer->RotateArm(y, WindowHeight);
+void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight, GLfloat timeDifference) {
+    gPlayer->RotateArm(y, WindowHeight, timeDifference);
 }
 
 
@@ -585,4 +585,32 @@ bool Arena::OpponentCollidesWithShot(Opponent* opponent, Shot* shot) {
     GLfloat distanceSquared = distanceX * distanceX + distanceY * distanceY;
 
     return distanceSquared <= shotRadius * shotRadius;
+}
+
+
+void Arena::MoveOpponentsArms(GLfloat timeDifference) {
+    for (Opponent* opponent : gOpponents) {
+        // Rotate the arm in the player direction
+        GLfloat playerX = gPlayer->GetGx();
+        GLfloat playerY = gPlayer->GetGy();
+
+        GLfloat opponentX = opponent->GetGx();
+        GLfloat opponentY = opponent->GetGy();
+
+        GLfloat xResVector = playerX - opponentX;
+        GLfloat yResVector = playerY - opponentY;
+
+        GLfloat angleMax = -45.0f;
+        GLfloat angleMin = -135.0f;
+
+        GLfloat angle = atan2(yResVector, xResVector) * 180.0f / M_PI; // Converte de radianos para graus
+
+        angle = angle - 90.0f;
+        if (angle > 0) angle *= -1;
+
+        if      (angle > angleMax) angle = angleMax;
+        else if (angle < angleMin) angle = angleMin;
+
+        opponent->RotateArmToTargetAngle(timeDifference, angle);
+    }
 }

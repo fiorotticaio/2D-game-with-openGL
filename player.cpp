@@ -104,19 +104,20 @@ void Player::MoveInY(GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLd
     }
 }
 
-void Player::RotateArm(GLfloat y, GLfloat windowHeight) {
+void Player::RotateArm(GLfloat y, GLfloat windowHeight, GLfloat timeDifference) {
     GLfloat mouseMin = 0;
     GLfloat mouseMax = windowHeight - mouseMin;
 
     GLfloat angleMax = -45.0f;
     GLfloat angleMin = -135.0f;
 
-    gArmAngle = angleMin + ((y - mouseMin) / (mouseMax - mouseMin)) * (angleMax - angleMin);
+    GLfloat targetAngle = angleMin + ((y - mouseMin) / (mouseMax - mouseMin)) * (angleMax - angleMin);
     
-    // gArmAngle *= gArmSpeed;
-
-    if      (gArmAngle > angleMax) gArmAngle = angleMax;
-    else if (gArmAngle < angleMin) gArmAngle = angleMin;
+    if (gArmAngle < targetAngle) {
+        gArmAngle += gArmSpeed * timeDifference;
+    } else if (gArmAngle > targetAngle) {
+        gArmAngle -= gArmSpeed * timeDifference;
+    }
 }
 
 void Player::SetXDirection(GLint xDirection) {

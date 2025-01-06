@@ -41,6 +41,7 @@ std::vector<Shot*> shots;
 // Flags and aux variables
 int animateLegs = 0;
 float positionTolerance = 0.5f;
+float mouseY = 0.0f;
 
 
 
@@ -233,9 +234,7 @@ void init(void) {
 
 void passiveMotion(int x, int y) {
 	// Invert the y position
-	y = Height - y;
-
-	arena->RotatePlayerArm(y, Height);
+	mouseY = Height - y;
 }
 
 
@@ -256,20 +255,20 @@ void idle(void) {
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
-	GLdouble currentTime, timeDiference;
+	GLdouble currentTime, timeDifference;
 	currentTime = glutGet(GLUT_ELAPSED_TIME);   // Get the time that has passed since the start of the application
-	timeDiference = currentTime - previousTime; // Calculates the elapsed time since the last frame
+	timeDifference = currentTime - previousTime; // Calculates the elapsed time since the last frame
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
 
 	if (keyStatus[(int)('a')]) {
 		animateLegs = 1;
 		arena->SetPlayerXDirection(-1);
-		arena->MovePlayerInX(timeDiference);
+		arena->MovePlayerInX(timeDifference);
 	}
 	if (keyStatus[(int)('d')]) {
 		animateLegs = 1;
 		arena->SetPlayerXDirection(1);
-		arena->MovePlayerInX(timeDiference);
+		arena->MovePlayerInX(timeDifference);
 	}
 
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
@@ -281,14 +280,16 @@ void idle(void) {
 		arena->SetPlayerYDirection(-1);
 	}
 
-	arena->MovePlayerInY(timeDiference);
-	arena->MoveOpponentsInY(timeDiference);
-	arena->MoveOpponentsInX(timeDiference);
+	arena->RotatePlayerArm(mouseY, Height, timeDifference);
+	arena->MovePlayerInY(timeDifference);
+	arena->MoveOpponentsInY(timeDifference);
+	arena->MoveOpponentsInX(timeDifference);
+	arena->MoveOpponentsArms(timeDifference);
 	
 	for (size_t i = 0; i < shots.size(); ++i) {
         Shot* shot = shots[i];
         if (shot) {
-            shot->Move(timeDiference);
+            shot->Move(timeDifference);
 
 			bool shotDeleted = false;
 

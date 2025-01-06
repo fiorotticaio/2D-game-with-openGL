@@ -64,6 +64,8 @@ public:
     Player(GLfloat x, GLfloat y, GLfloat baseCircleRadius) {
         gX = x;
         gY = y;
+        gXDirection = 1;
+        gYDirection = -1;
         gBaseCircleRadius = baseCircleRadius;
         gHeadCircleRadius = ((float) 22 / (float) 172) * gBaseCircleRadius;
         gBodyHeight = ((float) 53 / 172) * gBaseCircleRadius;
@@ -82,8 +84,6 @@ public:
         gBackShinAngle = 0.0f;
         gXSpeed = 0.05f;
         gYSpeed = 0.025f;
-        gXDirection = 1;
-        gYDirection = -1;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
         maxJumpHeight = 4 * gInvisibleReactHeight; // 4 instead of 3 to make the game more playable
@@ -98,7 +98,7 @@ public:
     GLfloat GetGy();
     void MoveInX(GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference);
     void MoveInY(GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLdouble timeDifference);
-    void RotateArm(GLfloat y, GLfloat windowHeight);
+    void RotateArm(GLfloat y, GLfloat windowHeight, GLfloat timeDifference);
     void SetXDirection(GLint xDirection);
     GLint GetXDirection();
     void SetYDirection(GLint yDirection);

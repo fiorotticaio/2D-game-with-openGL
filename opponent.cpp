@@ -308,30 +308,6 @@ Shot* Opponent::Shoot(GLfloat maxDist) {
 }
 
 
-bool Opponent::CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-
-    GLfloat x = gX + dx * gXDirection + offset * gXDirection;
-    GLfloat y = gY + dy * gYDirection + offset * gYDirection;
-
-    GLfloat opponentLeftX = x - gInvisibleReactWidth / 2;
-    GLfloat opponentRightX = x + gInvisibleReactWidth / 2;
-    GLfloat opponentBottomY = y - gThighHeight - gShinHeight;
-    GLfloat opponentTopY = y - gThighHeight - gShinHeight + gInvisibleReactHeight;
-
-    GLfloat obstacleLeftX = obstacle->GetGx();
-    GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
-    GLfloat obstacleTopY = obstacle->GetGy();
-    GLfloat obstacleBottomY = obstacle->GetGy() - obstacle->GetHeight();
-
-    bool collidesInX = opponentRightX >= obstacleLeftX && opponentLeftX <= obstacleRightX;
-
-    bool collidesInY = opponentTopY >= obstacleBottomY && opponentBottomY <= obstacleTopY;
-
-    return collidesInX && collidesInY;
-}
-
-
 GLfloat Opponent::GetXSpeed() {
     return gXSpeed;
 }
@@ -390,45 +366,4 @@ GLfloat Opponent::GetInvisibleReactHeight() {
 
 GLfloat Opponent::GetInvisibleReactWidth() {
     return gInvisibleReactWidth;
-}
-
-
-bool Opponent::LandedInObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-    
-    GLfloat x = gX + dx * gXDirection + offset * gXDirection;
-    GLfloat y = gY + dy * gYDirection + offset * gYDirection;
-
-    GLfloat opponentBottomY = y - gThighHeight - gShinHeight;
-    GLfloat opponentLeftX = x - gInvisibleReactWidth / 2;
-    GLfloat opponentRightX = x + gInvisibleReactWidth / 2;
-
-    GLfloat obstacleLeftX = obstacle->GetGx();
-    GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
-    GLfloat obstacleTopY = obstacle->GetGy();
-
-    return opponentBottomY <= obstacleTopY && opponentBottomY >= obstacleTopY -1.0f && // Top offset
-           opponentRightX >= obstacleLeftX && opponentLeftX <= obstacleRightX;
-}
-
-
-bool Opponent::CollidedWithGround(GLfloat groundY, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-    return gY - gThighHeight - gShinHeight <= groundY + dy * (-gYDirection) + offset * (-gYDirection);
-}
-
-
-bool Opponent::CollidesWithShot(Shot* shot) {
-    GLfloat shotX = shot->GetGx();
-    GLfloat shotY = shot->GetGy();
-    GLfloat shotRadius = shot->GetRadius();
-
-    GLfloat closestX = std::max(gX - gInvisibleReactWidth / 2, std::min(shotX, gX + gInvisibleReactWidth / 2));
-    GLfloat closestY = std::max(gY - gThighHeight - gShinHeight, std::min(shotY, gY - gThighHeight - gShinHeight + gInvisibleReactHeight));
-
-    GLfloat distanceX = shotX - closestX;
-    GLfloat distanceY = shotY - closestY;
-    GLfloat distanceSquared = distanceX * distanceX + distanceY * distanceY;
-
-    return distanceSquared <= shotRadius * shotRadius;
 }

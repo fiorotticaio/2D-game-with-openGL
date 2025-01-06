@@ -292,27 +292,20 @@ void idle(void) {
 
 			bool shotDeleted = false;
 
-			for (Obstacle* obstacle : arena->GetObstacles()) {
-				if (obstacle->CollidesWithShot(shot)) {
-					delete shot;
-					shots.erase(shots.begin() + i);
-					i--;
-					shotDeleted = true;
-					break;
-				}
+			if (arena->ObstaclesCollidesWithShot(shot)) {
+				delete shot;
+				shots.erase(shots.begin() + i);
+				i--;
+				shotDeleted = true;
 			}
 
 			if (shotDeleted) continue;
 
-			for (Opponent* opponent : arena->GetOpponents()) {
-				if (opponent->CollidesWithShot(shot)) {
-					delete shot;
-					shots.erase(shots.begin() + i);
-					i--;
-					shotDeleted = true;
-					arena->EraseOpponent(opponent);
-					break;
-				}
+			if (arena->OpponentsCollidesWithShot(shot)) {
+				delete shot;
+				shots.erase(shots.begin() + i);
+				i--;
+				shotDeleted = true;
 			}
 
 			if (shotDeleted) continue;

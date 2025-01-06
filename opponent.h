@@ -8,7 +8,6 @@
 #include <math.h>
 #include <stdio.h>
 #include "shot.h"
-#include "obstacle.h"
 
 
 class Opponent {
@@ -115,7 +114,6 @@ public:
     void SetFrontShinAngle(GLfloat angle);
     void SetBackShinAngle(GLfloat angle);
     Shot* Shoot(GLfloat maxDist);
-    bool CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
     GLfloat GetXSpeed();
     GLfloat GetYSpeed();
     void Jump();
@@ -126,10 +124,6 @@ public:
     bool ReachedMaximumJumpHeight();
     GLfloat GetInvisibleReactHeight();
     GLfloat GetInvisibleReactWidth();
-    bool LandedInObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
-    bool CollidedWithGround(GLfloat groundY, GLfloat dy);
-    bool CollidesWithShot(Shot* shot);
-    void MoveFromSideToSide(GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX, GLdouble timeDifference);
 };
 
 

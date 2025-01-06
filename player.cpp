@@ -308,30 +308,6 @@ Shot* Player::Shoot(GLfloat maxDist) {
 }
 
 
-bool Player::CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-
-    GLfloat x = gX + dx * gXDirection + offset * gXDirection;
-    GLfloat y = gY + dy * gYDirection + offset * gYDirection;
-
-    GLfloat playerLeftX = x - gInvisibleReactWidth / 2;
-    GLfloat playerRightX = x + gInvisibleReactWidth / 2;
-    GLfloat playerBottomY = y - gThighHeight - gShinHeight;
-    GLfloat playerTopY = y - gThighHeight - gShinHeight + gInvisibleReactHeight;
-
-    GLfloat obstacleLeftX = obstacle->GetGx();
-    GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
-    GLfloat obstacleTopY = obstacle->GetGy();
-    GLfloat obstacleBottomY = obstacle->GetGy() - obstacle->GetHeight();
-
-    bool collidesInX = playerRightX >= obstacleLeftX && playerLeftX <= obstacleRightX;
-
-    bool collidesInY = playerTopY >= obstacleBottomY && playerBottomY <= obstacleTopY;
-
-    return collidesInX && collidesInY;
-}
-
-
 GLfloat Player::GetXSpeed() {
     return gXSpeed;
 }
@@ -339,33 +315,6 @@ GLfloat Player::GetXSpeed() {
 
 GLfloat Player::GetYSpeed() {
     return gYSpeed;
-}
-
-
-bool Player::CollidesWithOpponent(Opponent* opponent, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-
-    GLfloat x = gX + dx * gXDirection + offset * gXDirection;
-    GLfloat y = gY + dy * gYDirection + offset * gYDirection;
-
-    GLfloat playerLeftX = x - gInvisibleReactWidth / 2;
-    GLfloat playerRightX = x + gInvisibleReactWidth / 2;
-    GLfloat playerBottomY = y - gThighHeight - gShinHeight;
-    GLfloat playerTopY = y - gThighHeight - gShinHeight + gInvisibleReactHeight;
-
-    GLfloat opponentLeftX = opponent->GetGx();
-    GLfloat opponentRightX = opponent->GetGx() + opponent->GetInvisibleReactWidth();
-    GLfloat opponentTopY = opponent->GetGy();
-    GLfloat opponentBottomY = opponent->GetGy() - opponent->GetInvisibleReactHeight();
-
-    // Colisão lateral (eixo X)
-    bool collidesInX = playerRightX >= opponentLeftX && playerLeftX <= opponentRightX;
-
-    // Colisão vertical (eixo Y)
-    bool collidesInY = playerTopY >= opponentBottomY && playerBottomY <= opponentTopY;
-
-    // Retorna verdadeiro apenas se houver colisão em ambos os eixos
-    return collidesInX && collidesInY;
 }
 
 
@@ -417,49 +366,4 @@ GLfloat Player::GetInvisibleReactHeight() {
 
 GLfloat Player::GetInvisibleReactWidth() {
     return gInvisibleReactWidth;
-}
-
-
-bool Player::LandedInObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-    
-    GLfloat x = gX + dx * gXDirection + offset * gXDirection;
-    GLfloat y = gY + dy * gYDirection + offset * gYDirection;
-
-    GLfloat playerBottomY = y - gThighHeight - gShinHeight;
-    GLfloat playerLeftX = x - gInvisibleReactWidth / 2;
-    GLfloat playerRightX = x + gInvisibleReactWidth / 2;
-
-    GLfloat obstacleLeftX = obstacle->GetGx();
-    GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
-    GLfloat obstacleTopY = obstacle->GetGy();
-
-    return playerBottomY <= obstacleTopY && playerBottomY >= obstacleTopY -1.0f && // Top offset
-           playerRightX >= obstacleLeftX && playerLeftX <= obstacleRightX;
-}
-
-
-bool Player::LandedInOpponent(Opponent* opponent, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-    
-    GLfloat x = gX + dx * gXDirection + offset * gXDirection;
-    GLfloat y = gY + dy * gYDirection + offset * gYDirection;
-
-    GLfloat playerBottomY = y - gThighHeight - gShinHeight;
-    GLfloat playerLeftX = x - gInvisibleReactWidth / 2;
-    GLfloat playerRightX = x + gInvisibleReactWidth / 2;
-
-    GLfloat opponentLeftX = opponent->GetGx();
-    GLfloat opponentRightX = opponent->GetGy() + opponent->GetInvisibleReactWidth();
-    GLfloat opponentTopY = opponent->GetGy();
-
-    // Verifica se o jogador está em cima do obstáculo
-    return playerBottomY <= opponentTopY && playerBottomY >= opponentTopY - 1.0f && // Top offset
-           playerRightX >= opponentLeftX && playerLeftX <= opponentRightX;
-}
-
-
-bool Player::CollidedWithGround(GLfloat groundY, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
-    return gY - gThighHeight - gShinHeight <= groundY + dy * (-gYDirection) + offset * (-gYDirection);
 }

@@ -34,6 +34,16 @@ private:
     void LoadArena(const char* svg_file_path);
     void DrawArena();
     void DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
+    bool PlayerCollidesWithObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool PlayerLandsInObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool PlayerCollidesWithOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy);
+    bool PlayerLandsInOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy);
+    bool PlayerCollidesWithGround(Player* player, GLfloat dx, GLfloat dy);
+    bool OpponentCollidesWithObstacle(Opponent* opponent, Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool OpponentLandsInObstacle(Opponent* opponent, Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool OpponentCollidesWithGround(Opponent* opponent, GLfloat dx, GLfloat dy);
+    bool ObstacleCollidesWithShot(Obstacle* obstacle, Shot* shot);
+    bool OpponentCollidesWithShot(Opponent* opponent, Shot* shot);
 
 
 public:
@@ -79,6 +89,8 @@ public:
     void EraseOpponent(Opponent* opponent);
     void MoveOpponentsInY(GLfloat timeDiference);
 	void MoveOpponentsInX(GLfloat timeDiference);
+    bool ObstaclesCollidesWithShot(Shot* shot);
+    bool OpponentsCollidesWithShot(Shot* shot);
 };
 
 

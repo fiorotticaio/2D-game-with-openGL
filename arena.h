@@ -87,8 +87,8 @@ public:
     std::vector<Obstacle*> GetObstacles();
     std::vector<Opponent*> GetOpponents();
     void EraseOpponent(Opponent* opponent);
-    void MoveOpponentsInY(GLfloat timeDiference);
-	void MoveOpponentsInX(GLfloat timeDiference);
+    void MoveOpponentsInY(GLfloat timeDifference);
+	void MoveOpponentsInX(GLfloat timeDifference);
     bool ObstaclesCollidesWithShot(Shot* shot);
     bool OpponentsCollidesWithShot(Shot* shot);
     void MoveOpponentsArms(GLfloat timeDifference);

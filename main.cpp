@@ -272,8 +272,6 @@ void idle(void) {
 		arena->MovePlayerInX(timeDiference);
 	}
 
-	arena->MoveOpponents(timeDiference);
-
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),
@@ -284,6 +282,8 @@ void idle(void) {
 	}
 
 	arena->MovePlayerInY(timeDiference);
+	arena->MoveOpponentsInY(timeDiference);
+	arena->MoveOpponentsInX(timeDiference);
 	
 	for (size_t i = 0; i < shots.size(); ++i) {
         Shot* shot = shots[i];

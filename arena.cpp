@@ -323,8 +323,26 @@ void Arena::EraseOpponent(Opponent* opponent) {
 }
 
 
-void Arena::MoveOpponents(GLdouble timeDifference) {
+void Arena::MoveOpponentsInY(GLfloat timeDifference) {
+    bool goToNextOpponent = false;
+
     for (Opponent* opponent : gOpponents) {
-        opponent->MoveFromSideToSide(gX, gX + gWidth, timeDifference);
+        for (Obstacle* obstacle : gObstacles) {
+            if (opponent->CollidesWithObstacle(obstacle, 0, opponent->GetYSpeed())) {
+                goToNextOpponent = true;
+            }
+        }
+
+        if (goToNextOpponent) {
+            goToNextOpponent = false;
+            continue;
+        }
+
+        opponent->MoveInY(gY, gY + gHeight, timeDifference);
     }
+}
+
+
+void Arena::MoveOpponentsInX(GLfloat timeDifference) {
+    // TODO: Implement this function
 }

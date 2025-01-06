@@ -272,6 +272,8 @@ void idle(void) {
 		arena->MovePlayerInX(timeDiference);
 	}
 
+	arena->MoveOpponents(timeDiference);
+
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),

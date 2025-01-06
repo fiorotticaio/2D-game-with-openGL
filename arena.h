@@ -77,6 +77,7 @@ public:
     std::vector<Obstacle*> GetObstacles();
     std::vector<Opponent*> GetOpponents();
     void EraseOpponent(Opponent* opponent);
+    void MoveOpponents(GLdouble timeDifference);
 };
 
 

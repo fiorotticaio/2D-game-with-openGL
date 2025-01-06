@@ -8,6 +8,7 @@
 #include <math.h>
 #include <stdio.h>
 #include "shot.h"
+#include "obstacle.h"
 
 
 class Opponent {
@@ -39,8 +40,13 @@ class Opponent {
     GLfloat gFrontShinAngle;
     GLfloat gBackShinAngle;
 
-    GLfloat gSpeed;
-    GLint gDirection; // 1 for right (front), -1 for left (back)
+    GLfloat gXSpeed;
+    GLfloat gYSpeed;
+    GLint gXDirection; // 1 for right (front), -1 for left (back)
+    GLint gYDirection; // 1 for up, -1 for down
+
+    GLfloat maxJumpHeight;
+    GLfloat jumpHeight;
 
 
 private:
@@ -50,6 +56,9 @@ private:
     void DrawHeadAndArm();
     void DrawFrontLeg();
     void DrawBackLeg();
+    void RotatePoint(GLfloat x, GLfloat y, GLfloat angle, GLfloat &xOut, GLfloat &yOut);
+    void TranslatePoint(GLfloat x, GLfloat y, GLfloat dx, GLfloat dy, GLfloat &xOut, GLfloat &yOut);
+    void ScalePoint(GLfloat x, GLfloat y, GLfloat sx, GLfloat sy, GLfloat &xOut, GLfloat &yOut);
     
 
 public:
@@ -67,15 +76,19 @@ public:
         gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
         gThighWidth = (float) gThighHeight / (float) 6;
         gFrontThighAngle = -140.0f;
-        gBackThighAngle = -210.0f;
+        gBackThighAngle = -220.0f;
         gShinHeight = ((float) 50 / (float) 172) * gBaseCircleRadius;
         gShinWidth = (float) gShinHeight / (float)  6;
-        gFrontShinAngle = -70.0f;
-        gBackShinAngle = -30.0f;
-        gSpeed = 10;
-        gDirection = -1;
+        gFrontShinAngle = 0.0f;
+        gBackShinAngle = 0.0f;
+        gXSpeed = 0.05f;
+        gYSpeed = 0.025f;
+        gXDirection = -1;
+        gYDirection = -1;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
+        maxJumpHeight = 3 * gInvisibleReactHeight;
+        jumpHeight = 0;
     }
 
     void Draw() {
@@ -84,15 +97,39 @@ public:
 
     GLfloat GetGx();
     GLfloat GetGy();
-    void MoveInX(GLfloat dx, GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX);
-    void MoveInY(GLfloat dy, GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY);
+    void MoveInX(GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX, GLdouble timeDifference);
+    void MoveInY(GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY, GLdouble timeDifference);
     void RotateArm(GLfloat y, GLfloat windowHeight);
-    void SetDirection(GLint direction);
-    GLfloat GetInvisibleReactWidth();
-    GLfloat GetInvisibleReactHeight();
+    void SetXDirection(GLint xDirection);
+    GLint GetXDirection();
+    void SetYDirection(GLint yDirection);
+    GLint GetYDirection();
+    GLfloat GetFrontThighAngle();
+    GLfloat GetBackThighAngle();
+    GLfloat GetFrontShinAngle();
+    GLfloat GetBackShinAngle();
+    void RotateFrontThigh(GLfloat dAngle);
+    void RotateBackThigh(GLfloat dAngle);
+    void RotateFrontShin(GLfloat dAngle);
+    void RotateBackShin(GLfloat dAngle);
+    void SetFrontShinAngle(GLfloat angle);
+    void SetBackShinAngle(GLfloat angle);
+    Shot* Shoot(GLfloat maxDist);
+    bool CollidesWithObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    GLfloat GetXSpeed();
+    GLfloat GetYSpeed();
+    void Jump();
+    GLfloat GetMaxJumpHeight();
+    GLfloat GetJumpHeight();
     GLfloat GetThighHeight();
     GLfloat GetShinHeight();
+    bool ReachedMaximumJumpHeight();
+    GLfloat GetInvisibleReactHeight();
+    GLfloat GetInvisibleReactWidth();
+    bool LandedInObstacle(Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool CollidedWithGround(GLfloat groundY, GLfloat dy);
     bool CollidesWithShot(Shot* shot);
+    void MoveFromSideToSide(GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX, GLdouble timeDifference);
 };
 
 

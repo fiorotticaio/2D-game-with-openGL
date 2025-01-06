@@ -321,3 +321,10 @@ void Arena::EraseOpponent(Opponent* opponent) {
         }
     }
 }
+
+
+void Arena::MoveOpponents(GLdouble timeDifference) {
+    for (Opponent* opponent : gOpponents) {
+        opponent->MoveFromSideToSide(gX, gX + gWidth, timeDifference);
+    }
+}

@@ -432,8 +432,3 @@ bool Opponent::CollidesWithShot(Shot* shot) {
 
     return distanceSquared <= shotRadius * shotRadius;
 }
-
-
-void Opponent::MoveFromSideToSide(GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX, GLdouble timeDifference) {
-    // Implementação do movimento do oponente
-}

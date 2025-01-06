@@ -81,13 +81,13 @@ public:
         gShinWidth = (float) gShinHeight / (float)  6;
         gFrontShinAngle = 0.0f;
         gBackShinAngle = 0.0f;
-        gXSpeed = 0.05f;
+        gXSpeed = 0.025f;
         gYSpeed = 0.025f;
         gXDirection = -1;
         gYDirection = -1;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
-        maxJumpHeight = 3 * gInvisibleReactHeight;
+        maxJumpHeight = 4 * gInvisibleReactHeight; // 4 instead of 3 to make the game more playable
         jumpHeight = 0;
     }
 

@@ -324,19 +324,16 @@ void Arena::EraseOpponent(Opponent* opponent) {
 
 
 void Arena::MoveOpponentsInY(GLfloat timeDifference) {
-    bool goToNextOpponent = false;
-
     for (Opponent* opponent : gOpponents) {
+        bool goToNextOpponent = false;
+        
         for (Obstacle* obstacle : gObstacles) {
             if (opponent->CollidesWithObstacle(obstacle, 0, opponent->GetYSpeed())) {
                 goToNextOpponent = true;
             }
         }
 
-        if (goToNextOpponent) {
-            goToNextOpponent = false;
-            continue;
-        }
+        if (goToNextOpponent) continue;
 
         opponent->MoveInY(gY, gY + gHeight, timeDifference);
     }
@@ -344,5 +341,47 @@ void Arena::MoveOpponentsInY(GLfloat timeDifference) {
 
 
 void Arena::MoveOpponentsInX(GLfloat timeDifference) {
-    // TODO: Implement this function
+    for (Opponent* opponent : gOpponents) {
+        bool directionChanged = false;
+
+        // Check obstacle collisions
+        for (Obstacle* obstacle : gObstacles) {
+            if (opponent->LandedInObstacle(obstacle, 0, opponent->GetYSpeed())) {
+                GLfloat obstacleLeftX = obstacle->GetGx();
+                GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
+
+                // If the opponent reaches the left or right side of the obstacle, change direction
+                if ((opponent->GetGx() + (opponent->GetInvisibleReactWidth() / 2) >= obstacleRightX - 1.0f && opponent->GetXDirection() == 1) || // 1.0f offset
+                    (opponent->GetGx() - (opponent->GetInvisibleReactWidth() / 2) <= obstacleLeftX + 1.0f && opponent->GetXDirection() == -1)) { // 1.0f offset
+                    opponent->SetXDirection(-opponent->GetXDirection());
+                    directionChanged = true;
+                }
+                break;
+            }
+        }
+
+        // If the opponent is not on an obstacle, check for collisions on the ground
+        if (!directionChanged && opponent->CollidedWithGround(gY, opponent->GetYSpeed())) {
+            for (Obstacle* obstacle : gObstacles) {
+                if (opponent->CollidesWithObstacle(obstacle, opponent->GetXSpeed(), 0)) {
+                    opponent->SetXDirection(-opponent->GetXDirection());
+                    directionChanged = true;
+                    break;
+                }
+            }
+
+            // Check for collision with arena boundaries
+            if (!directionChanged) {
+                if ((opponent->GetGx() + (opponent->GetInvisibleReactWidth() / 2) >= gX + gWidth && opponent->GetXDirection() == 1) ||
+                    (opponent->GetGy() - (opponent->GetInvisibleReactWidth() / 2) <= gX && opponent->GetXDirection() == -1)) {
+                    opponent->SetXDirection(-opponent->GetXDirection());
+                    directionChanged = true;
+                }
+            }
+        }
+
+        if (!directionChanged) {
+            opponent->MoveInX(gX, gX + gWidth, timeDifference);
+        }
+    }
 }

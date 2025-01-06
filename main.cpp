@@ -354,7 +354,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	// Initialize the arena
-	arena = new Arena(argv[1], ViewingWidth, ViewingHeight);
+	arena = new Arena(argv[1]);
 
 	// Initialize openGL with Double buffer and RGB color without transparency.
 	// Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.

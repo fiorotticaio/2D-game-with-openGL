@@ -31,14 +31,14 @@ class Arena {
 
 
 private:
-    void LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat ViewingHeight);
+    void LoadArena(const char* svg_file_path);
     void DrawArena();
     void DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
 
 
 public:
-    Arena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat ViewingHeight) {
-        LoadArena(svg_file_path, ViewingWidth, ViewingHeight);
+    Arena(const char* svg_file_path) {
+        LoadArena(svg_file_path);
     }
 
     void Draw() {

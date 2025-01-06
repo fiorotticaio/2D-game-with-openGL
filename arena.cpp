@@ -1,11 +1,11 @@
 #include "arena.h"
 
-GLfloat MapYCoordinate(GLfloat yRead, GLfloat yPositionArena, GLfloat ViewingHeight) {
+GLfloat MapYCoordinate(GLfloat yRead, GLfloat yPositionArena, GLfloat arenaHeight) {
     // The y coordenates of the svg are inverted
-    return yPositionArena + ViewingHeight - (yRead - yPositionArena);
+    return yPositionArena + arenaHeight - (yRead - yPositionArena);
 }
 
-void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat ViewingHeight) {
+void Arena::LoadArena(const char* svg_file_path) {
     using namespace tinyxml2;
 
     XMLDocument doc;
@@ -46,7 +46,7 @@ void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat V
                     GLfloat obstacleWidth = elem->FloatAttribute("width");
                     GLfloat obstacleHeight = elem->FloatAttribute("height");
 
-                    obstacleY = MapYCoordinate(obstacleY, gY, ViewingHeight);
+                    obstacleY = MapYCoordinate(obstacleY, gY, gHeight);
 
                     gObstacles.push_back(new Obstacle(obstacleX, obstacleY, obstacleWidth, obstacleHeight));
                 }
@@ -60,7 +60,7 @@ void Arena::LoadArena(const char* svg_file_path, GLfloat ViewingWidth, GLfloat V
                 GLfloat cy = elem->FloatAttribute("cy");
                 GLfloat radius = elem->FloatAttribute("r");
 
-                cy = MapYCoordinate(cy, gY, ViewingHeight);
+                cy = MapYCoordinate(cy, gY, gHeight);
 
                 if (fillStr == "green") {
                     gPlayer = new Player(cx, cy, radius);

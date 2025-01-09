@@ -139,8 +139,8 @@ void renderScene(void) {
 		if (shot) shot->Draw();
 	}
 
-	// Draw the new frame of the game
-	glutSwapBuffers(); 
+	// Draw on the frame buffer
+	glutSwapBuffers(); // Function suitable for double buffer window
 }
 
 

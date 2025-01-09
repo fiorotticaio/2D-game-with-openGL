@@ -29,19 +29,23 @@ const GLint Width = 500;
 const GLint Height = 500;
 
 // Viewing dimensions
-GLfloat ViewingWidth = 0;
-GLfloat ViewingHeight = 0;
+GLfloat viewingWidth = 0;
+GLfloat viewingHeight = 0;
 GLfloat xPositionArena = 0;
 GLfloat yPositionArena = 0;
+GLfloat arenaWidth = 0;
+GLfloat arenaHeight = 0;
 
 // Components of the virtual world
 Arena* arena = NULL;
-std::vector<Shot*> shots;
+std::vector<Shot*> playerShots;
+std::vector<Shot*> opponentsShots;
 
 // Flags and aux variables
 int animateLegs = 0;
 float positionTolerance = 0.5f;
 float mouseY = 0.0f;
+GLfloat timeAccumulator = 0.0f;
 
 
 
@@ -105,8 +109,8 @@ bool loadViewportSizeFromSvg(const char* svg_file_path) {
         const char* fill = elem->Attribute("fill");
         if (fill && std::string(fill) == "blue") {
             if (elem->Attribute("width") && elem->Attribute("height")) {
-				ViewingWidth = elem->FloatAttribute("width");
-				ViewingHeight = elem->FloatAttribute("height");
+				arenaWidth = elem->FloatAttribute("width");
+				arenaHeight = elem->FloatAttribute("height");
 				xPositionArena = elem->FloatAttribute("x");
 				yPositionArena = elem->FloatAttribute("y");
 			} else {
@@ -114,11 +118,14 @@ bool loadViewportSizeFromSvg(const char* svg_file_path) {
 				return false;
 			}
 
+			viewingWidth = arenaWidth;
+			viewingHeight = arenaHeight;
+
 			// Make the viewing area a square with the smallest dimension
-			if (ViewingWidth > ViewingHeight) {
-				ViewingWidth = ViewingHeight;
+			if (viewingWidth > viewingHeight) {
+				viewingWidth = viewingHeight;
 			} else {
-				ViewingHeight = ViewingWidth;
+				viewingHeight = viewingWidth;
 			}
 
             return true;
@@ -135,7 +142,11 @@ void renderScene(void) {
     
 	arena->Draw();
 
-	for (Shot* shot : shots) {
+	for (Shot* shot : playerShots) {
+		if (shot) shot->Draw();
+	}
+
+	for (Shot* shot : opponentsShots) {
 		if (shot) shot->Draw();
 	}
 
@@ -221,9 +232,9 @@ void init(void) {
 
 	glMatrixMode(GL_PROJECTION); // Select the projection matrix    
 	glOrtho(xPositionArena,                 // X coordinate of left edge             
-			xPositionArena + ViewingWidth,  // X coordinate of right edge            
+			xPositionArena + viewingWidth,  // X coordinate of right edge            
 			yPositionArena,                 // Y coordinate of bottom edge             
-			yPositionArena + ViewingHeight, // Y coordinate of top edge             
+			yPositionArena + viewingHeight, // Y coordinate of top edge             
 			-100,                           // Z coordinate of the “near” plane            
 			100);                           // Z coordinate of the “far” plane
 	glMatrixMode(GL_MODELVIEW); // Select the projection matrix    
@@ -240,7 +251,7 @@ void passiveMotion(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        shots.push_back(arena->PlayerShoot(ViewingWidth));
+        playerShots.push_back(arena->PlayerShoot(viewingWidth));
     }
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN && arena->PlayerLanded()) {
 		arena->PlayerJump();
@@ -259,7 +270,10 @@ void idle(void) {
 	currentTime = glutGet(GLUT_ELAPSED_TIME);   // Get the time that has passed since the start of the application
 	timeDifference = currentTime - previousTime; // Calculates the elapsed time since the last frame
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
+	timeAccumulator += timeDifference;
+	
 	timeDifference = 1; // TODO: timeDifference is causing issue (REMOVE THIS LATER)
+
 
 	if (keyStatus[(int)('a')]) {
 		animateLegs = 1;
@@ -275,7 +289,7 @@ void idle(void) {
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),
-				   ViewingWidth, ViewingHeight);
+				   viewingWidth, viewingHeight);
 	
 	if (arena->PlayerReachedMaximumJumpHeight()) {
 		arena->SetPlayerYDirection(-1);
@@ -286,9 +300,14 @@ void idle(void) {
 	arena->MoveOpponentsInY(timeDifference);
 	arena->MoveOpponentsInX(timeDifference);
 	arena->MoveOpponentsArms(timeDifference);
+
+	if (timeAccumulator >= 500.0f) {
+		arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
+		timeAccumulator = 0.0f;
+	}
 	
-	for (size_t i = 0; i < shots.size(); ++i) {
-        Shot* shot = shots[i];
+	for (size_t i = 0; i < playerShots.size(); ++i) {
+        Shot* shot = playerShots[i];
         if (shot) {
             shot->Move(timeDifference);
 
@@ -296,7 +315,7 @@ void idle(void) {
 
 			if (arena->ObstaclesCollidesWithShot(shot)) {
 				delete shot;
-				shots.erase(shots.begin() + i);
+				playerShots.erase(playerShots.begin() + i);
 				i--;
 				shotDeleted = true;
 			}
@@ -305,7 +324,7 @@ void idle(void) {
 
 			if (arena->OpponentsCollidesWithShot(shot)) {
 				delete shot;
-				shots.erase(shots.begin() + i);
+				playerShots.erase(playerShots.begin() + i);
 				i--;
 				shotDeleted = true;
 			}
@@ -314,11 +333,36 @@ void idle(void) {
 
             if (!shot->Valid()) {
                 delete shot;
-                shots.erase(shots.begin() + i);
+                playerShots.erase(playerShots.begin() + i);
                 i--;
             }
         }
     }
+
+	for (size_t i = 0; i < opponentsShots.size(); ++i) {
+		Shot* shot = opponentsShots[i];
+
+		if (shot) {
+			shot->Move(timeDifference);
+
+			bool shotDeleted = false;
+
+			if (arena->ObstaclesCollidesWithShot(shot)) {
+				delete shot;
+				opponentsShots.erase(opponentsShots.begin() + i);
+				i--;
+				shotDeleted = true;
+			}
+
+			if (shotDeleted) continue;
+
+			if (!shot->Valid()) {
+				delete shot;
+				opponentsShots.erase(opponentsShots.begin() + i);
+				i--;
+			}
+		}
+	}
 
 	if (animateLegs) {
 		static int frontThighAngleDir = 1;

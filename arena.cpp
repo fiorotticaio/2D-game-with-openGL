@@ -453,7 +453,7 @@ void Arena::MoveOpponentsInX(GLfloat timeDifference) {
 
         // Check player collision
         if (PlayerCollidesWithOpponent(gPlayer, opponent, opponent->GetXSpeed(), 0)) {
-            if (!PlayerLandsInOpponent(gPlayer, opponent, 0, opponent->GetYSpeed()) && gPlayer->GetXDirection() != opponent->GetXDirection()) {
+            if (!PlayerLandsInOpponent(gPlayer, opponent, 0, opponent->GetYSpeed())) {
                 continue;
             }
         }
@@ -621,5 +621,14 @@ void Arena::MoveOpponentsArms(GLfloat timeDifference) {
         }
 
         opponent->RotateArmToTargetAngle(timeDifference, angle);
+    }
+}
+
+
+void Arena::UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat maxDist, GLfloat timeDifference) {
+    for (Opponent* opponent : gOpponents) {
+        if (rand() % 2 == 0) {
+            opponentsShots.push_back(opponent->Shoot(maxDist));
+        }
     }
 }

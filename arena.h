@@ -92,6 +92,7 @@ public:
     bool ObstaclesCollidesWithShot(Shot* shot);
     bool OpponentsCollidesWithShot(Shot* shot);
     void MoveOpponentsArms(GLfloat timeDifference);
+    void UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat maxDist, GLfloat timeDifference);
 };
 
 

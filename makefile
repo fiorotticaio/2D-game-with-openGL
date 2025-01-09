@@ -16,5 +16,8 @@ all:
 run: all
 	./trabalhocg $(SVG_PATH)
 
+run2: all
+	./trabalhocg ./arena_teste_2.svg
+
 clean:
 	$(RM) trabalhocg

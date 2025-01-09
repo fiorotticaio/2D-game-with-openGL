@@ -35,6 +35,10 @@ GLfloat xPositionArena = 0;
 GLfloat yPositionArena = 0;
 GLfloat arenaWidth = 0;
 GLfloat arenaHeight = 0;
+GLfloat viewPortLeft = 0;
+GLfloat viewPortRight = 0;
+GLfloat viewPortBottom = 0;
+GLfloat viewPortTop = 0;
 
 // Components of the virtual world
 Arena* arena = NULL;
@@ -47,6 +51,7 @@ float positionTolerance = 0.5f;
 float mouseY = 0.0f;
 GLfloat timeAccumulator = 0.0f;
 void* font = GLUT_BITMAP_9_BY_15;
+static char str[1000];
 int gameOver = 0;
 
 
@@ -54,25 +59,19 @@ int gameOver = 0;
 /*****************************************************************************************/
 /************************************ AUX FUNCTIONS **************************************/
 /*****************************************************************************************/
-void PrintMessage(const char* message, GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B) {
+void PrintMessage(GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B) {
 	glColor3f(R, G, B);
-	glRasterPos2f(x, y);
 
 	char* tempStr;
-	tempStr = (char*) message;
+	sprintf(str, "Game Over");
+
+	glRasterPos2f(x, y);
+
+	tempStr = str;
 	while (*tempStr) {
 		glutBitmapCharacter(font, *tempStr);
 		tempStr++;
 	}
-}
-
-
-void GameOver() {
-	printf("Game Over\n");
-	gameOver = 1;
-	GLfloat centeredX = arena->GetPlayerGx() - viewingWidth / 2;
-	GLfloat centeredY = arena->GetPlayerGy() - viewingHeight / 2;
-	PrintMessage("Game Over", centeredX, centeredY, 1.0f, 0.0f, 0.0f);
 }
 
 
@@ -112,6 +111,12 @@ void UpdateViewport(GLfloat playerX, GLfloat playerY,
             -100,                               
             100);                               
     glMatrixMode(GL_MODELVIEW);
+
+	viewPortLeft = newViewportX;
+	viewPortRight = newViewportX + viewingWidth;
+	viewPortBottom = newViewportY;
+	viewPortTop = newViewportY + viewingHeight;
+
     glLoadIdentity();
 }
 
@@ -172,6 +177,12 @@ void renderScene(void) {
 
 	for (Shot* shot : opponentsShots) {
 		if (shot) shot->Draw();
+	}
+
+	if (gameOver) {
+		GLfloat messagePosX = viewPortLeft + viewingWidth / 2 - 6;
+		GLfloat messagePosy = viewPortBottom + viewingHeight / 2 + 15;
+		PrintMessage(messagePosX, messagePosy, 1.0f, 0.0f, 0.0f);
 	}
 
 	// Draw on the frame buffer
@@ -383,7 +394,8 @@ void idle(void) {
 			if (shotDeleted) continue;
 
 			if (arena->PlayerCollidesWithShot(shot)) {
-				GameOver();
+				gameOver = 1;
+				glutPostRedisplay();
 				delete shot;
 				opponentsShots.erase(opponentsShots.begin() + i);
 				i--;

@@ -259,6 +259,7 @@ void idle(void) {
 	currentTime = glutGet(GLUT_ELAPSED_TIME);   // Get the time that has passed since the start of the application
 	timeDifference = currentTime - previousTime; // Calculates the elapsed time since the last frame
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
+	timeDifference = 1; // TODO: timeDifference is causing issue (REMOVE THIS LATER)
 
 	if (keyStatus[(int)('a')]) {
 		animateLegs = 1;

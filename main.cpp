@@ -46,12 +46,36 @@ int animateLegs = 0;
 float positionTolerance = 0.5f;
 float mouseY = 0.0f;
 GLfloat timeAccumulator = 0.0f;
+void* font = GLUT_BITMAP_9_BY_15;
+int gameOver = 0;
 
 
 
 /*****************************************************************************************/
 /************************************ AUX FUNCTIONS **************************************/
 /*****************************************************************************************/
+void PrintMessage(const char* message, GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B) {
+	glColor3f(R, G, B);
+	glRasterPos2f(x, y);
+
+	char* tempStr;
+	tempStr = (char*) message;
+	while (*tempStr) {
+		glutBitmapCharacter(font, *tempStr);
+		tempStr++;
+	}
+}
+
+
+void GameOver() {
+	printf("Game Over\n");
+	gameOver = 1;
+	GLfloat centeredX = arena->GetPlayerGx() - viewingWidth / 2;
+	GLfloat centeredY = arena->GetPlayerGy() - viewingHeight / 2;
+	PrintMessage("Game Over", centeredX, centeredY, 1.0f, 0.0f, 0.0f);
+}
+
+
 void UpdateViewport(GLfloat playerX, GLfloat playerY, 
                     GLfloat arenaX, GLfloat arenaY, 
                     GLfloat arenaWidth, GLfloat arenaHeight, 
@@ -263,6 +287,8 @@ void mouseClick(int button, int state, int x, int y) {
 
 
 void idle(void) {
+	if (gameOver) return;
+
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
@@ -356,6 +382,16 @@ void idle(void) {
 
 			if (shotDeleted) continue;
 
+			if (arena->PlayerCollidesWithShot(shot)) {
+				GameOver();
+				delete shot;
+				opponentsShots.erase(opponentsShots.begin() + i);
+				i--;
+				shotDeleted = true;
+			}
+
+			if (shotDeleted) continue;
+
 			if (!shot->Valid()) {
 				delete shot;
 				opponentsShots.erase(opponentsShots.begin() + i);
@@ -374,7 +410,7 @@ void idle(void) {
 		arena->RotatePlayerFrontThigh(frontThighAngleDir);
 		arena->RotatePlayerBackThigh(backThighAngleDir);
 	}
-		
+
 	glutPostRedisplay();
 }
 

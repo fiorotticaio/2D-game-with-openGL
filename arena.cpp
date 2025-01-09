@@ -626,3 +626,26 @@ void Arena::UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat max
         }
     }
 }
+
+
+bool Arena::PlayerCollidesWithShot(Shot* shot) {
+    GLfloat shotX = shot->GetGx();
+    GLfloat shotY = shot->GetGy();
+    GLfloat shotRadius = shot->GetRadius();
+
+    GLfloat playerX = gPlayer->GetGx();
+    GLfloat playerY = gPlayer->GetGy();
+    GLfloat playerTopY = playerY - gPlayer->GetThighHeight() - gPlayer->GetShinHeight() + gPlayer->GetInvisibleReactHeight();
+    GLfloat playerBottomY = playerY - gPlayer->GetThighHeight() - gPlayer->GetShinHeight();
+    GLfloat playerLeftX = playerX - gPlayer->GetInvisibleReactWidth() / 2;
+    GLfloat playerRightX = playerX + gPlayer->GetInvisibleReactWidth() / 2;
+
+    GLfloat closestX = std::max(playerLeftX, std::min(shotX, playerRightX));
+    GLfloat closestY = std::max(playerBottomY, std::min(shotY, playerTopY));
+
+    GLfloat distanceX = shotX - closestX;
+    GLfloat distanceY = shotY - closestY;
+    GLfloat distanceSquared = distanceX * distanceX + distanceY * distanceY;
+
+    return distanceSquared <= shotRadius * shotRadius;
+}

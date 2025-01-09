@@ -328,7 +328,7 @@ void idle(void) {
 				   arena->GetWidth(), arena->GetHeight(),
 				   viewingWidth, viewingHeight);
 	
-	if (arena->PlayerReachedMaximumJumpHeight()) {
+	if (arena->PlayerReachedMaximumJumpHeight()) { // Add condition when player hits head
 		arena->SetPlayerYDirection(-1);
 	}
 

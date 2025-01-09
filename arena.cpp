@@ -369,7 +369,6 @@ bool Arena::PlayerLanded() {
     
     for (Obstacle* obstacle : gObstacles) {
         if (PlayerLandsInObstacle(gPlayer, obstacle, 0, gPlayer->GetYSpeed())) {
-            printf("Player landed on obstacle\n");
             return true;
         }
     }

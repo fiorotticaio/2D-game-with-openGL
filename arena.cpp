@@ -193,15 +193,16 @@ bool Arena::PlayerLandsInObstacle(Player* player, Obstacle* obstacle, GLfloat dx
     GLfloat x = player->GetGx() + ((dx + offset) * player->GetXDirection());
     GLfloat y = player->GetGy() + ((dy + offset) * player->GetYDirection());
 
-    GLfloat playerBottomY = y - player->GetThighHeight() - player->GetShinHeight();
     GLfloat playerLeftX = x - player->GetInvisibleReactWidth() / 2;
     GLfloat playerRightX = x + player->GetInvisibleReactWidth() / 2;
+    GLfloat playerTopY = y - player->GetThighHeight() - player->GetShinHeight() + player->GetInvisibleReactHeight();
+    GLfloat playerBottomY = y - player->GetThighHeight() - player->GetShinHeight();
 
     GLfloat obstacleLeftX = obstacle->GetGx();
     GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
     GLfloat obstacleTopY = obstacle->GetGy();
 
-    return playerBottomY <= obstacleTopY + offset &&
+    return playerTopY >= obstacleTopY && playerBottomY <= obstacleTopY + offset &&
            playerRightX >= obstacleLeftX && playerLeftX <= obstacleRightX;
 }
 
@@ -235,15 +236,16 @@ bool Arena::PlayerLandsInOpponent(Player* player, Opponent* opponent, GLfloat dx
     GLfloat x = player->GetGx() + ((dx + offset) * player->GetXDirection());
     GLfloat y = player->GetGy() + ((dy + offset) * player->GetYDirection());
 
-    GLfloat playerBottomY = y - player->GetThighHeight() - player->GetShinHeight();
     GLfloat playerLeftX = x - player->GetInvisibleReactWidth() / 2;
     GLfloat playerRightX = x + player->GetInvisibleReactWidth() / 2;
+    GLfloat playerTopY = y - player->GetThighHeight() - player->GetShinHeight() + player->GetInvisibleReactHeight();
+    GLfloat playerBottomY = y - player->GetThighHeight() - player->GetShinHeight();
 
     GLfloat opponentLeftX = opponent->GetGx() - opponent->GetInvisibleReactWidth() / 2;
     GLfloat opponentRightX = opponent->GetGx() + opponent->GetInvisibleReactWidth() / 2;
     GLfloat opponentTopY = opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight() + opponent->GetInvisibleReactHeight();
 
-    return playerBottomY <= opponentTopY + offset &&
+    return playerTopY >= opponentTopY && playerBottomY <= opponentTopY + offset &&
            playerRightX >= opponentLeftX && playerLeftX <= opponentRightX;
 }
 
@@ -367,6 +369,7 @@ bool Arena::PlayerLanded() {
     
     for (Obstacle* obstacle : gObstacles) {
         if (PlayerLandsInObstacle(gPlayer, obstacle, 0, gPlayer->GetYSpeed())) {
+            printf("Player landed on obstacle\n");
             return true;
         }
     }

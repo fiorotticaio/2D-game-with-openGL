@@ -374,7 +374,7 @@ void idle(void) {
 		arena->RotatePlayerFrontThigh(frontThighAngleDir);
 		arena->RotatePlayerBackThigh(backThighAngleDir);
 	}
-	
+		
 	glutPostRedisplay();
 }
 

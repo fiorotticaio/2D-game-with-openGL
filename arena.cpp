@@ -133,18 +133,12 @@ GLfloat Arena::GetPlayerGy() {
 void Arena::MovePlayerInX(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
         if(PlayerCollidesWithObstacle(gPlayer, obstacle, gPlayer->GetXSpeed(), 0)) {
-            if (PlayerLandsInObstacle(gPlayer, obstacle, 0, gPlayer->GetYSpeed())) {
-                continue;
-            }
             return;
         }
     }
 
     for (Opponent* opponent : gOpponents) {
         if (PlayerCollidesWithOpponent(gPlayer, opponent, gPlayer->GetXSpeed(), 0)) {
-            if (PlayerLandsInOpponent(gPlayer, opponent, 0, gPlayer->GetYSpeed())) {
-                continue;
-            }
             return;
         }
     }
@@ -207,7 +201,7 @@ bool Arena::PlayerLandsInObstacle(Player* player, Obstacle* obstacle, GLfloat dx
     GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
     GLfloat obstacleTopY = obstacle->GetGy();
 
-    return playerBottomY <= obstacleTopY && playerBottomY >= obstacleTopY - 1.0f && // Top offset
+    return playerBottomY <= obstacleTopY + offset &&
            playerRightX >= obstacleLeftX && playerLeftX <= obstacleRightX;
 }
 
@@ -249,7 +243,7 @@ bool Arena::PlayerLandsInOpponent(Player* player, Opponent* opponent, GLfloat dx
     GLfloat opponentRightX = opponent->GetGx() + opponent->GetInvisibleReactWidth() / 2;
     GLfloat opponentTopY = opponent->GetGy() - opponent->GetThighHeight() - opponent->GetShinHeight() + opponent->GetInvisibleReactHeight();
 
-    return playerBottomY <= opponentTopY && playerBottomY >= opponentTopY - 1.0f && // Top offset
+    return playerBottomY <= opponentTopY + offset &&
            playerRightX >= opponentLeftX && playerLeftX <= opponentRightX;
 }
 
@@ -435,7 +429,7 @@ void Arena::MoveOpponentsInX(GLfloat timeDifference) {
     for (Opponent* opponent : gOpponents) {
         bool directionChanged = false;
 
-        // Check obstacle collisions
+        // When opponent is landing on an obstacle
         for (Obstacle* obstacle : gObstacles) {
             if (OpponentLandsInObstacle(opponent, obstacle, 0, opponent->GetYSpeed())) {
                 GLfloat obstacleLeftX = obstacle->GetGx();
@@ -470,8 +464,8 @@ void Arena::MoveOpponentsInX(GLfloat timeDifference) {
 
             // Check for collision with arena boundaries
             if (!directionChanged) {
-                if ((opponent->GetGx() + (opponent->GetInvisibleReactWidth() / 2) >= gX + gWidth && opponent->GetXDirection() == 1) ||
-                    (opponent->GetGy() - (opponent->GetInvisibleReactWidth() / 2) <= gX && opponent->GetXDirection() == -1)) {
+                if ((opponent->GetGx() + (opponent->GetInvisibleReactWidth() / 2) >= gX + gWidth -1.0f && opponent->GetXDirection() == 1) ||
+                    (opponent->GetGy() - (opponent->GetInvisibleReactWidth() / 2) <= gX + 1.0f && opponent->GetXDirection() == -1)) {
                     opponent->SetXDirection(-opponent->GetXDirection());
                     directionChanged = true;
                 }
@@ -522,7 +516,7 @@ bool Arena::OpponentLandsInObstacle(Opponent* opponent, Obstacle* obstacle, GLfl
     GLfloat obstacleRightX = obstacle->GetGx() + obstacle->GetWidth();
     GLfloat obstacleTopY = obstacle->GetGy();
 
-    return opponentBottomY <= obstacleTopY && opponentBottomY >= obstacleTopY - 1.0f && // Top offset
+    return opponentBottomY <= obstacleTopY && opponentBottomY >= obstacleTopY - offset &&
            opponentRightX >= obstacleLeftX && opponentLeftX <= obstacleRightX;
 }
 

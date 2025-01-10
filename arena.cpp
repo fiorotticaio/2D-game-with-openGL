@@ -715,3 +715,9 @@ bool Arena::PlayerHitsHeadOpponent(Player* player, Opponent* opponent, GLfloat d
     return playerTopY >= opponentBottomY && playerBottomY <= opponentBottomY + offset &&
            playerRightX >= opponentLeftX && playerLeftX <= opponentRightX;
 }
+
+
+bool Arena::PlayerWon() {
+    GLfloat offset = 1.0f;
+    return gPlayer->GetGx() + gPlayer->GetInvisibleReactWidth() / 2 >= gX + gWidth - offset;
+}

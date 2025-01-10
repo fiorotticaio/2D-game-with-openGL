@@ -51,23 +51,19 @@ float positionTolerance = 0.5f;
 float mouseY = 0.0f;
 GLfloat timeAccumulator = 0.0f;
 void* font = GLUT_BITMAP_9_BY_15;
-static char str[1000];
 int gameOver = 0;
+int playerWon = 0;
 
 
 
 /*****************************************************************************************/
 /************************************ AUX FUNCTIONS **************************************/
 /*****************************************************************************************/
-void PrintMessage(GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B) {
+void PrintMessage(const char* message, GLfloat x, GLfloat y, GLfloat R, GLfloat G, GLfloat B) {
 	glColor3f(R, G, B);
-
-	char* tempStr;
-	sprintf(str, "Game Over");
-
 	glRasterPos2f(x, y);
 
-	tempStr = str;
+	char* tempStr = (char*) message;
 	while (*tempStr) {
 		glutBitmapCharacter(font, *tempStr);
 		tempStr++;
@@ -182,7 +178,13 @@ void renderScene(void) {
 	if (gameOver) {
 		GLfloat messagePosX = viewPortLeft + viewingWidth / 2 - 6;
 		GLfloat messagePosy = viewPortBottom + viewingHeight / 2 + 15;
-		PrintMessage(messagePosX, messagePosy, 1.0f, 0.0f, 0.0f);
+		PrintMessage("Game Over", messagePosX, messagePosy, 1.0f, 0.0f, 0.0f);
+	}
+
+	if (playerWon) {
+		GLfloat messagePosX = viewPortLeft + viewingWidth / 2 - 6;
+		GLfloat messagePosy = viewPortBottom + viewingHeight / 2 + 15;
+		PrintMessage("Player Won", messagePosX, messagePosy, 1.0f, 1.0f, 1.0f);
 	}
 
 	// Draw on the frame buffer
@@ -298,7 +300,7 @@ void mouseClick(int button, int state, int x, int y) {
 
 
 void idle(void) {
-	// if (gameOver) return;
+	if (gameOver || playerWon) return;
 
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
@@ -395,7 +397,6 @@ void idle(void) {
 
 			if (arena->PlayerCollidesWithShot(shot)) {
 				gameOver = 1;
-				glutPostRedisplay();
 				delete shot;
 				opponentsShots.erase(opponentsShots.begin() + i);
 				i--;
@@ -422,6 +423,8 @@ void idle(void) {
 		arena->RotatePlayerFrontThigh(frontThighAngleDir);
 		arena->RotatePlayerBackThigh(backThighAngleDir);
 	}
+
+	if (arena->PlayerWon()) { playerWon = 1; }
 
 	glutPostRedisplay();
 }

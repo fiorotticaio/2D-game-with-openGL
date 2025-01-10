@@ -466,17 +466,6 @@ void idle(void) {
 
 	if (animatePlayerLegs) { arena->AnimatePlayerLegs(timeDifference); }
 
-	if (animatePlayerLegs) {
-		static int frontThighAngleDir = 1;
-		static int backThighAngleDir = 1;
-		if      (arena->GetPlayerFrontThighAngle() > -140) frontThighAngleDir *= -1;
-		else if (arena->GetPlayerFrontThighAngle() < -220) frontThighAngleDir *= -1;
-		if      (arena->GetPlayerBackThighAngle()  > -140) backThighAngleDir  *= -1;
-		else if (arena->GetPlayerBackThighAngle()  < -220) backThighAngleDir  *= -1;
-		arena->RotatePlayerFrontThigh(frontThighAngleDir);
-		arena->RotatePlayerBackThigh(backThighAngleDir);
-	}
-
 	if (arena->PlayerWon()) { playerWon = 1; }
 
 	glutPostRedisplay();

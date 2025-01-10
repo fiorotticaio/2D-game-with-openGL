@@ -144,20 +144,20 @@ GLfloat Player::GetBackShinAngle() {
     return gBackShinAngle;
 }
 
-void Player::RotateFrontThigh(GLfloat dAngle) {
-    gFrontThighAngle += dAngle;
+void Player::RotateFrontThigh(GLfloat angle) {
+    gFrontThighAngle += angle  * 0.1f;
 }
 
-void Player::RotateBackThigh(GLfloat dAngle) {
-    gBackThighAngle += dAngle;
+void Player::RotateBackThigh(GLfloat angle) {
+    gBackThighAngle += angle * 0.1f;
 }
 
-void Player::RotateFrontShin(GLfloat dAngle) {
-    gFrontShinAngle += dAngle;
+void Player::RotateFrontShin(GLfloat angle) {
+    gFrontShinAngle += angle;
 }
 
-void Player::RotateBackShin(GLfloat dAngle) {
-    gBackShinAngle += dAngle;
+void Player::RotateBackShin(GLfloat angle) {
+    gBackShinAngle += angle;
 }
 
 void Player::SetFrontShinAngle(GLfloat angle) {
@@ -371,5 +371,14 @@ GLfloat Player::GetInvisibleReactWidth() {
 
 
 void Player::AnimateLegs(GLdouble timeDifference) {
-    
+    static int frontThighAngleDir = 1;
+    static int backThighAngleDir = 1;
+
+    if (gFrontThighAngle > -140) frontThighAngleDir *= -1;
+    if (gFrontThighAngle < -220) frontThighAngleDir *= -1;
+    if (gBackThighAngle > -140) backThighAngleDir *= -1;
+    if (gBackThighAngle < -220) backThighAngleDir *= -1;
+
+    RotateFrontThigh(frontThighAngleDir);
+    RotateBackThigh(backThighAngleDir);
 }

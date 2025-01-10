@@ -721,3 +721,16 @@ bool Arena::PlayerWon() {
     GLfloat offset = 1.0f;
     return gPlayer->GetGx() + gPlayer->GetInvisibleReactWidth() / 2 >= gX + gWidth - offset;
 }
+
+
+void Arena::Delete() {
+    delete gPlayer;
+
+    for (Obstacle* obstacle : gObstacles) {
+        delete obstacle;
+    }
+
+    for (Opponent* opponent : gOpponents) {
+        delete opponent;
+    }
+}

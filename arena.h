@@ -99,6 +99,7 @@ public:
     bool PlayerHitsHeadObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy);
     bool PlayerHitsHeadOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy);
     bool PlayerWon();
+    void Delete();
 };
 
 

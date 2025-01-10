@@ -46,6 +46,7 @@ std::vector<Shot*> playerShots;
 std::vector<Shot*> opponentsShots;
 
 // Flags and aux variables
+char* svgFilePath = NULL;
 int animateLegs = 0;
 float positionTolerance = 0.5f;
 float mouseY = 0.0f;
@@ -299,7 +300,57 @@ void mouseClick(int button, int state, int x, int y) {
 }
 
 
+void ResetGame() {
+    gameOver = 0;
+    playerWon = 0;
+
+    for (Shot* shot : playerShots) {
+        delete shot;
+    }
+    playerShots.clear();
+
+    for (Shot* shot : opponentsShots) {
+        delete shot;
+    }
+    opponentsShots.clear();
+
+    arena->Delete();
+
+	// Reset global variables
+	viewingWidth = 0;
+	viewingHeight = 0;
+	xPositionArena = 0;
+	yPositionArena = 0;
+	arenaWidth = 0;
+	arenaHeight = 0;
+	viewPortLeft = 0;
+	viewPortRight = 0;
+	viewPortBottom = 0;
+	viewPortTop = 0;
+	animateLegs = 0;
+	positionTolerance = 0.5f;
+	mouseY = 0.0f;
+	timeAccumulator = 0.0f;
+	font = GLUT_BITMAP_9_BY_15;
+	gameOver = 0;
+	playerWon = 0;
+
+	loadViewportSizeFromSvg(svgFilePath);
+    
+	arena = new Arena(svgFilePath);
+
+    UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGy(), 
+                   xPositionArena, yPositionArena, 
+                   arenaWidth, arenaHeight, 
+                   viewingWidth, viewingHeight);
+}
+
+
 void idle(void) {
+	if (keyStatus[(int)('r')] && (gameOver || playerWon)) {
+		ResetGame();
+	}
+
 	if (gameOver || playerWon) return;
 
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
@@ -441,12 +492,14 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
 
-	if (!loadViewportSizeFromSvg(argv[1])) {
+	svgFilePath = argv[1];
+
+	if (!loadViewportSizeFromSvg(svgFilePath)) {
 		exit(1);
 	}
 
 	// Initialize the arena
-	arena = new Arena(argv[1]);
+	arena = new Arena(svgFilePath);
 
 	// Initialize openGL with Double buffer and RGB color without transparency.
 	// Its interesting to try GLUT_SINGLE instead of GLUT_DOUBLE.

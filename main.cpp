@@ -298,7 +298,7 @@ void mouseClick(int button, int state, int x, int y) {
 
 
 void idle(void) {
-	if (gameOver) return;
+	// if (gameOver) return;
 
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
@@ -328,7 +328,7 @@ void idle(void) {
 				   arena->GetWidth(), arena->GetHeight(),
 				   viewingWidth, viewingHeight);
 	
-	if (arena->PlayerReachedMaximumJumpHeight()) { // Add condition when player hits head
+	if (arena->PlayerReachedMaximumJumpHeight() || arena->PlayerHitsHead()) {
 		arena->SetPlayerYDirection(-1);
 	}
 

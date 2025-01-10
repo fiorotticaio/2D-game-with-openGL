@@ -94,6 +94,10 @@ public:
     void MoveOpponentsArms(GLfloat timeDifference);
     void UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat maxDist, GLfloat timeDifference);
     bool PlayerCollidesWithShot(Shot* shot);
+    bool PlayerHitsHead();
+    bool PlayerHitsHeadRoof(Player* player, GLfloat dx, GLfloat dy);
+    bool PlayerHitsHeadObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool PlayerHitsHeadOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy);
 };
 
 

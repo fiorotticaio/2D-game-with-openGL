@@ -39,6 +39,11 @@ class Player {
     GLfloat gFrontShinAngle;
     GLfloat gBackShinAngle;
 
+    GLint gFrontThighAngleDir;
+    GLint gBackThighAngleDir;
+    GLint gFrontShinAngleDir;
+    GLint gBackShinAngleDir;
+
     GLfloat gXSpeed;
     GLfloat gYSpeed;
     GLint gXDirection; // 1 for right (front), -1 for left (back)
@@ -88,6 +93,10 @@ public:
         gInvisibleReactWidth = gBodyWidth;
         maxJumpHeight = 4 * gInvisibleReactHeight; // 4 instead of 3 to make the game more playable
         jumpHeight = 0;
+        gFrontThighAngleDir = 1;
+        gBackThighAngleDir = 1;
+        gFrontShinAngleDir = -1;
+        gBackShinAngleDir = -1;
     }
 
     void Draw() {

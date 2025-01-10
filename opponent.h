@@ -98,7 +98,7 @@ public:
     GLfloat GetGy();
     void MoveInX(GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX, GLdouble timeDifference);
     void MoveInY(GLfloat minOpponentPositionY, GLfloat maxOpponentPositionY, GLdouble timeDifference);
-    void RotateArmToTargetAngle(GLfloat timeDifference, GLfloat targetAngle);
+    void RotateArmToTargetAngle(GLdouble timeDifference, GLfloat targetAngle);
     void SetXDirection(GLint xDirection);
     GLint GetXDirection();
     void SetYDirection(GLint yDirection);

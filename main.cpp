@@ -47,7 +47,7 @@ std::vector<Shot*> opponentsShots;
 
 // Flags and aux variables
 char* svgFilePath = NULL;
-int animateLegs = 0;
+int animatePlayerLegs = 0;
 float positionTolerance = 0.5f;
 float mouseY = 0.0f;
 GLfloat timeAccumulator = 0.0f;
@@ -248,7 +248,7 @@ void keyPress(unsigned char key, int x, int y) {
 
 void keyUp(unsigned char key, int x, int y) {
 	if (key == 'a' || key == 'A' || key == 'd' || key == 'D') {
-		animateLegs = 0;
+		animatePlayerLegs = 0;
 	}
 	keyStatus[(int)(key)] = 0;
 	glutPostRedisplay();
@@ -327,7 +327,7 @@ void ResetGame() {
 	viewPortRight = 0;
 	viewPortBottom = 0;
 	viewPortTop = 0;
-	animateLegs = 0;
+	animatePlayerLegs = 0;
 	positionTolerance = 0.5f;
 	mouseY = 0.0f;
 	timeAccumulator = 0.0f;
@@ -366,12 +366,12 @@ void idle(void) {
 
 
 	if (keyStatus[(int)('a')]) {
-		animateLegs = 1;
+		animatePlayerLegs = 1;
 		arena->SetPlayerXDirection(-1);
 		arena->MovePlayerInX(timeDifference);
 	}
 	if (keyStatus[(int)('d')]) {
-		animateLegs = 1;
+		animatePlayerLegs = 1;
 		arena->SetPlayerXDirection(1);
 		arena->MovePlayerInX(timeDifference);
 	}
@@ -464,7 +464,9 @@ void idle(void) {
 		}
 	}
 
-	if (animateLegs) {
+	if (animatePlayerLegs) { arena->AnimatePlayerLegs(timeDifference); }
+
+	if (animatePlayerLegs) {
 		static int frontThighAngleDir = 1;
 		static int backThighAngleDir = 1;
 		if      (arena->GetPlayerFrontThighAngle() > -140) frontThighAngleDir *= -1;

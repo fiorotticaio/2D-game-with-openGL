@@ -61,7 +61,7 @@ public:
     GLfloat GetPlayerGy();
     void MovePlayerInX(GLdouble timeDifference);
     void MovePlayerInY(GLdouble timeDifference);
-    void RotatePlayerArm(GLfloat y, GLfloat WindowHeight, GLfloat timeDifference);
+    void RotatePlayerArm(GLfloat y, GLfloat WindowHeight, GLdouble timeDifference);
     void SetPlayerXDirection(GLint xDirection);
     GLint GetPlayerXDirection();
     void SetPlayerYDirection(GLint yDirection);
@@ -87,12 +87,12 @@ public:
     std::vector<Obstacle*> GetObstacles();
     std::vector<Opponent*> GetOpponents();
     void EraseOpponent(Opponent* opponent);
-    void MoveOpponentsInY(GLfloat timeDifference);
-	void MoveOpponentsInX(GLfloat timeDifference);
+    void MoveOpponentsInY(GLdouble timeDifference);
+	void MoveOpponentsInX(GLdouble timeDifference);
     bool ObstaclesCollidesWithShot(Shot* shot);
     bool OpponentsCollidesWithShot(Shot* shot);
-    void MoveOpponentsArms(GLfloat timeDifference);
-    void UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat maxDist, GLfloat timeDifference);
+    void MoveOpponentsArms(GLdouble timeDifference);
+    void UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat maxDist, GLdouble timeDifference);
     bool PlayerCollidesWithShot(Shot* shot);
     bool PlayerHitsHead();
     bool PlayerHitsHeadRoof(Player* player, GLfloat dx, GLfloat dy);
@@ -100,6 +100,7 @@ public:
     bool PlayerHitsHeadOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy);
     bool PlayerWon();
     void Delete();
+    void AnimatePlayerLegs(GLdouble timeDifference);
 };
 
 

@@ -98,7 +98,7 @@ public:
     GLfloat GetGy();
     void MoveInX(GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference);
     void MoveInY(GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLdouble timeDifference);
-    void RotateArm(GLfloat y, GLfloat windowHeight, GLfloat timeDifference);
+    void RotateArm(GLfloat y, GLfloat windowHeight, GLdouble timeDifference);
     void SetXDirection(GLint xDirection);
     GLint GetXDirection();
     void SetYDirection(GLint yDirection);
@@ -124,6 +124,7 @@ public:
     bool ReachedMaximumJumpHeight();
     GLfloat GetInvisibleReactHeight();
     GLfloat GetInvisibleReactWidth();
+    void AnimateLegs(GLdouble timeDifference);
 };
 
 

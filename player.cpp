@@ -104,7 +104,7 @@ void Player::MoveInY(GLfloat minPlayerPositionY, GLfloat maxPlayerPositionY, GLd
     }
 }
 
-void Player::RotateArm(GLfloat y, GLfloat windowHeight, GLfloat timeDifference) {
+void Player::RotateArm(GLfloat y, GLfloat windowHeight, GLdouble timeDifference) {
     GLfloat mouseMin = 0;
     GLfloat mouseMax = windowHeight - mouseMin;
 
@@ -367,4 +367,9 @@ GLfloat Player::GetInvisibleReactHeight() {
 
 GLfloat Player::GetInvisibleReactWidth() {
     return gInvisibleReactWidth;
+}
+
+
+void Player::AnimateLegs(GLdouble timeDifference) {
+    
 }

@@ -104,7 +104,7 @@ void Opponent::MoveInY(GLfloat minOpponentPositionY, GLfloat maxOpponentPosition
     }
 }
 
-void Opponent::RotateArmToTargetAngle(GLfloat timeDifference, GLfloat targetAngle) {
+void Opponent::RotateArmToTargetAngle(GLdouble timeDifference, GLfloat targetAngle) {
     if (gArmAngle < targetAngle) {
         gArmAngle += gArmSpeed * timeDifference;
     } else if (gArmAngle > targetAngle) {

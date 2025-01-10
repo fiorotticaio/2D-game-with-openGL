@@ -250,7 +250,7 @@ bool Arena::PlayerLandsInOpponent(Player* player, Opponent* opponent, GLfloat dx
 }
 
 
-void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight, GLfloat timeDifference) {
+void Arena::RotatePlayerArm(GLfloat y, GLfloat WindowHeight, GLdouble timeDifference) {
     gPlayer->RotateArm(y, WindowHeight, timeDifference);
 }
 
@@ -410,7 +410,7 @@ void Arena::EraseOpponent(Opponent* opponent) {
 }
 
 
-void Arena::MoveOpponentsInY(GLfloat timeDifference) {
+void Arena::MoveOpponentsInY(GLdouble timeDifference) {
     for (Opponent* opponent : gOpponents) {
         bool opponentCollided = false;
         
@@ -427,7 +427,7 @@ void Arena::MoveOpponentsInY(GLfloat timeDifference) {
 }
 
 
-void Arena::MoveOpponentsInX(GLfloat timeDifference) {
+void Arena::MoveOpponentsInX(GLdouble timeDifference) {
     for (Opponent* opponent : gOpponents) {
         bool directionChanged = false;
 
@@ -584,7 +584,7 @@ bool Arena::OpponentCollidesWithShot(Opponent* opponent, Shot* shot) {
 }
 
 
-void Arena::MoveOpponentsArms(GLfloat timeDifference) {
+void Arena::MoveOpponentsArms(GLdouble timeDifference) {
     // Point opponents arms to the player
 
     for (Opponent* opponent : gOpponents) {
@@ -621,7 +621,7 @@ void Arena::MoveOpponentsArms(GLfloat timeDifference) {
 }
 
 
-void Arena::UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat maxDist, GLfloat timeDifference) {
+void Arena::UpdateOpponentsShots(std::vector<Shot*>& opponentsShots, GLfloat maxDist, GLdouble timeDifference) {
     for (Opponent* opponent : gOpponents) {
         if (rand() % 2 == 0) {
             opponentsShots.push_back(opponent->Shoot(maxDist));
@@ -733,4 +733,9 @@ void Arena::Delete() {
     for (Opponent* opponent : gOpponents) {
         delete opponent;
     }
+}
+
+
+void Arena::AnimatePlayerLegs(GLdouble timeDifference) {
+    gPlayer->AnimateLegs(timeDifference);
 }

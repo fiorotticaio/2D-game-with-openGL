@@ -165,10 +165,12 @@ void Arena::MovePlayerInY(GLdouble timeDifference) {
 
 
 bool Arena::PlayerCollidesWithObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
+    // Offset to avoid collision detection problems
+    GLfloat offsetX = 1.0f; 
+    GLfloat offsetY = 0.5f;
 
-    GLfloat x = player->GetGx() + ((dx + offset) * player->GetXDirection());
-    GLfloat y = player->GetGy() + ((dy + offset) * player->GetYDirection());
+    GLfloat x = player->GetGx() + ((dx + offsetX) * player->GetXDirection());
+    GLfloat y = player->GetGy() + ((dy + offsetY) * player->GetYDirection());
 
     GLfloat playerLeftX = x - player->GetInvisibleReactWidth() / 2;
     GLfloat playerRightX = x + player->GetInvisibleReactWidth() / 2;
@@ -482,10 +484,12 @@ void Arena::MoveOpponentsInX(GLdouble timeDifference) {
 
 
 bool Arena::OpponentCollidesWithObstacle(Opponent* opponent, Obstacle* obstacle, GLfloat dx, GLfloat dy) {
-    GLfloat offset = 1.0f; // Offset to avoid collision detection problems
+    // Offset to avoid collision detection problems
+    GLfloat offsetX = 1.0f; 
+    GLfloat offsetY = 0.5f;
 
-    GLfloat x = opponent->GetGx() + ((dx + offset) * opponent->GetXDirection());
-    GLfloat y = opponent->GetGy() + ((dy + offset) * opponent->GetYDirection());
+    GLfloat x = opponent->GetGx() + ((dx + offsetX) * opponent->GetXDirection());
+    GLfloat y = opponent->GetGy() + ((dy + offsetY) * opponent->GetYDirection());
 
     GLfloat opponentLeftX = x - opponent->GetInvisibleReactWidth() / 2;
     GLfloat opponentRightX = x + opponent->GetInvisibleReactWidth() / 2;

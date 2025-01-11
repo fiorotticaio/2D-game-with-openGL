@@ -82,11 +82,11 @@ public:
         gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
         gThighWidth = (float) gThighHeight / (float) 6;
         gFrontThighAngle = -140.0f;
-        gBackThighAngle = -220.0f;
+        gBackThighAngle = -210.0f;
         gShinHeight = ((float) 50 / (float) 172) * gBaseCircleRadius;
         gShinWidth = (float) gShinHeight / (float)  6;
         gFrontShinAngle = 0.0f;
-        gBackShinAngle = 0.0f;
+        gBackShinAngle = -50.0f;
         gXSpeed = 0.05f;
         gYSpeed = 0.025f;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;

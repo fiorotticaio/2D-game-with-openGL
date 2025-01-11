@@ -31,12 +31,12 @@ void Player::DrawFrontLeg() {
     glPushMatrix();
         // Draw the front thigh
         glRotatef(gFrontThighAngle * gXDirection, 0, 0, 1);
-        DrawRect(gThighWidth, gThighHeight, 1.0f, 1.0f, 1.0f);
+        DrawRect(gThighWidth, gThighHeight, 1.0f, 0.0f, 0.0f);
 
         // Draw the front leg
         glTranslatef(0, gThighHeight, 0);
         glRotatef(gFrontShinAngle * gXDirection, 0, 0, 1);
-        DrawRect(gShinWidth, gShinHeight, 1.0f, 1.0f, 1.0f);
+        DrawRect(gShinWidth, gShinHeight, 1.0f, 0.0f, 0.0f);
     glPopMatrix();
 }
 
@@ -371,17 +371,17 @@ GLfloat Player::GetInvisibleReactWidth() {
 
 
 void Player::AnimateLegs(GLdouble timeDifference) {
-    if (gFrontThighAngle > -120) gFrontThighAngleDir *= -1;
-    if (gFrontThighAngle < -220) gFrontThighAngleDir *= -1;
-    if (gBackThighAngle > -120) gBackThighAngleDir *= -1;
-    if (gBackThighAngle < -220) gBackThighAngleDir *= -1;
+    if (gFrontThighAngle > -140) gFrontThighAngleDir *= -1;
+    if (gFrontThighAngle < -210) gFrontThighAngleDir *= -1;
+    if (gBackThighAngle > -140) gBackThighAngleDir *= -1;
+    if (gBackThighAngle < -210) gBackThighAngleDir *= -1;
 
     if (gFrontShinAngle > 0) gFrontShinAngleDir *= -1;
-    if (gFrontShinAngle < -80) gFrontShinAngleDir *= -1;
+    if (gFrontShinAngle < -50) gFrontShinAngleDir *= -1;
     if (gBackShinAngle > 0) gBackShinAngleDir *= -1;
-    if (gBackShinAngle < -80) gBackShinAngleDir *= -1;
+    if (gBackShinAngle < -50) gBackShinAngleDir *= -1;
 
-    RotateFrontThigh (gFrontThighAngleDir);
+    RotateFrontThigh(gFrontThighAngleDir);
     RotateBackThigh(gBackThighAngleDir);
     RotateFrontShin(gFrontShinAngleDir);
     RotateBackShin(gBackShinAngleDir);

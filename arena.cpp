@@ -285,23 +285,23 @@ GLfloat Arena::GetPlayerBackShinAngle() {
 }
 
 
-void Arena::RotatePlayerFrontThigh(GLfloat dAngle) {
-    gPlayer->RotateFrontThigh(dAngle * gPlayer->GetXSpeed());
+void Arena::RotatePlayerFrontThigh(GLfloat angle, GLdouble timeDifference) {
+    gPlayer->RotateFrontThigh(angle * gPlayer->GetXSpeed(), timeDifference);
 }
 
 
-void Arena::RotatePlayerBackThigh(GLfloat dAngle) {
-    gPlayer->RotateBackThigh(dAngle * gPlayer->GetXSpeed());
+void Arena::RotatePlayerBackThigh(GLfloat angle, GLdouble timeDifference) {
+    gPlayer->RotateBackThigh(angle * gPlayer->GetXSpeed(), timeDifference);
 }
 
 
-void Arena::RotatePlayerFrontShin(GLfloat dAngle) {
-    gPlayer->RotateFrontShin(dAngle * gPlayer->GetXSpeed());
+void Arena::RotatePlayerFrontShin(GLfloat angle, GLdouble timeDifference) {
+    gPlayer->RotateFrontShin(angle * gPlayer->GetXSpeed(), timeDifference);
 }
 
 
-void Arena::RotatePlayerBackShin(GLfloat dAngle) {
-    gPlayer->RotateBackShin(dAngle * gPlayer->GetXSpeed());
+void Arena::RotatePlayerBackShin(GLfloat angle, GLdouble timeDifference) {
+    gPlayer->RotateBackShin(angle * gPlayer->GetXSpeed(), timeDifference);
 }
 
 

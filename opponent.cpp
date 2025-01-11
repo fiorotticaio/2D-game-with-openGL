@@ -136,20 +136,20 @@ GLfloat Opponent::GetBackShinAngle() {
     return gBackShinAngle;
 }
 
-void Opponent::RotateFrontThigh(GLfloat angle) {
-    gFrontThighAngle += angle * 0.1f;
+void Opponent::RotateFrontThigh(GLfloat angle, GLdouble timeDifference) {
+    gFrontThighAngle += angle * 0.1f * timeDifference;
 }
 
-void Opponent::RotateBackThigh(GLfloat angle) {
-    gBackThighAngle += angle * 0.1f;
+void Opponent::RotateBackThigh(GLfloat angle, GLdouble timeDifference) {
+    gBackThighAngle += angle * 0.1f * timeDifference;
 }
 
-void Opponent::RotateFrontShin(GLfloat angle) {
-    gFrontShinAngle += angle * 0.1f;
+void Opponent::RotateFrontShin(GLfloat angle, GLdouble timeDifference) {
+    gFrontShinAngle += angle * 0.1f * timeDifference;
 }
 
-void Opponent::RotateBackShin(GLfloat angle) {
-    gBackShinAngle += angle * 0.1f;
+void Opponent::RotateBackShin(GLfloat angle, GLdouble timeDifference) {
+    gBackShinAngle += angle * 0.1f * timeDifference;
 }
 
 void Opponent::SetFrontShinAngle(GLfloat angle) {
@@ -373,8 +373,8 @@ void Opponent::AnimateLegs(GLdouble timeDifference) {
     if (gBackShinAngle > 0) gBackShinAngleDir *= -1;
     if (gBackShinAngle < -50) gBackShinAngleDir *= -1;
 
-    RotateFrontThigh(gFrontThighAngleDir);
-    RotateBackThigh(gBackThighAngleDir);
-    RotateFrontShin(gFrontShinAngleDir);
-    RotateBackShin(gBackShinAngleDir);
+    RotateFrontThigh(gFrontThighAngleDir, timeDifference);
+    RotateBackThigh(gBackThighAngleDir, timeDifference);
+    RotateFrontShin(gFrontShinAngleDir, timeDifference);
+    RotateBackShin(gBackShinAngleDir, timeDifference);
 }

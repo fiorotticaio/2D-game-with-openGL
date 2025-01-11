@@ -70,10 +70,10 @@ public:
     GLfloat GetPlayerBackThighAngle();
     GLfloat GetPlayerFrontShinAngle();
     GLfloat GetPlayerBackShinAngle();
-    void RotatePlayerFrontThigh(GLfloat dAngle);
-    void RotatePlayerBackThigh(GLfloat dAngle);
-    void RotatePlayerFrontShin(GLfloat dAngle);
-    void RotatePlayerBackShin(GLfloat dAngle);
+    void RotatePlayerFrontThigh(GLfloat angle, GLdouble timeDifference);
+    void RotatePlayerBackThigh(GLfloat angle, GLdouble timeDifference);
+    void RotatePlayerFrontShin(GLfloat angle, GLdouble timeDifference);
+    void RotatePlayerBackShin(GLfloat angle, GLdouble timeDifference);
     void SetPlayerFrontShinAngle(GLfloat angle);
     void SetPlayerBackShinAngle(GLfloat angle);
     Shot* PlayerShoot(GLfloat maxDist);

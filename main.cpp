@@ -48,6 +48,7 @@ std::vector<Shot*> opponentsShots;
 // Flags and aux variables
 char* svgFilePath = NULL;
 int animatePlayerLegs = 0;
+int animateOpponentsLegs = 1;
 float positionTolerance = 0.5f;
 float mouseY = 0.0f;
 GLfloat timeAccumulator = 0.0f;
@@ -328,6 +329,7 @@ void ResetGame() {
 	viewPortBottom = 0;
 	viewPortTop = 0;
 	animatePlayerLegs = 0;
+	animateOpponentsLegs = 1;
 	positionTolerance = 0.5f;
 	mouseY = 0.0f;
 	timeAccumulator = 0.0f;
@@ -465,6 +467,7 @@ void idle(void) {
 	}
 
 	if (animatePlayerLegs) { arena->AnimatePlayerLegs(timeDifference); }
+	if (animateOpponentsLegs) { arena->AnimateOpponentsLegs(timeDifference); }
 
 	if (arena->PlayerWon()) { playerWon = 1; }
 

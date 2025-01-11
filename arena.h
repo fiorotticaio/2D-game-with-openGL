@@ -101,6 +101,7 @@ public:
     bool PlayerWon();
     void Delete();
     void AnimatePlayerLegs(GLdouble timeDifference);
+    void AnimateOpponentsLegs(GLdouble timeDifference);
 };
 
 

@@ -739,3 +739,10 @@ void Arena::Delete() {
 void Arena::AnimatePlayerLegs(GLdouble timeDifference) {
     gPlayer->AnimateLegs(timeDifference);
 }
+
+
+void Arena::AnimateOpponentsLegs(GLdouble timeDifference) {
+    for (Opponent* opponent : gOpponents) {
+        opponent->AnimateLegs(timeDifference);
+    }
+}

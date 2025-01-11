@@ -39,6 +39,11 @@ class Opponent {
     GLfloat gFrontShinAngle;
     GLfloat gBackShinAngle;
 
+    GLint gFrontThighAngleDir;
+    GLint gBackThighAngleDir;
+    GLint gFrontShinAngleDir;
+    GLint gBackShinAngleDir;
+
     GLfloat gXSpeed;
     GLfloat gYSpeed;
     GLint gXDirection; // 1 for right (front), -1 for left (back)
@@ -77,17 +82,21 @@ public:
         gThighHeight = ((float) 47 / (float) 172) * gBaseCircleRadius;
         gThighWidth = (float) gThighHeight / (float) 6;
         gFrontThighAngle = -140.0f;
-        gBackThighAngle = -220.0f;
+        gBackThighAngle = -210.0f;
         gShinHeight = ((float) 50 / (float) 172) * gBaseCircleRadius;
         gShinWidth = (float) gShinHeight / (float)  6;
         gFrontShinAngle = 0.0f;
-        gBackShinAngle = 0.0f;
+        gBackShinAngle = -50.0f;
         gXSpeed = 0.025f;
         gYSpeed = 0.025f;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
         maxJumpHeight = 4 * gInvisibleReactHeight; // 4 instead of 3 to make the game more playable
         jumpHeight = 0;
+        gFrontThighAngleDir = 1;
+        gBackThighAngleDir = 1;
+        gFrontShinAngleDir = -1;
+        gBackShinAngleDir = -1;
     }
 
     void Draw() {
@@ -124,6 +133,7 @@ public:
     bool ReachedMaximumJumpHeight();
     GLfloat GetInvisibleReactHeight();
     GLfloat GetInvisibleReactWidth();
+    void AnimateLegs(GLdouble timeDifference);
 };
 
 

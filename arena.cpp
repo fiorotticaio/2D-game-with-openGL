@@ -475,8 +475,8 @@ void Arena::MoveOpponentsInX(GLdouble timeDifference) {
 
             // Check for collision with arena boundaries
             if (!directionChanged) {
-                if ((opponent->GetGx() + (opponent->GetInvisibleReactWidth() / 2) >= gX + gWidth -1.0f && opponent->GetXDirection() == 1) ||
-                    (opponent->GetGy() - (opponent->GetInvisibleReactWidth() / 2) <= gX + 1.0f && opponent->GetXDirection() == -1)) {
+                if ((opponent->GetGx() + opponent->GetInvisibleReactWidth() / 2 >= gX + gWidth -1.0f && opponent->GetXDirection() == 1) ||
+                    (opponent->GetGx() - opponent->GetInvisibleReactWidth() / 2 <= gX + 1.0f && opponent->GetXDirection() == -1)) {
                     opponent->SetXDirection(-opponent->GetXDirection());
                     directionChanged = true;
                 }

@@ -405,6 +405,12 @@ bool Arena::OpponentLanded(Opponent* opponent) {
         return true;
     }
 
+    for (Opponent* otherOpponent : gOpponents) {
+        if (opponent != otherOpponent && OpponentCollidesWithOtherOpponent(opponent, otherOpponent, 0, opponent->GetYSpeed())) {
+            return true;
+        }
+    }
+
     return false;
 }
 
@@ -507,6 +513,18 @@ void Arena::MoveOpponentsInX(GLdouble timeDifference) {
         }
 
         if (!directionChanged) {
+            // If opponent collides with other opponent, both change direction
+            for (Opponent* otherOpponent : gOpponents) {
+                if (opponent != otherOpponent && OpponentCollidesWithOtherOpponent(opponent, otherOpponent, opponent->GetXSpeed(), 0)) {
+                    opponent->SetXDirection(-opponent->GetXDirection());
+                    otherOpponent->SetXDirection(-otherOpponent->GetXDirection());
+                    directionChanged = true;
+                    break;
+                }
+            }
+        }
+
+        if (!directionChanged) {
             opponent->MoveInX(gX, gX + gWidth, timeDifference);
         }
     }
@@ -576,6 +594,51 @@ bool Arena::OpponentLandsInPlayer(Opponent* opponent, Player* player, GLfloat dx
 
     return opponentTopY >= playerTopY && opponentBottomY <= playerTopY + offsetY &&
            opponentRightX >= playerLeftX && opponentLeftX <= playerRightX;
+}
+
+
+bool Arena::OpponentCollidesWithOtherOpponent(Opponent* opponent, Opponent* otherOpponent, GLfloat dx, GLfloat dy) {
+    // Offset to avoid collision detection problems
+    GLfloat offsetX = 1.0f; 
+    GLfloat offsetY = 0.5f;
+
+    GLfloat x = opponent->GetGx() + ((dx + offsetX) * opponent->GetXDirection());
+    GLfloat y = opponent->GetGy() + ((dy + offsetY) * opponent->GetYDirection());
+
+    GLfloat opponentLeftX = x - opponent->GetInvisibleReactWidth() / 2;
+    GLfloat opponentRightX = x + opponent->GetInvisibleReactWidth() / 2;
+    GLfloat opponentBottomY = y - opponent->GetThighHeight() - opponent->GetShinHeight();
+    GLfloat opponentTopY = y - opponent->GetThighHeight() - opponent->GetShinHeight() + opponent->GetInvisibleReactHeight();
+
+    GLfloat otherOpponentLeftX = otherOpponent->GetGx() - otherOpponent->GetInvisibleReactWidth() / 2;
+    GLfloat otherOpponentRightX = otherOpponent->GetGx() + otherOpponent->GetInvisibleReactWidth() / 2;
+    GLfloat otherOpponentTopY = otherOpponent->GetGy() - otherOpponent->GetThighHeight() - otherOpponent->GetShinHeight() + otherOpponent->GetInvisibleReactHeight();
+    GLfloat otherOpponentBottomY = otherOpponent->GetGy() - otherOpponent->GetThighHeight() - otherOpponent->GetShinHeight();
+
+    bool collidesInX = opponentRightX >= otherOpponentLeftX && opponentLeftX <= otherOpponentRightX;
+    bool collidesInY = opponentTopY >= otherOpponentBottomY && opponentBottomY <= otherOpponentTopY;
+
+    return collidesInX && collidesInY;
+}
+
+
+bool Arena::OpponentLandsInOtherOpponent(Opponent* opponent, Opponent* otherOpponent, GLfloat dx, GLfloat dy) {
+    GLfloat offsetX = 1.0f; // Offset to avoid collision detection problems
+    GLfloat offsetY = 1.0f; // Offset to avoid collision detection problems
+
+    GLfloat x = opponent->GetGx() + ((dx + offsetX) * opponent->GetXDirection());
+    GLfloat y = opponent->GetGy() + ((dy + offsetY) * opponent->GetYDirection());
+
+    GLfloat opponentBottomY = y - opponent->GetThighHeight() - opponent->GetShinHeight();
+    GLfloat opponentLeftX = x - opponent->GetInvisibleReactWidth() / 2;
+    GLfloat opponentRightX = x + opponent->GetInvisibleReactWidth() / 2;
+
+    GLfloat otherOpponentLeftX = otherOpponent->GetGx() - otherOpponent->GetInvisibleReactWidth() / 2;
+    GLfloat otherOpponentRightX = otherOpponent->GetGx() + otherOpponent->GetInvisibleReactWidth() / 2;
+    GLfloat otherOpponentTopY = otherOpponent->GetGy() - otherOpponent->GetThighHeight() - otherOpponent->GetShinHeight() + otherOpponent->GetInvisibleReactHeight();
+
+    return opponentBottomY <= otherOpponentTopY && opponentBottomY >= otherOpponentTopY - offsetY &&
+           opponentRightX >= otherOpponentLeftX && opponentLeftX <= otherOpponentRightX;
 }
 
 

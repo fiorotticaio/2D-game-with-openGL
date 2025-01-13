@@ -104,6 +104,8 @@ public:
     void AnimatePlayerLegs(GLdouble timeDifference);
     void AnimateOpponentsLegs(GLdouble timeDifference);
     bool OpponentLandsInPlayer(Opponent* opponent, Player* player, GLfloat dx, GLfloat dy);
+    bool OpponentCollidesWithOtherOpponent(Opponent* opponent, Opponent* otherOpponent, GLfloat dx, GLfloat dy);
+    bool OpponentLandsInOtherOpponent(Opponent* opponent, Opponent* otherOpponent, GLfloat dx, GLfloat dy);
 };
 
 

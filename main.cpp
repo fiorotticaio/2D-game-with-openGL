@@ -394,7 +394,7 @@ void idle(void) {
 	if (animatePlayerLegs) { arena->AnimatePlayerLegs(timeDifference); }
 	if (animateOpponentsLegs) { arena->AnimateOpponentsLegs(timeDifference); }
 
-	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
+	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGy(), 
 				   xPositionArena, yPositionArena,
 				   arena->GetWidth(), arena->GetHeight(),
 				   viewingWidth, viewingHeight);

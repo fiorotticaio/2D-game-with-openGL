@@ -22,5 +22,8 @@ run2: all
 run3: all
 	./trabalhocg ./arena_teste_3.svg
 
+run4: all
+	./trabalhocg ../teste/arena_teste_4.svg
+
 clean:
 	$(RM) trabalhocg

@@ -660,7 +660,10 @@ bool Arena::PlayerCollidesWithShot(Shot* shot) {
 }
 
 bool Arena::PlayerHitsHead() {
-    if (PlayerHitsHeadRoof(gPlayer, 0, gPlayer->GetYSpeed())) { return true; }
+    if (PlayerHitsHeadRoof(gPlayer, 0, gPlayer->GetYSpeed())) { 
+        printf("Player hits head\n");
+        return true;
+    }
 
     for (Obstacle* obstacle : gObstacles) {
         if (PlayerHitsHeadObstacle(gPlayer, obstacle, 0, gPlayer->GetYSpeed())) {
@@ -680,7 +683,7 @@ bool Arena::PlayerHitsHead() {
 
 bool Arena::PlayerHitsHeadRoof(Player* player, GLfloat dx, GLfloat dy) {
     GLfloat offset = 1.0f;
-    return player->GetGy() - player->GetThighHeight() - player->GetShinHeight() + player->GetInvisibleReactHeight() >= gY + gHeight - ((dy + offset) * (-player->GetYDirection()));
+    return player->GetGy() - player->GetThighHeight() - player->GetShinHeight() + player->GetInvisibleReactHeight() >= gY + gHeight - dy - offset;
 }
 
 

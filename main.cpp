@@ -453,6 +453,15 @@ void idle(void) {
 
 			if (shotDeleted) continue;
 
+			if (arena->OpponentsCollidesWithShot(shot)) {
+				delete shot;
+				opponentsShots.erase(opponentsShots.begin() + i);
+				i--;
+				shotDeleted = true;
+			}
+
+			if (shotDeleted) continue;
+
 			if (arena->PlayerCollidesWithShot(shot)) {
 				gameOver = 1;
 				delete shot;

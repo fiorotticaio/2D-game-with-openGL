@@ -349,7 +349,7 @@ void ResetGame() {
 
 
 void idle(void) {
-	for (int i = 0; i < 90000000; i++); // Simulate lower processing
+	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
 	GLdouble currentTime, timeDifference;
@@ -445,15 +445,6 @@ void idle(void) {
 			bool shotDeleted = false;
 
 			if (arena->ObstaclesCollidesWithShot(shot)) {
-				delete shot;
-				opponentsShots.erase(opponentsShots.begin() + i);
-				i--;
-				shotDeleted = true;
-			}
-
-			if (shotDeleted) continue;
-
-			if (arena->OpponentsCollidesWithShot(shot)) {
 				delete shot;
 				opponentsShots.erase(opponentsShots.begin() + i);
 				i--;

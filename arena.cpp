@@ -132,13 +132,13 @@ GLfloat Arena::GetPlayerGy() {
 
 void Arena::MovePlayerInX(GLdouble timeDifference) {
     for (Obstacle* obstacle : gObstacles) {
-        if(PlayerCollidesWithObstacle(gPlayer, obstacle, gPlayer->GetXSpeed(), 0, timeDifference)) {
+        if(PlayerCollidesWithObstacle(gPlayer, obstacle, gPlayer->GetXSpeed(), 0)) {
             return;
         }
     }
 
     for (Opponent* opponent : gOpponents) {
-        if (PlayerCollidesWithOpponent(gPlayer, opponent, gPlayer->GetXSpeed(), 0, timeDifference)) {
+        if (PlayerCollidesWithOpponent(gPlayer, opponent, gPlayer->GetXSpeed(), 0)) {
             return;
         }
     }
@@ -164,7 +164,7 @@ void Arena::MovePlayerInY(GLdouble timeDifference) {
 }
 
 
-bool Arena::PlayerCollidesWithObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy, GLdouble timeDifference) {
+bool Arena::PlayerCollidesWithObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy) {
     // Offset to avoid collision detection problems
     GLfloat offsetX = 1.0f; 
     GLfloat offsetY = 0.5f;
@@ -210,7 +210,7 @@ bool Arena::PlayerLandsInObstacle(Player* player, Obstacle* obstacle, GLfloat dx
 }
 
 
-bool Arena::PlayerCollidesWithOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy, GLdouble timeDifference) {
+bool Arena::PlayerCollidesWithOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy) {
     GLfloat offsetX = 1.0f; // Offset to avoid collision detection problems
     GLfloat offsetY = 0.5f; // Offset to avoid collision detection problems 
 
@@ -445,7 +445,7 @@ void Arena::MoveOpponentsInX(GLdouble timeDifference) {
         }
 
         // Check player collision
-        if (PlayerCollidesWithOpponent(gPlayer, opponent, opponent->GetXSpeed(), 0, timeDifference)) {
+        if (PlayerCollidesWithOpponent(gPlayer, opponent, opponent->GetXSpeed(), 0)) {
             if (!PlayerLandsInOpponent(gPlayer, opponent, 0, opponent->GetYSpeed())) {
                 continue; // Do not move
             }

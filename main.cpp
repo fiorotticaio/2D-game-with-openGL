@@ -349,7 +349,7 @@ void ResetGame() {
 
 
 void idle(void) {
-	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
+	for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
 	GLdouble currentTime, timeDifference;

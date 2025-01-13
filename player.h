@@ -91,7 +91,7 @@ public:
         gYSpeed = 0.025f;
         gInvisibleReactHeight = gThighHeight + gShinHeight + gBodyHeight + 2 * gHeadCircleRadius;
         gInvisibleReactWidth = gBodyWidth;
-        maxJumpHeight = 10 * gInvisibleReactHeight; // 4 instead of 3 to make the game more playable
+        maxJumpHeight = 4 * gInvisibleReactHeight; // 4 instead of 3 to make the game more playable
         jumpHeight = 0;
         gFrontThighAngleDir = 1;
         gBackThighAngleDir = 1;

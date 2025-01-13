@@ -84,6 +84,7 @@ public:
     GLfloat GetPlayerShinHeight();
     bool PlayerReachedMaximumJumpHeight();
     bool PlayerLanded();
+    bool OpponentLanded(Opponent* opponent);
     std::vector<Obstacle*> GetObstacles();
     std::vector<Opponent*> GetOpponents();
     void EraseOpponent(Opponent* opponent);

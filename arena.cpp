@@ -388,6 +388,27 @@ bool Arena::PlayerLanded() {
 }
 
 
+bool Arena::OpponentLanded(Opponent* opponent) {
+    if (opponent->GetYDirection() == 1) return false; // If the opponent is still going up, it hasn't landed yet
+
+    if (OpponentCollidesWithGround(opponent, 0, opponent->GetYSpeed())) {
+        return true;
+    }
+
+    for (Obstacle* obstacle : gObstacles) {
+        if (OpponentLandsInObstacle(opponent, obstacle, 0, opponent->GetYSpeed())) {
+            return true;
+        }
+    }
+
+    if (OpponentLandsInPlayer(opponent, gPlayer, 0, opponent->GetYSpeed())) {
+        return true;
+    }
+
+    return false;
+}
+
+
 bool Arena::PlayerCollidesWithGround(Player* player, GLfloat dx, GLfloat dy) {
     GLfloat offset = 1.0f; // Offset to avoid collision detection problems
     return player->GetGy() - player->GetThighHeight() - player->GetShinHeight() <= gY + ((dy + offset) * (-player->GetYDirection()));
@@ -438,18 +459,9 @@ void Arena::MoveOpponentsInY(GLdouble timeDifference) {
 
 void Arena::MoveOpponentsInX(GLdouble timeDifference) {
     for (Opponent* opponent : gOpponents) {
-        // Check collision with arena borders
-        if ((opponent->GetGx() + opponent->GetInvisibleReactWidth() / 2 >= gX + gWidth -1.0f && opponent->GetXDirection() == 1) ||
-            (opponent->GetGx() - opponent->GetInvisibleReactWidth() / 2 <= gX + 1.0f && opponent->GetXDirection() == -1)) {
-            opponent->SetXDirection(-opponent->GetXDirection());
-        }
+        if (!OpponentLanded(opponent)) { continue; }
 
-        // Check player collision
-        if (PlayerCollidesWithOpponent(gPlayer, opponent, opponent->GetXSpeed(), 0)) {
-            if (!PlayerLandsInOpponent(gPlayer, opponent, 0, opponent->GetYSpeed())) {
-                continue; // Do not move
-            }
-        }
+        bool directionChanged = false;
 
         // When opponent is landing on an obstacle
         for (Obstacle* obstacle : gObstacles) {
@@ -461,22 +473,42 @@ void Arena::MoveOpponentsInX(GLdouble timeDifference) {
                 if ((opponent->GetGx() + (opponent->GetInvisibleReactWidth() / 2) >= obstacleRightX - 2.0f && opponent->GetXDirection() == 1) || // 1.0f offset
                     (opponent->GetGx() - (opponent->GetInvisibleReactWidth() / 2) <= obstacleLeftX + 2.0f && opponent->GetXDirection() == -1)) { // 1.0f offset
                     opponent->SetXDirection(-opponent->GetXDirection());
+                    directionChanged = true;
                 }
                 break;
             }
         }
 
+        // Check player collision
+        if (PlayerCollidesWithOpponent(gPlayer, opponent, opponent->GetXSpeed(), 0)) {
+            if (!PlayerLandsInOpponent(gPlayer, opponent, 0, opponent->GetYSpeed())) {
+                continue; // Do not move
+            }
+        }
+
         // If the opponent is not on an obstacle, check for collisions on the ground
-        if (OpponentCollidesWithGround(opponent, 0, opponent->GetYSpeed())) {
+        if (!directionChanged && OpponentCollidesWithGround(opponent, 0, opponent->GetYSpeed())) {
             for (Obstacle* obstacle : gObstacles) {
                 if (OpponentCollidesWithObstacle(opponent, obstacle, opponent->GetXSpeed(), 0)) {
                     opponent->SetXDirection(-opponent->GetXDirection());
+                    directionChanged = true;
                     break;
                 }
             }
         }
 
-        opponent->MoveInX(gX, gX + gWidth, timeDifference);
+        if (!directionChanged) {
+            // Check collision with arena borders
+            if ((opponent->GetGx() + opponent->GetInvisibleReactWidth() / 2 >= gX + gWidth -1.0f && opponent->GetXDirection() == 1) ||
+                (opponent->GetGx() - opponent->GetInvisibleReactWidth() / 2 <= gX + 1.0f && opponent->GetXDirection() == -1)) {
+                opponent->SetXDirection(-opponent->GetXDirection());
+                directionChanged = true;
+            }
+        }
+
+        if (!directionChanged) {
+            opponent->MoveInX(gX, gX + gWidth, timeDifference);
+        }
     }
 }
 

@@ -356,13 +356,12 @@ void idle(void) {
 	currentTime = glutGet(GLUT_ELAPSED_TIME);   // Get the time that has passed since the start of the application
 	timeDifference = currentTime - previousTime; // Calculates the elapsed time since the last frame
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
+
+	// Avoids the program to crash when the difference is too high
+	if (timeDifference <= 0.0f || timeDifference > 1000.0f) timeDifference = 1.0f;
+
 	timeAccumulator += timeDifference;
-	// timeDifference = 1; // TODO: timeDifference is causing issue (REMOVE THIS LATER)
-
-	if (timeDifference == 0.0f) timeDifference = 1.0f;
 	
-	// printf("Time difference: %f\n", timeDifference);
-
 	if (keyStatus[(int)('r')] && (gameOver || playerWon)) {
 		ResetGame();
 	}
@@ -381,15 +380,6 @@ void idle(void) {
 		arena->MovePlayerInX(timeDifference);
 	}
 
-	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
-				   xPositionArena, yPositionArena,
-				   arena->GetWidth(), arena->GetHeight(),
-				   viewingWidth, viewingHeight);
-	
-	if (arena->PlayerReachedMaximumJumpHeight() || arena->PlayerHitsHead()) {
-		arena->SetPlayerYDirection(-1);
-	}
-
 	arena->RotatePlayerArm(mouseY, Height, timeDifference);
 	arena->MovePlayerInY(timeDifference);
 	arena->MoveOpponentsInY(timeDifference);
@@ -399,6 +389,18 @@ void idle(void) {
 	if (timeAccumulator >= 500.0f) {
 		arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
 		timeAccumulator = 0.0f;
+	}
+
+	if (animatePlayerLegs) { arena->AnimatePlayerLegs(timeDifference); }
+	if (animateOpponentsLegs) { arena->AnimateOpponentsLegs(timeDifference); }
+
+	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGx(), 
+				   xPositionArena, yPositionArena,
+				   arena->GetWidth(), arena->GetHeight(),
+				   viewingWidth, viewingHeight);
+	
+	if (arena->PlayerReachedMaximumJumpHeight() || arena->PlayerHitsHead()) {
+		arena->SetPlayerYDirection(-1);
 	}
 	
 	for (size_t i = 0; i < playerShots.size(); ++i) {
@@ -468,9 +470,6 @@ void idle(void) {
 			}
 		}
 	}
-
-	if (animatePlayerLegs) { arena->AnimatePlayerLegs(timeDifference); }
-	if (animateOpponentsLegs) { arena->AnimateOpponentsLegs(timeDifference); }
 
 	if (arena->PlayerWon()) { playerWon = 1; }
 

@@ -34,9 +34,9 @@ private:
     void LoadArena(const char* svg_file_path);
     void DrawArena();
     void DrawRect(GLfloat width, GLfloat height, GLfloat R, GLfloat G, GLfloat B);
-    bool PlayerCollidesWithObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy);
+    bool PlayerCollidesWithObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy, GLdouble timeDifference);
     bool PlayerLandsInObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy);
-    bool PlayerCollidesWithOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy);
+    bool PlayerCollidesWithOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy, GLdouble timeDifference);
     bool PlayerLandsInOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy);
     bool PlayerCollidesWithGround(Player* player, GLfloat dx, GLfloat dy);
     bool OpponentCollidesWithObstacle(Opponent* opponent, Obstacle* obstacle, GLfloat dx, GLfloat dy);

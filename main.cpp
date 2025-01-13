@@ -349,12 +349,6 @@ void ResetGame() {
 
 
 void idle(void) {
-	if (keyStatus[(int)('r')] && (gameOver || playerWon)) {
-		ResetGame();
-	}
-
-	if (gameOver || playerWon) return;
-
 	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
@@ -363,8 +357,17 @@ void idle(void) {
 	timeDifference = currentTime - previousTime; // Calculates the elapsed time since the last frame
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
 	timeAccumulator += timeDifference;
+	// timeDifference = 1; // TODO: timeDifference is causing issue (REMOVE THIS LATER)
+
+	if (timeDifference == 0.0f) timeDifference = 1.0f;
 	
-	timeDifference = 1; // TODO: timeDifference is causing issue (REMOVE THIS LATER)
+	// printf("Time difference: %f\n", timeDifference);
+
+	if (keyStatus[(int)('r')] && (gameOver || playerWon)) {
+		ResetGame();
+	}
+
+	if (gameOver || playerWon) return;
 
 
 	if (keyStatus[(int)('a')]) {

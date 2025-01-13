@@ -102,6 +102,7 @@ public:
     void Delete();
     void AnimatePlayerLegs(GLdouble timeDifference);
     void AnimateOpponentsLegs(GLdouble timeDifference);
+    bool OpponentLandsInPlayer(Opponent* opponent, Player* player, GLfloat dx, GLfloat dy);
 };
 
 

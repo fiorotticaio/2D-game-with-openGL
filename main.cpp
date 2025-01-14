@@ -378,7 +378,7 @@ void idle(void) {
 	arena->MoveOpponentsArms(timeDifference);
 
 	if (timeAccumulator >= 500.0f) {
-		// arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
+		arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
 		timeAccumulator = 0.0f;
 	}
 

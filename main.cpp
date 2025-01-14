@@ -47,8 +47,6 @@ std::vector<Shot*> opponentsShots;
 
 // Flags and aux variables
 char* svgFilePath = NULL;
-int animatePlayerLegs = 0;
-int animateOpponentsLegs = 1;
 float positionTolerance = 0.5f;
 float mouseY = 0.0f;
 GLfloat timeAccumulator = 0.0f;
@@ -248,9 +246,6 @@ void keyPress(unsigned char key, int x, int y) {
 
 
 void keyUp(unsigned char key, int x, int y) {
-	if (key == 'a' || key == 'A' || key == 'd' || key == 'D') {
-		animatePlayerLegs = 0;
-	}
 	keyStatus[(int)(key)] = 0;
 	glutPostRedisplay();
 }
@@ -328,8 +323,6 @@ void ResetGame() {
 	viewPortRight = 0;
 	viewPortBottom = 0;
 	viewPortTop = 0;
-	animatePlayerLegs = 0;
-	animateOpponentsLegs = 1;
 	positionTolerance = 0.5f;
 	mouseY = 0.0f;
 	timeAccumulator = 0.0f;
@@ -349,7 +342,7 @@ void ResetGame() {
 
 
 void idle(void) {
-	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
+	for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
 	GLdouble currentTime, timeDifference;
@@ -370,12 +363,10 @@ void idle(void) {
 
 
 	if (keyStatus[(int)('a')]) {
-		animatePlayerLegs = 1;
 		arena->SetPlayerXDirection(-1);
 		arena->MovePlayerInX(timeDifference);
 	}
 	if (keyStatus[(int)('d')]) {
-		animatePlayerLegs = 1;
 		arena->SetPlayerXDirection(1);
 		arena->MovePlayerInX(timeDifference);
 	}
@@ -387,12 +378,9 @@ void idle(void) {
 	arena->MoveOpponentsArms(timeDifference);
 
 	if (timeAccumulator >= 500.0f) {
-		arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
+		// arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
 		timeAccumulator = 0.0f;
 	}
-
-	if (animatePlayerLegs) { arena->AnimatePlayerLegs(timeDifference); }
-	if (animateOpponentsLegs) { arena->AnimateOpponentsLegs(timeDifference); }
 
 	UpdateViewport(arena->GetPlayerGx(), arena->GetPlayerGy(), 
 				   xPositionArena, yPositionArena,

@@ -90,6 +90,7 @@ GLfloat Opponent::GetGy() {
 }
 
 void Opponent::MoveInX(GLfloat minOpponentPositionX, GLfloat maxOpponentPositionX, GLdouble timeDifference) {
+    AnimateLegs(timeDifference);
     if (gX + gXSpeed * timeDifference * gXDirection >= minOpponentPositionX + gBodyWidth/2 && 
         gX + gXSpeed * timeDifference * gXDirection <= maxOpponentPositionX - gBodyWidth/2) {
         gX += gXSpeed * timeDifference * gXDirection;

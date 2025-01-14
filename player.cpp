@@ -90,6 +90,7 @@ GLfloat Player::GetGy() {
 }
 
 void Player::MoveInX(GLfloat minPlayerPositionX, GLfloat maxPlayerPositionX, GLdouble timeDifference) {
+    AnimateLegs(timeDifference);
     if (gX + gXSpeed * timeDifference * gXDirection >= minPlayerPositionX + gBodyWidth/2 && 
         gX + gXSpeed * timeDifference * gXDirection <= maxPlayerPositionX - gBodyWidth/2) {
         gX += gXSpeed * timeDifference * gXDirection;

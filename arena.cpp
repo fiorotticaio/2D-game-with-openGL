@@ -190,8 +190,8 @@ bool Arena::PlayerCollidesWithObstacle(Player* player, Obstacle* obstacle, GLflo
 
 
 bool Arena::PlayerLandsInObstacle(Player* player, Obstacle* obstacle, GLfloat dx, GLfloat dy) {
-    GLfloat offsetX = 1.0f; // Offset to avoid collision detection problems
-    GLfloat offsetY = 1.0f; // Offset to avoid collision detection problems
+    GLfloat offsetX = 0.5f; // Offset to avoid collision detection problems
+    GLfloat offsetY = 2.0f; // Offset to avoid collision detection problems
 
     GLfloat x = player->GetGx() + ((dx + offsetX) * player->GetXDirection());
     GLfloat y = player->GetGy() + ((dy + offsetY) * player->GetYDirection());
@@ -237,8 +237,8 @@ bool Arena::PlayerCollidesWithOpponent(Player* player, Opponent* opponent, GLflo
 
 bool Arena::PlayerLandsInOpponent(Player* player, Opponent* opponent, GLfloat dx, GLfloat dy) {
     // Offset to avoid collision detection problems
-    GLfloat offsetX = 1.0f; 
-    GLfloat offsetY = 1.0f;
+    GLfloat offsetX = 0.5f; 
+    GLfloat offsetY = 2.0f;
 
     GLfloat x = player->GetGx() + ((dx + offsetX) * player->GetXDirection());
     GLfloat y = player->GetGy() + ((dy + offsetY) * player->GetYDirection());

@@ -54,6 +54,9 @@ void* font = GLUT_BITMAP_9_BY_15;
 int gameOver = 0;
 int playerWon = 0;
 
+// Feature flags
+int simulateSlowProcessing = 0;
+
 
 
 /*****************************************************************************************/
@@ -194,6 +197,9 @@ void renderScene(void) {
 
 void keyPress(unsigned char key, int x, int y) {
 	switch (key) {
+		case '1':
+			simulateSlowProcessing = !simulateSlowProcessing;
+			break;
 		case 'a':
 		case 'A':
 			keyStatus[(int)('a')] = 1;
@@ -329,6 +335,7 @@ void ResetGame() {
 	font = GLUT_BITMAP_9_BY_15;
 	gameOver = 0;
 	playerWon = 0;
+	simulateSlowProcessing = 0;
 
 	loadViewportSizeFromSvg(svgFilePath);
     
@@ -342,7 +349,7 @@ void ResetGame() {
 
 
 void idle(void) {
-	// for (int i = 0; i < 90000000; i++); // Simulate lower processing
+	if (simulateSlowProcessing) for (int i = 0; i < 90000000; i++); // Simulate lower processing
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
 	GLdouble currentTime, timeDifference;

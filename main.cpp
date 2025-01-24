@@ -351,7 +351,7 @@ void idle(void) {
 	previousTime = currentTime;                 // Update the time of the last frame that occurred
 
 	// Avoids the program to crash when the difference is too high
-	if (timeDifference <= 0.0f || timeDifference > 1000.0f) timeDifference = 1.0f;
+	if (timeDifference <= 0.0f || timeDifference > 200.0f) timeDifference = 1.0f;
 
 	timeAccumulator += timeDifference;
 	
@@ -377,7 +377,7 @@ void idle(void) {
 	arena->MoveOpponentsInX(timeDifference);
 	arena->MoveOpponentsArms(timeDifference);
 
-	if (timeAccumulator >= 500.0f) {
+	if (timeAccumulator >= 1000.0f) {
 		arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
 		timeAccumulator = 0.0f;
 	}

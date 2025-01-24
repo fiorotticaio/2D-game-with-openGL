@@ -56,6 +56,8 @@ int playerWon = 0;
 
 // Feature flags
 int simulateSlowProcessing = 0;
+int opponentMoves = 0;
+int opponentShoots = 0;
 
 
 
@@ -200,6 +202,12 @@ void keyPress(unsigned char key, int x, int y) {
 		case '1':
 			simulateSlowProcessing = !simulateSlowProcessing;
 			break;
+		case '2':
+			opponentMoves = !opponentMoves;
+			break;
+		case '3':
+			opponentShoots = !opponentShoots;
+			break;
 		case 'a':
 		case 'A':
 			keyStatus[(int)('a')] = 1;
@@ -335,7 +343,10 @@ void ResetGame() {
 	font = GLUT_BITMAP_9_BY_15;
 	gameOver = 0;
 	playerWon = 0;
+
 	simulateSlowProcessing = 0;
+	opponentMoves = 0;
+	opponentShoots = 0;
 
 	loadViewportSizeFromSvg(svgFilePath);
     
@@ -381,11 +392,11 @@ void idle(void) {
 	arena->RotatePlayerArm(mouseY, Height, timeDifference);
 	arena->MovePlayerInY(timeDifference);
 	arena->MoveOpponentsInY(timeDifference);
-	arena->MoveOpponentsInX(timeDifference);
+	if (opponentMoves) arena->MoveOpponentsInX(timeDifference);
 	arena->MoveOpponentsArms(timeDifference);
 
 	if (timeAccumulator >= 1000.0f) {
-		arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
+		if (opponentShoots) arena->UpdateOpponentsShots(opponentsShots, arenaWidth, timeDifference);
 		timeAccumulator = 0.0f;
 	}
 

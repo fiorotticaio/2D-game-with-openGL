@@ -298,7 +298,7 @@ void passiveMotion(int x, int y) {
 
 
 void mouseClick(int button, int state, int x, int y) {
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && !gameOver && !playerWon) {
         playerShots.push_back(arena->PlayerShoot(viewingWidth));
     }
 	if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN && arena->PlayerLanded()) {

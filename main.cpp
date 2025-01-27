@@ -55,7 +55,8 @@ int gameOver = 0;
 int playerWon = 0;
 
 // Feature flags
-int simulateSlowProcessing = 0;
+int simulateSlowProcessingUbuntu = 0;
+int simulateSlowProcessingWindows = 0;
 int opponentMoves = 0;
 int opponentShoots = 0;
 
@@ -200,15 +201,18 @@ void renderScene(void) {
 void keyPress(unsigned char key, int x, int y) {
 	switch (key) {
 		case '1':
-			simulateSlowProcessing = !simulateSlowProcessing;
+			simulateSlowProcessingUbuntu = !simulateSlowProcessingUbuntu;
 			break;
 		case '2':
-			opponentMoves = !opponentMoves;
+			simulateSlowProcessingWindows = !simulateSlowProcessingWindows;
 			break;
 		case '3':
-			opponentShoots = !opponentShoots;
+			opponentMoves = !opponentMoves;
 			break;
 		case '4':
+			opponentShoots = !opponentShoots;
+			break;
+		case '5':
 			gameOver = 1;
 			break;
 		case 'a':
@@ -347,7 +351,8 @@ void ResetGame() {
 	gameOver = 0;
 	playerWon = 0;
 
-	simulateSlowProcessing = 0;
+	simulateSlowProcessingUbuntu = 0;
+	simulateSlowProcessingWindows = 0;
 	opponentMoves = 0;
 	opponentShoots = 0;
 
@@ -363,7 +368,8 @@ void ResetGame() {
 
 
 void idle(void) {
-	if (simulateSlowProcessing) for (int i = 0; i < 90000000; i++);
+	if (simulateSlowProcessingUbuntu) for (int i = 0; i < 9000000; i++);
+	if (simulateSlowProcessingWindows) for (int i = 0; i < 90000000; i++);
 
 	static GLdouble previousTime = glutGet(GLUT_ELAPSED_TIME);
 	GLdouble currentTime, timeDifference;

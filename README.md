@@ -2,6 +2,10 @@
 
 This project is a 2D side-scrolling game implemented in C++ using OpenGL and FreeGLUT.
 
+<div align="center">
+  <img src="img/game.png" alt="Game screenshot" width="300">
+</div>
+
 ## 🕹️ Game Overview
 
 The game is rendered in a lateral view (side-scrolling style), where the player must move from the left to the right side of the arena, avoiding obstacles and enemy attacks.

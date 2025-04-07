@@ -67,3 +67,9 @@ The diameter of the circles defines the height of the characters.
 | Shoot          | Left Mouse Button    |
 | Restart Game   | `R` key                |
 | Aim Arm        | Vertical Mouse Move  |
+
+
+## Authors
+
+- [Caio Fiorotti](https://github.com/fiorotticaio)
+- [Matheus Schreiber](https://github.com/matheusschreiber)
